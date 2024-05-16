@@ -1,4 +1,20 @@
-# class TestClass():
+"""
+This file implements the Load Store Instruction as a class for the Caltech10
+Assembler. It is a subclass of the multi operand instruction class.
+
+Revision History:
+    Zachary Pestrikov 5/13/2024
+    Zachary Pestrikov 5/14/2024
+    Zachary Pestrikov 5/15/2024
+"""
+
+
+from HexOffset import hex_offset
+
+# class TestLDST():
+#     """
+#     Class for testing the LoadStoreInstruction class
+#     """
 #     def __init__(self, opcode, operands, file, line_num):
 #         self._opcode = opcode
 #         self._operands = operands
@@ -15,6 +31,7 @@
 #     def hex(self):
 #         pass
 
+
 class LoadStoreInstruction(): # TODO extends multioperand instruction
     """
     Handles all instructions with the opcode LD or ST.
@@ -28,12 +45,12 @@ class LoadStoreInstruction(): # TODO extends multioperand instruction
 
     def _validate_operands(self):
         """
-        Operands come in stripped, and uppercase.
+        Operands come in stripped.
         Checks if the Ld/St instruction's operands are valid. 
         Valid Operands include:
             - +X, X+, -X, X-, X
             - +S, S+, -S, S-, S
-            - +o for some offset o (default is 0)
+            - +o, -o for some offset o (default is 0)
         Lack of spaces is accounted for.
         
         Returns a dictionary of the operands
@@ -41,55 +58,87 @@ class LoadStoreInstruction(): # TODO extends multioperand instruction
         +/i, pre/post will be empty string if reg unchanged
         If no offset, offset will return as ''
         """
-        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid LD/ST Operands'
+        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid LD/ST Operands "{self._operands}"'
         operands = self._operands
         operand_list = {
             'register': '',
             '+/-': '',
             'pre/post': '',
-            'offset': ''
+            'offset': '', # leaves in '-' if offset negative
         }
+        if operands == '':
+            self.errors.append(error)
+            self._error = True
+            return operand_list
         # first character is either +,-,X,S
         if operands[0] == '+' or operands[0] == '-':
             operand_list['pre/post'] = 'pre'
             operand_list['+/-'] = operands[0]
-            operands = operands[1:].strip() # find reg
+            try: operands = operands[1:].strip() # find reg
+            except: 
+                    self.errors.append(error)
+                    self._error = True
+            operands = operands[0].upper() + operands[1:]
             if operands[0] == 'X' or operands[0] == 'S':
                 operand_list['register'] = operands[0]
                 # check for offset
-                operands = operands[1:].strip()
-                if operands == '': # no offset
+                if operands == operands[0]: # no offset
                     return operand_list
-                elif operands[0] == '+':
-                    operand_list['offset'] = operands[1:]
+                operands = operands[1:].strip()
+                if operands[0] == '+':
+                    try: operand_list['offset'] = operands[1:].strip()
+                    except: pass # 0 offset
+                    return operand_list
+                elif operands[0] == '-': #subtraction
+                    try: operand_list['offset'] = '-' + operands[1:].strip()
+                    except: pass # 0 offset
                     return operand_list
                 # some other thing is there, so its an error
             # no register, or no proper offset is found, so error
         elif operands[0].upper() == 'X' or operands[0].upper() == 'S':
             operand_list['register'] = operands[0].upper()
+            if operands.strip() == operands[0]:
+                return operand_list
             # find +/- (next non-space char)
             operands = operands[1:].strip()
-            if operands[0] == '-' and operands[1:] == '': #x-
-                operand_list['+/-'] == '-'
-                operand_list['pre/post'] = 'post'
+            if operands[0] == '-': #x-+o, x-o, x-,
+                operands = operands[1:].strip()
+                if operands[0] == '+': # x-+offset
+                    operand_list['+/-'] = '-'
+                    operand_list['pre/post'] = 'post'
+                    try: operand_list['offset'] = operands[1:]
+                    except: pass
+                elif operands[0] == '-': #x--offset:
+                    operand_list['+/-'] = '-'
+                    operand_list['pre/post'] = 'post'
+                    try: operand_list['offset'] = '-' + operands[1:].strip()
+                    except: pass
+                elif operands == '': # x-
+                    operand_list['+/-'] = '-'
+                    operand_list['pre/post'] = 'post'
+                else: # x-offset
+                    operand_list['offset'] = '-' + operands.strip()
                 return operand_list
-            # could be X++o, or X+o, or X+
+            # could be X++o, or X+o, or X+, or X+-o
             elif operands[0] == '+':
+                if operands[0] == operands.strip(): # x+
+                    operand_list['+/-'] = '+'
+                    operand_list['pre/post'] = 'post'
+                    return operand_list
                 operands = operands[1:].strip()
                 if operands[0] == '+': # x++offset
                     operand_list['+/-'] = '+'
                     operand_list['pre/post'] = 'post'
-                    operand_list['offset'] = operands[1:]
-                elif operands == '': # x+
+                    try: operand_list['offset'] = operands[1:]
+                    except: pass
+                elif operands[0] == '-': #x+-offset:
                     operand_list['+/-'] = '+'
                     operand_list['pre/post'] = 'post'
+                    try: operand_list['offset'] = '-' + operands[1:].strip()
+                    except: pass
                 else: # x+offset
                     operand_list['offset'] = operands
                 return operand_list
-            # if there's no +/i, then offset is 0, and reg unchanged
-            elif operands == '':
-                return operand_list
-
         self.errors.append(error)
         self._error = True
 
@@ -128,67 +177,31 @@ class LoadStoreInstruction(): # TODO extends multioperand instruction
         This function takes in the symbol table, instruction number,
         and list of operands for the instruction. It then finalizes and returns
         the hexadecimal version of the instruction for the output file.
+        The function assumes that instruction_num is positive and less than 65536
         """
         if self._error == True:
             return 'ERROR'
         operand_list = self._operand_list
-        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid LD/ST Operands'
+        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid LD/ST Operands "{self._operands}"'
         
-        offset = operand_list['offset']
-        if offset in symbols:
-            offset = symbols[offset]
-        else:
-            # handle converting offset to hex
-            # cases for offset are dec, hex (0x...), bin(0b...), char, truncation
-            if offset[0:2].upper() == '0x':
-                try: 
-                    offset = int(offset, 16)
-                except ValueError:
-                    self._error = True
-                    self.errors.append(error)
-                    return 'ERROR'
-            elif offset[0:2].upper() == '0b':
-                try:
-                    offset = int(offset, 2)
-                except ValueError:
-                    self._error = True
-                    self.errors.append(error)
-                    return 'ERROR'
-            elif offset[0] == "'" :
-                if len(offset) != 3:
-                    self._error = True
-                    self.errors.append(error)
-                    return 'ERROR'
-                offset = ord(offset)
-            else:
-                try:
-                    offset = int(offset)
-                    if offset < 0:
-                        if offset < -128:
-                            offset = -128
-                        offset+=256
-                except ValueError:
-                    self._error = True
-                    self.errors.append(f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Symbol Not Defined')
-                    return 'ERROR'
+        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols)
+        if warning == True:
+            self.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
+        if invalid == True:
+            self.errors.append(error)
+            self._error = True
 
-        if offset > 255:
-            offset = 255
-
-        # now instruction is in dec
         # convert instruction to hex
         instruction_num = str(hex(instruction_num))[2:] 
         self._opcode = '0' * (2-len(self._opcode)) + self._opcode 
-        offset = str(hex(offset))[2:]
-        offset = '0' * (2-len(offset)) + offset
         instruction_num = '0' * (4 - len(instruction_num)) + instruction_num
         hex_op = self._opcode + offset
         return f'{instruction_num.upper()} {hex_op.upper()}'
     
 
-
-
-        
+# For debugger:
+instruction = LoadStoreInstruction('ST', 'S++-5', 'test', 3)
+#hex = instruction.hex(37330, {'test': '80'})
     
 
 
