@@ -200,7 +200,7 @@ class LoadStoreInstruction(): # TODO extends multioperand instruction
     
 
 # For debugger:
-instruction = LoadStoreInstruction('ST', 'S++-5', 'test', 3)
+# instruction = LoadStoreInstruction('ST', 'S++-5', 'test', 3)
 #hex = instruction.hex(37330, {'test': '80'})
     
 

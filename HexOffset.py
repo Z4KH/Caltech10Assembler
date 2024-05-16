@@ -1,3 +1,12 @@
+"""
+This file contains the function to turn offsets into hexadecimal.
+
+Revision History
+    Zachary Pestrikov 5/15/2024
+    Zachary Pestrikov 5/16/2024
+"""
+
+
 def hex_offset(offset, symbols):
     """
     Given an offset(either a symbol or constant) and a symbols tabel,
@@ -31,14 +40,17 @@ def hex_offset(offset, symbols):
                 offset = int(offset, 16)
             except ValueError:
                 offset = 'ERROR'
+                error = True
         elif offset[0:2].upper() == '0b':
             try:
                 offset = int(offset, 2)
             except ValueError:
                 offset = 'ERROR'
+                error = True
         elif offset[0] == "'" or offset[0] == '"':
             if len(offset) != 3:
                 offset = 'ERROR'
+                error = True
             else: 
                 offset = ord(offset[1])
         else:
