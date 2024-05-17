@@ -141,7 +141,7 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
         return opcode_hex
     
     
-    def hex(self, instruction_num, symbols, labels, stack_init):
+    def hex(self, instruction_num, symbols, labels, stack_init, bytes_table):
         """
         This function takes in the symbol table, instruction number,
         and list of operands for the instruction. It then finalizes and returns
@@ -154,7 +154,7 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
         operand_list = self._operand_list
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         
-        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols, operand_list['memory'])
+        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols, operand_list['memory'], bytes_table)
         if warning == True and operand_list['memory'] == False:
             self.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
         if warning == True and operand_list['memory'] == True:

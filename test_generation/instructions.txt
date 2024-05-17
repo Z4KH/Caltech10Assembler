@@ -1,16 +1,14 @@
-10001000rrrrrrrr	JA	r
-10001100rrrrrrrr	JAE / JNC	r
-10001111rrrrrrrr	JB / JC	r
-10001011rrrrrrrr	JBE	r
-10011111rrrrrrrr	JE / JZ	r
-10101111rrrrrrrr	JG	r
-10111011rrrrrrrr	JGE	r
-10111000rrrrrrrr	JL	r
-10101100rrrrrrrr	JLE	r
-10011100rrrrrrrr	JNE / JNZ	r
-10011000rrrrrrrr	JNS	r
-10111100rrrrrrrr	JNU	r
-10101000rrrrrrrr	JNV	r
-10011011rrrrrrrr	JS	r
-10111111rrrrrrrr	JU	r
-10101011rrrrrrrr	JV	r
+01100011kkkkkkkk	ADCI	k
+01101011kkkkkkkk	ADDI	k
+01000111kkkkkkkk	ANDI	k
+00110011kkkkkkkk	CMPI	k
+01110111kkkkkkkk	ORI	k
+00011011kkkkkkkk	SBBI	k
+00010011kkkkkkkk	SUBI	k
+01001111kkkkkkkk	TSTI	k
+00110111kkkkkkkk	XORI	k
+10001001kkkkkkkk	LDI	k
+10000000mmmmmmmm	LDD	m
+10100000mmmmmmmm	STD	m
+10010000pppppppp	IN	p
+10110000pppppppp	OUT	p
