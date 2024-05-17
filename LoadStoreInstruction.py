@@ -3,36 +3,14 @@ This file implements the Load Store Instruction as a class for the Caltech10
 Assembler. It is a subclass of the multi operand instruction class.
 
 Revision History:
-    Zachary Pestrikov 5/13/2024
-    Zachary Pestrikov 5/14/2024
-    Zachary Pestrikov 5/15/2024
+    5/13/2024   Zachary Pestrikov   Drafted Class
+    5/14/2024   Zachary Pestrikov   Implemented Hexing Procedures
+    5/15/2024   Zachary Pestrikov   Added Error Handling
+    5/16/2024   Zachary Pestrikov   Finalized Class
 """
+from MultiOpInstruction import MultiOpInstruction
 
-
-from HexOffset import hex_offset
-
-# class TestLDST():
-#     """
-#     Class for testing the LoadStoreInstruction class
-#     """
-#     def __init__(self, opcode, operands, file, line_num):
-#         self._opcode = opcode
-#         self._operands = operands
-#         self._file = file
-#         self._line_num = line_num
-#         self._error = False
-#         self._operand_list = self._validate_operands()
-#         self._opcode = self._hex_opcode(self._operand_list)
-
-#     def _validate_operands(self):
-#         return []
-#     def _hex_opcode(self):
-#         return ''
-#     def hex(self):
-#         pass
-
-
-class LoadStoreInstruction(): # TODO extends multioperand instruction
+class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand instruction
     """
     Handles all instructions with the opcode LD or ST.
     Assumes that the opcode is correct and in uppercase
@@ -40,8 +18,6 @@ class LoadStoreInstruction(): # TODO extends multioperand instruction
     Initialized with opcode, operands(str), file, line_num.
     Initialized with self._error = False
     """
-
-    errors = [] # accessible outside class, holds all errors discovered in this class
 
     def _validate_operands(self):
         """
@@ -144,13 +120,14 @@ class LoadStoreInstruction(): # TODO extends multioperand instruction
 
 
 
-    def _hex_opcode(self, operand_list):
+    def _hex_opcode(self):
         """
         This private method is given a dict(operand_list), 
         which contains the operands [register, +/-, pre/post, offset].
         It returns ERROR if the operands are invalid. Otherwise,
         it converts the opcode to hex based on the operands
         """
+        operand_list = self._operand_list
         if self._error == True:
             return 'ERROR'
         ldst = '00'
@@ -170,33 +147,6 @@ class LoadStoreInstruction(): # TODO extends multioperand instruction
             select = '1'
         opcode_binary = ['1',ldst,prepost,incdec,sx,'1',select]
         return str(hex(int(''.join(opcode_binary), 2)))[2:].upper()
-
-
-    def hex(self, instruction_num, symbols):
-        """
-        This function takes in the symbol table, instruction number,
-        and list of operands for the instruction. It then finalizes and returns
-        the hexadecimal version of the instruction for the output file.
-        The function assumes that instruction_num is positive and less than 65536
-        """
-        if self._error == True:
-            return 'ERROR'
-        operand_list = self._operand_list
-        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid LD/ST Operands "{self._operands}"'
-        
-        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols)
-        if warning == True:
-            self.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
-        if invalid == True:
-            self.errors.append(error)
-            self._error = True
-
-        # convert instruction to hex
-        instruction_num = str(hex(instruction_num))[2:] 
-        self._opcode = '0' * (2-len(self._opcode)) + self._opcode 
-        instruction_num = '0' * (4 - len(instruction_num)) + instruction_num
-        hex_op = self._opcode + offset
-        return f'{instruction_num.upper()} {hex_op.upper()}'
     
 
 # For debugger:

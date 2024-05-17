@@ -1,0 +1,27 @@
+01100000mmmmmmmm	ADC	m
+01100001oooooooo	ADC	X, o
+01100010oooooooo	ADC	S, o
+01101000mmmmmmmm	ADD	m
+01101001oooooooo	ADD	X, o
+01101010oooooooo	ADD	S, o
+01000100mmmmmmmm	AND	m
+01000101oooooooo	AND	X, o
+01000110oooooooo	AND	S, o
+00110000mmmmmmmm	CMP	m
+00110001oooooooo	CMP	X, o
+00110010oooooooo	CMP	S, o
+01110100mmmmmmmm	OR	m
+01110101oooooooo	OR	X, o
+01110110oooooooo	OR	S, o
+00011000mmmmmmmm	SBB	m
+00011001oooooooo	SBB	X, o
+00011010oooooooo	SBB	S, o
+00010000mmmmmmmm	SUB	m
+00010001oooooooo	SUB	X, o
+00010010oooooooo	SUB	S, o
+01001100mmmmmmmm	TST	m
+01001101oooooooo	TST	X, o
+01001110oooooooo	TST	S, o
+00110100mmmmmmmm	XOR	m
+00110101oooooooo	XOR	X, o
+00110110oooooooo	XOR	S, o

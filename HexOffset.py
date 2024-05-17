@@ -2,8 +2,9 @@
 This file contains the function to turn offsets into hexadecimal.
 
 Revision History
-    Zachary Pestrikov 5/15/2024
-    Zachary Pestrikov 5/16/2024
+    Zachary Pestrikov 5/15/2024 Wrote first draft
+    Zachary Pestrikov 5/16/2024 Added Error Handling
+    Zachary Pestrikov 5/16/2024 Added support for negative hex/bin offsets with sign extension
 """
 
 
@@ -35,16 +36,58 @@ def hex_offset(offset, symbols):
     else:
         # handle converting constant offset to hex
         # cases for offset are dec, hex (0x...), bin(0b...), char, truncation
-        if offset[0:2].lower() == '0x':
-            try: 
-                offset = int(offset, 16)
-            except ValueError:
+        if offset[0:2].lower() == '0x': # add hex
+            # sign extend
+            if len(offset) > 2 and len(offset) < 5:
+                if int(offset[2], 16) > 7:
+                    sign = 'F'
+                else:
+                    sign = '0'
+                offset = '0x' + (sign * (2 - len(offset[2:]))) + offset[2:]
+                try: offset = int(offset, 16)
+                except ValueError:
+                    offset = 'ERROR'
+                    error = True
+            else:
                 offset = 'ERROR'
                 error = True
-        elif offset[0:2].upper() == '0b':
-            try:
-                offset = int(offset, 2)
-            except ValueError:
+        elif offset[0:3].lower() == '-0x':# subtract hex
+            # sign extend
+            if len(offset) > 3 and len(offset) < 5:
+                if int(offset[3], 16) > 7:
+                    sign = 'F'
+                else:
+                    sign = '0'
+                offset = '-0x' + (sign * (2 - len(offset[3:]))) + offset[3:]
+                try: offset = int(offset, 16)
+                except ValueError:
+                    offset = 'ERROR'
+                    error = True
+            else:
+                offset = 'ERROR'
+                error = True
+        elif offset[0:2].lower() == '0b':
+            # sign extend
+            if len(offset) > 2 and len(offset) < 11:
+                sign = offset[2]
+                offset = '0b' + (sign * (8 - len(offset[2:]))) + offset[2:]
+                try: offset = int(offset, 2)
+                except ValueError:
+                    offset = 'ERROR'
+                    error = True
+            else:
+                offset = 'ERROR'
+                error = True
+        elif offset[0:3].lower == '-0b':
+            # sign extend
+            if len(offset) > 3 and len(offset) < 12:
+                sign = offset[3]
+                offset = '-0b' + (sign * (8 - len(offset[3:]))) + offset[3:]
+                try: offset = int(offset, 2)
+                except ValueError:
+                    offset = 'ERROR'
+                    error = True
+            else:
                 offset = 'ERROR'
                 error = True
         elif offset[0] == "'" or offset[0] == '"':
@@ -56,15 +99,15 @@ def hex_offset(offset, symbols):
         else:
             try:
                 offset = int(offset)
-                if offset < 0:
-                    if offset < -128:
-                        offset = -128
-                        warning = True
-                    offset+=256
             except ValueError: # final line of defense against invalide operands
                 offset = 'ERROR'
                 error = True 
         if offset != 'ERROR':
+            if offset < 0:
+                if offset < -128:
+                    offset = -128
+                    warning = True
+                offset+=256
             if offset > 255:
                 offset = 255
                 warning = True
