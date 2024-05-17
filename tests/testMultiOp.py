@@ -205,7 +205,7 @@ def test_multiop():
     # test o is binary
     instruction = MultiOpInstruction('XOR', 'S, -0b101001', 'test', 959468)
     hex = instruction.hex(54, [], [], False)
-    assert hex == "0036 3623"
+    assert hex == "0036 3617"
     assert instruction._error == False
 
     # test strange operand
@@ -215,27 +215,33 @@ def test_multiop():
 
     # test const as o
     instruction = MultiOpInstruction('XOR', 'S, -test', 'test', 959468)
-    hex = instruction.hex(54, {'test', 'F1'}, [], False)
+    hex = instruction.hex(54, {'test': 'F1'}, [], False)
     assert hex == "0036 360F"
     assert instruction._error == False
 
     # test blank operands
     instruction = MultiOpInstruction('XOR', '', 'test', 959468)
-    hex = instruction.hex(54, {'test', 'F1'}, [], False)
+    hex = instruction.hex(54, {'test': 'F1'}, [], False)
     assert instruction._error == True
 
     # test blank o = 0
     instruction = MultiOpInstruction('XOR', 'S', 'test', 959468)
-    hex = instruction.hex(54, {'test', 'F1'}, [], False)
+    hex = instruction.hex(54, {'test': 'F1'}, [], False)
     assert hex == "0036 3600"
     assert instruction._error == False
 
     # test operand count < 3
     instruction = MultiOpInstruction('XOR', 'S, test, 2', 'test', 959468)
-    hex = instruction.hex(54, {'test', 'F1'}, [], False)
+    hex = instruction.hex(54, {'test': 'F1'}, [], False)
     assert instruction._error == True
 
     # test negative memory address
     instruction = MultiOpInstruction('CMP', '-0x8a', 'test', 307613)
     hex = instruction.hex(4281, [], [], False)
     assert instruction._error == True
+
+    # test short memory address
+    instruction = MultiOpInstruction('SBB', '0x7', 'test', 954913)
+    hex = instruction.hex(3722, [], [], False)
+    assert hex == "0E8A 1807"
+    assert instruction._error == False

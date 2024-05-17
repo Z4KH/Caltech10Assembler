@@ -31,6 +31,7 @@ def hex_offset(offset, symbols):
             else:
                 offset += '0'
         offset = hex(int(offset, 2) + 1)[2:]
+        offset = '0' * (2-len(offset)) + offset
     elif offset in symbols:
         offset = symbols[offset]
     else:
@@ -59,7 +60,9 @@ def hex_offset(offset, symbols):
                 else:
                     sign = '0'
                 offset = '-0x' + (sign * (2 - len(offset[3:]))) + offset[3:]
-                try: offset = int(offset, 16)
+                try: 
+                    offset = int(offset, 16)
+                    offset += 256 # flip bits
                 except ValueError:
                     offset = 'ERROR'
                     error = True
@@ -78,12 +81,15 @@ def hex_offset(offset, symbols):
             else:
                 offset = 'ERROR'
                 error = True
-        elif offset[0:3].lower == '-0b':
+        elif offset[0:3].lower() == '-0b':
             # sign extend
             if len(offset) > 3 and len(offset) < 12:
                 sign = offset[3]
                 offset = '-0b' + (sign * (8 - len(offset[3:]))) + offset[3:]
-                try: offset = int(offset, 2)
+                # need to flip bits
+                try: 
+                    offset = int(offset, 2)
+                    offset += 256
                 except ValueError:
                     offset = 'ERROR'
                     error = True

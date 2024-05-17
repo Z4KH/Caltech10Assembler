@@ -84,12 +84,11 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
             if ' ' not in operands:
                 # do not allow negative memory address
                 if operands.startswith('-'):
-                    try: operands = operands[1:]
-                    except ValueError:
-                        self._error = True
-                        self.errors.append(error)
-                operand_list['offset'] = operands
-                operand_list['memory'] = True
+                    self._error = True
+                    self.errors.append(error)
+                else:
+                    operand_list['offset'] = operands
+                    operand_list['memory'] = True
                 return operand_list
         
         # anything else is an error
@@ -170,5 +169,5 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
     
 
 # tests for debugger
-instruction = MultiOpInstruction('XOR', 'S, -0b101001', 'test', 959468)
-hex = instruction.hex(54, [], [], False)
+# instruction = MultiOpInstruction('XOR', 'S, -test', 'test', 959468)
+# hex = instruction.hex(54, {'test': 'F1'}, [], False)
