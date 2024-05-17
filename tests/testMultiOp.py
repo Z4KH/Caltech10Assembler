@@ -4,7 +4,7 @@ This file is used to test the MultiOpInstruction class through pytest.
 Revision History:
     Zachary Pestrikov 5/16/2024 Wrote Tests
 """
-from MultiOpInstruction import MultiOpInstruction
+from MultiOpInstruction.MultiOpInstruction import MultiOpInstruction
     
 def test_multiop():
     """

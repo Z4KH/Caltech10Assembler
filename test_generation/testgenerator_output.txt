@@ -1,161 +1,122 @@
-# 01100000mmmmmmmm	ADC	m
-instruction = MultiOpInstruction('ADC', '0xa4', 'test', 759164)
-hex = instruction.hex(7667, [], [], False)
-assert hex == "1DF3 60A4"
+# 10001000rrrrrrrr	JA	r
+
+instruction = CallJmpInstruction('JA', 'label', 'test', 481510)
+hex = instruction.hex(5555, [],{'label': '153C'}, False)
+assert hex == "15B3 8888"
 assert instruction._error == False
 
-# 01100001oooooooo	ADC	X, o
-instruction = MultiOpInstruction('ADC', 'X, 13', 'test', 814416)
-hex = instruction.hex(1761, [], [], False)
-assert hex == "06E1 610D"
+
+# 10001100rrrrrrrr	JAE / JNC	r
+
+instruction = CallJmpInstruction('JAE / JNC', 'label', 'test', 803626)
+hex = instruction.hex(2388, [],{'label': '09CD'}, False)
+assert hex == "0954 8C7A"
 assert instruction._error == False
 
-# 01100010oooooooo	ADC	S, o
-instruction = MultiOpInstruction('ADC', 'S, -17', 'test', 233882)
-hex = instruction.hex(2469, [], [], False)
-assert hex == "09A5 62EF"
+
+# 10001111rrrrrrrr	JB / JC	r
+
+instruction = CallJmpInstruction('JB / JC', 'label', 'test', 838206)
+hex = instruction.hex(3141, [],{'label': '0BDE'}, False)
+assert hex == "0C45 8F98"
 assert instruction._error == False
 
-# 01101000mmmmmmmm	ADD	m
-instruction = MultiOpInstruction('ADD', '0x7a', 'test', 404409)
-hex = instruction.hex(7947, [], [], False)
-assert hex == "1F0B 687A"
+
+# 10001011rrrrrrrr	JBE	r
+
+instruction = CallJmpInstruction('JBE', 'label', 'test', 512139)
+hex = instruction.hex(4592, [],{'label': '1D5A'}, False)
+assert instruction._error == True
+
+
+# 10011111rrrrrrrr	JE / JZ	r
+
+instruction = CallJmpInstruction('JE / JZ', 'label', 'test', 772087)
+hex = instruction.hex(7461, [],{'label': '1D5E'}, False)
+assert hex == "1D25 9F3A"
 assert instruction._error == False
 
-# 01101001oooooooo	ADD	X, o
-instruction = MultiOpInstruction('ADD', 'X, -69', 'test', 429689)
-hex = instruction.hex(5817, [], [], False)
-assert hex == "16B9 69BB"
+
+# 10101111rrrrrrrr	JG	r
+
+instruction = CallJmpInstruction('JG', 'label', 'test', 609803)
+hex = instruction.hex(5089, [],{'label': '1BE4'}, False)
+assert instruction._error == True
+
+
+# 10111011rrrrrrrr	JGE	r
+
+instruction = CallJmpInstruction('JGE', 'label', 'test', 994583)
+hex = instruction.hex(7531, [],{'label': '1DBE'}, False)
+assert hex == "1D6B BB54"
 assert instruction._error == False
 
-# 01101010oooooooo	ADD	S, o
-instruction = MultiOpInstruction('ADD', 'S, -36', 'test', 623454)
-hex = instruction.hex(4921, [], [], False)
-assert hex == "1339 6ADC"
+
+# 10111000rrrrrrrr	JL	r
+
+instruction = CallJmpInstruction('JL', 'label', 'test', 258451)
+hex = instruction.hex(4175, [],{'label': '1027'}, False)
+assert hex == "104F B8D7"
 assert instruction._error == False
 
-# 01000100mmmmmmmm	AND	m
-instruction = MultiOpInstruction('AND', '0x1d', 'test', 196146)
-hex = instruction.hex(6976, [], [], False)
-assert hex == "1B40 441D"
+
+# 10101100rrrrrrrr	JLE	r
+
+instruction = CallJmpInstruction('JLE', 'label', 'test', 529085)
+hex = instruction.hex(466, [],{'label': '1B9B'}, False)
+assert instruction._error == True
+
+
+# 10011100rrrrrrrr	JNE / JNZ	r
+
+instruction = CallJmpInstruction('JNE / JNZ', 'label', 'test', 652384)
+hex = instruction.hex(6044, [],{'label': '1CC1'}, False)
+assert instruction._error == True
+
+
+# 10011000rrrrrrrr	JNS	r
+
+instruction = CallJmpInstruction('JNS', 'label', 'test', 256610)
+hex = instruction.hex(660, [],{'label': '0ED9'}, False)
+assert instruction._error == True
+
+
+# 10111100rrrrrrrr	JNU	r
+
+instruction = CallJmpInstruction('JNU', 'label', 'test', 737903)
+hex = instruction.hex(4442, [],{'label': '1193'}, False)
+assert hex == "115A BC3A"
 assert instruction._error == False
 
-# 01000101oooooooo	AND	X, o
-instruction = MultiOpInstruction('AND', 'X, -87', 'test', 103076)
-hex = instruction.hex(5493, [], [], False)
-assert hex == "1575 45A9"
+
+# 10101000rrrrrrrr	JNV	r
+
+instruction = CallJmpInstruction('JNV', 'label', 'test', 801259)
+hex = instruction.hex(2755, [],{'label': '0ADE'}, False)
+assert hex == "0AC3 A81C"
 assert instruction._error == False
 
-# 01000110oooooooo	AND	S, o
-instruction = MultiOpInstruction('AND', 'S, -72', 'test', 537288)
-hex = instruction.hex(6660, [], [], False)
-assert hex == "1A04 46B8"
+
+# 10011011rrrrrrrr	JS	r
+
+instruction = CallJmpInstruction('JS', 'label', 'test', 553769)
+hex = instruction.hex(572, [],{'label': '0241'}, False)
+assert hex == "023C 9B06"
 assert instruction._error == False
 
-# 00110000mmmmmmmm	CMP	m
-instruction = MultiOpInstruction('CMP', '0x78', 'test', 288188)
-hex = instruction.hex(5056, [], [], False)
-assert hex == "13C0 3078"
+
+# 10111111rrrrrrrr	JU	r
+
+instruction = CallJmpInstruction('JU', 'label', 'test', 994917)
+hex = instruction.hex(152, [],{'label': '0079'}, False)
+assert hex == "0098 BFE0"
 assert instruction._error == False
 
-# 00110001oooooooo	CMP	X, o
-instruction = MultiOpInstruction('CMP', 'X, -89', 'test', 161429)
-hex = instruction.hex(6958, [], [], False)
-assert hex == "1B2E 31A7"
+
+# 10101011rrrrrrrr	JV	r
+instruction = CallJmpInstruction('JV', 'label', 'test', 310415)
+hex = instruction.hex(5410, [],{'label': '1597'}, False)
+assert hex == "1522 AB76"
 assert instruction._error == False
 
-# 00110010oooooooo	CMP	S, o
-instruction = MultiOpInstruction('CMP', 'S, 21', 'test', 276778)
-hex = instruction.hex(7842, [], [], False)
-assert hex == "1EA2 3215"
-assert instruction._error == False
-
-# 01110100mmmmmmmm	OR	m
-instruction = MultiOpInstruction('OR', '0x20', 'test', 327577)
-hex = instruction.hex(6783, [], [], False)
-assert hex == "1A7F 7420"
-assert instruction._error == False
-
-# 01110101oooooooo	OR	X, o
-instruction = MultiOpInstruction('OR', 'X, 248', 'test', 944429)
-hex = instruction.hex(7499, [], [], False)
-assert hex == "1D4B 75F8"
-assert instruction._error == False
-
-# 01110110oooooooo	OR	S, o
-instruction = MultiOpInstruction('OR', 'S, -49', 'test', 551329)
-hex = instruction.hex(1321, [], [], False)
-assert hex == "0529 76CF"
-assert instruction._error == False
-
-# 00011000mmmmmmmm	SBB	m
-instruction = MultiOpInstruction('SBB', '0x7a', 'test', 954913)
-hex = instruction.hex(3722, [], [], False)
-assert hex == "0E8A 187A"
-assert instruction._error == False
-
-# 00011001oooooooo	SBB	X, o
-instruction = MultiOpInstruction('SBB', 'X, -103', 'test', 640771)
-hex = instruction.hex(2497, [], [], False)
-assert hex == "09C1 1999"
-assert instruction._error == False
-
-# 00011010oooooooo	SBB	S, o
-instruction = MultiOpInstruction('SBB', 'S, 135', 'test', 166833)
-hex = instruction.hex(2440, [], [], False)
-assert hex == "0988 1A87"
-assert instruction._error == False
-
-# 00010000mmmmmmmm	SUB	m
-instruction = MultiOpInstruction('SUB', '0xa4', 'test', 244261)
-hex = instruction.hex(3293, [], [], False)
-assert hex == "0CDD 10A4"
-assert instruction._error == False
-
-# 00010001oooooooo	SUB	X, o
-instruction = MultiOpInstruction('SUB', 'X, -55', 'test', 850289)
-hex = instruction.hex(738, [], [], False)
-assert hex == "02E2 11C9"
-assert instruction._error == False
-
-# 00010010oooooooo	SUB	S, o
-instruction = MultiOpInstruction('SUB', 'S, -83', 'test', 381492)
-hex = instruction.hex(6287, [], [], False)
-assert hex == "188F 12AD"
-assert instruction._error == False
-
-# 01001100mmmmmmmm	TST	m
-instruction = MultiOpInstruction('TST', '0x94', 'test', 375904)
-hex = instruction.hex(5404, [], [], False)
-assert hex == "151C 4C94"
-assert instruction._error == False
-
-# 01001101oooooooo	TST	X, o
-instruction = MultiOpInstruction('TST', 'X, -102', 'test', 283364)
-hex = instruction.hex(3803, [], [], False)
-assert hex == "0EDB 4D9A"
-assert instruction._error == False
-
-# 01001110oooooooo	TST	S, o
-instruction = MultiOpInstruction('TST', 'S, 191', 'test', 334978)
-hex = instruction.hex(273, [], [], False)
-assert hex == "0111 4EBF"
-assert instruction._error == False
-
-# 00110100mmmmmmmm	XOR	m
-instruction = MultiOpInstruction('XOR', '0xdd', 'test', 596254)
-hex = instruction.hex(40, [], [], False)
-assert hex == "0028 34DD"
-assert instruction._error == False
-
-# 00110101oooooooo	XOR	X, o
-instruction = MultiOpInstruction('XOR', 'X, 156', 'test', 259849)
-hex = instruction.hex(4500, [], [], False)
-assert hex == "1194 359C"
-assert instruction._error == False
-
-# 00110110oooooooo	XOR	S, oinstruction = MultiOpInstruction('XOR', 'S, 121', 'test', 19171)
-hex = instruction.hex(2501, [], [], False)
-assert hex == "09C5 3679"
-assert instruction._error == False
 

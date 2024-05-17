@@ -20,16 +20,16 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
     The class assumes the opcode is correct.
     """
 
-    errors = []  # extended from OperandInstruction
+    # errors = []  # extended from OperandInstruction
 
-    def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
-        self._opcode = opcode
-        self._operands = operands
-        self._file = file
-        self._line_num = line_num
-        self._error = False
-        self._operand_list = self._validate_operands()
-        self._hexadecimal_opcode = self._hex_opcode()
+    # def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
+    #     self._opcode = opcode
+    #     self._operands = operands
+    #     self._file = file
+    #     self._line_num = line_num
+    #     self._error = False
+    #     self._operand_list = self._validate_operands()
+    #     self._hexadecimal_opcode = self._hex_opcode()
 
     def _validate_operands(self):
         """
@@ -146,7 +146,8 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
         This function takes in the symbol table, instruction number,
         and list of operands for the instruction. It then finalizes and returns
         the hexadecimal version of the instruction for the output file.
-        The function assumes that instruction_num is positive and less than 1FFF (PC max)
+        The function assumes that instruction_num is positive and less than 1FFF (PC max).
+        The instruction number should be in decimal.
         """
         if self._error == True:
             return 'ERROR'

@@ -1,5 +1,5 @@
 """
-Generates the tests for instructions.
+Generates the tests for multi operand(except LD/ST) instructions.
 """
 import random
 

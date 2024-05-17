@@ -8,7 +8,7 @@ Revision History:
     5/15/2024   Zachary Pestrikov   Added Error Handling
     5/16/2024   Zachary Pestrikov   Finalized Class
 """
-from MultiOpInstruction import MultiOpInstruction
+from MultiOpInstruction.MultiOpInstruction import MultiOpInstruction
 
 class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand instruction
     """
