@@ -22,10 +22,13 @@ def hex_offset(offset, symbols, memory, bytes_table):
     """
     warning = False
     error = False
-    if memory == True and offset[:2].lower() != '0x' and offset not in bytes_table and offset not in symbols:
+    if memory == True and offset[:2].lower() != '0x' and offset != '' and offset not in bytes_table and offset not in symbols:
         error = True
     if offset == '':
         offset = '00'
+        if memory == True:
+            warning = True
+        return (offset, warning, error)
     elif offset[0] == '-' and offset[1:] in symbols:
         binary = bin(int(symbols[offset[1:]], 16))[2:] # offset in hex needs invert+1
         offset = ''

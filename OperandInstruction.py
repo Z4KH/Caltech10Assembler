@@ -1,25 +1,36 @@
 """
 This class implements instructions with opcodes
-that can take multiple operands.
-These instructions include ADC, ADD, AND, CMP, OR, 
-SUBB, SUB, TST, XOR. Load and store instructions
-extend this class.
+that can only take one operand.
+These instructions include ADCI, ADDI, ANDI, CMPI, 
+ORI, SBBI, SUBI, TSTI, XORI, LDI, LDD, STD, IN, OUT.
+All other operand instructions are subclasses of this
+class.
 
 Revision History
-    5/16/2024   Zachary Pestrikov   Wrote File
+    5/17/2024   Zachary Pestrikov   Wrote File
 """
 from HexOffset import hex_offset
-from OperandInstruction import OperandInstruction
 
-class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
+class OperandInstruction(): # TODO extends Instruction
     """
-    Implements all instructions whose opcodes can take multiple
-    operands. 
-    ADC, ADD, AND, CMP, OR, SUBB, SUB, TST, XOR
-    Load and store instructions with multiple operands
-    are an extension of this class.
+    Implements all instructions whose opcodes can take only
+    take one operand: ADCI, ADDI, ANDI, CMPI, 
+    ORI, SBBI, SUBI, TSTI, XORI, LDI, LDD, STD, IN, OUT.
+    All other instructions that take operands are extensions 
+    of this class.
     The class assumes the opcode is correct.
     """
+
+    errors = []  # extended from OperandInstruction
+
+    def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
+        self._opcode = opcode
+        self._operands = operands
+        self._file = file
+        self._line_num = line_num
+        self._error = False
+        self._operand_list = self._validate_operands()
+        self._hexadecimal_opcode = self._hex_opcode()
 
     def _validate_operands(self):
         """
@@ -27,65 +38,37 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         Checks if the instruction operands are valid. 
         Valid Operands include:
             - (m) - constant(could be defined), single operand, memory address
-            - X or S - single operand register, 0 offset assumed
-            - X or S, o or -o - double operand reg+o or reg-o
-        If there are two operands, they must be separated by a comma.
-        If there is only one operand, there must not be any commas on the line.
-        Constant definitions cannot include commas.
+            - (p) - constant(could be defined), single operand, I/O port address
+            -  k  - constant(could be defined), single operand
         
-        Returns a dictionary of the operands:
+        Returns the operand
         [Memory, Register, Offset].
         If the specified dictionary key is not used it will be ''.
         If the offset is negative, the '-' will be the first char.
+        If the operand is blank, then 0 is assumed to be the operand.
         """
         operand_list = {
             'memory': False,
-            'register': '',
             'offset': ''    # if 0, then left blank
         }
         operands = self._operands
+        opcode = self._opcode
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         
+        # only one operand
+        if '\t' in operands or ' ' in operands or ',' in operands:
+            self.errors.append(error)
+            self._error = True
 
-        # ensure operands are not blank
-        if operands == '':
-            operand_list['memory'] = True
-            self.errors.append(f'Blank Operand Warning/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"')
-            return operand_list
-        
-        # determine whether register or memory
-        if operands[0].upper() == 'X' or operands[0] == 'S': # operand is register
-            operand_list['register'] = operands[0].upper() 
-            # deal with offset
-            # cases 'X' 'X,' 'X , ' 'X, o' same for S
-            if operands == operands[0]: # 'X' or 'S'
-                return operand_list
-            operands = operands[1:].strip()
-            if operands[0] == ',':
-                if operands == ',':
-                    return operand_list
-                operand_list['offset'] = operands[1:].strip()
-                return operand_list
-            elif operands[0] == '':
-                return operand_list
-            else:
+        memory_instructions = ['LDD', 'STD', 'IN', 'OUT']
+        # for ports and memory instructions, ensure that it is either a symbol/byte or hex
+        if opcode in memory_instructions:
+            if operands[:2] != '0x' and operands[0].isalpha == False and operands != '':
                 self.errors.append(error)
                 self._error = True
-        else: # operand is memory address
-            if ' ' not in operands:
-                # do not allow negative memory address
-                if operands.startswith('-'):
-                    self._error = True
-                    self.errors.append(error)
-                else:
-                    operand_list['offset'] = operands
-                    operand_list['memory'] = True
-                return operand_list
+            if opcode in memory_instructions[0:2]:
+                operand_list['memory'] == True
         
-        # anything else is an error
-        self._error = True
-        self.errors.append(error)
-        return operand_list
     
     
     def _hex_opcode(self):
@@ -160,9 +143,3 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         instruction_num = '0' * (4 - len(instruction_num)) + instruction_num
         hex_op = self._hexadecimal_opcode + offset
         return f'{instruction_num.upper()} {hex_op.upper()}'
-    
-
-# tests for debugger
-# instruction = MultiOpInstruction('SBB', '', 'test', 954913)
-# hex = instruction.hex(3722, {}, [], False, {})
-  

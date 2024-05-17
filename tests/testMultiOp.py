@@ -219,11 +219,6 @@ def test_multiop():
     assert hex == "0036 360F"
     assert instruction._error == False
 
-    # test blank operands
-    instruction = MultiOpInstruction('XOR', '', 'test', 959468)
-    hex = instruction.hex(54, {'test': 'F1'}, [], False, {})
-    assert instruction._error == True
-
     # test blank o = 0
     instruction = MultiOpInstruction('XOR', 'S', 'test', 959468)
     hex = instruction.hex(54, {'test': 'F1'}, [], False, {})
@@ -278,3 +273,10 @@ def test_multiop():
     instruction = MultiOpInstruction('SBB', '0b00000000', 'test', 954913)
     hex = instruction.hex(3722, {}, [], False, {})
     assert instruction._error == True
+
+    # test memory blank => 0 and warning
+    instruction = MultiOpInstruction('SBB', '', 'test', 954913)
+    hex = instruction.hex(3722, {}, [], False, {})
+    assert hex == "0E8A 1800"
+    assert instruction._error == False
+    assert instruction.errors[len(instruction.errors) - 1][:6] == 'Memory'

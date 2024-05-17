@@ -176,3 +176,4 @@ def test_load_store():
     hex = instruction.hex(37330, {'test': '80'}, [], False, {})
     assert instruction._error == True
 
+

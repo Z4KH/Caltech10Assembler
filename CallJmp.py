@@ -4,25 +4,15 @@ This file implements the CALL and jump instructions for the Assembler.
 Revision History:
     5/16/2024   Zachary Pestrikov   Implemented Class
 """
+from OperandInstruction import OperandInstruction
 
-class CallJmpInstruction(): # TODO extends Operand Instruction
+class CallJmpInstruction(OperandInstruction): 
     """
     This class is call all jump instructions as well as 
     the CALL instruction. The CALL instruction generates a 
     warning if the stack has not been initialized.
     Jumps require labels.
     """
-
-    errors = []  # extended from OperandInstruction
-
-    def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
-        self._opcode = opcode
-        self._operands = operands
-        self._file = file
-        self._line_num = line_num
-        self._error = False
-        self._operand_list = self._validate_operands()
-        self._hexadecimal_opcode = self._hex_opcode()
 
     def _validate_operands(self):
         """
@@ -37,7 +27,7 @@ class CallJmpInstruction(): # TODO extends Operand Instruction
         operands = self._operands
         error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
 
-        if ' ' in operands or '\t' in operands:
+        if ' ' in operands or '\t' in operands or ',' in operands:
             self.errors.append(error)
             self._error = True
         return operands
@@ -81,7 +71,7 @@ class CallJmpInstruction(): # TODO extends Operand Instruction
         return hexop
 
 
-    def hex(self, instruction_num, symbols, labels, stack_init):
+    def hex(self, instruction_num, symbols, labels, stack_init, bytes_table):
         """
         This method is executed on the second pass of assembly.
         It converts the instruction completely to hex.
