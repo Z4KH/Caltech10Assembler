@@ -36,7 +36,7 @@ def generate_test(opcode, operands, testfile, line_num, instruction_hex, offset_
     with open('test_generation/testgenerator_output.txt', 'a') as file:
         file.write(f'# {comment}\n')
         file.write(f"instruction = OperandInstruction('{opcode}', '{operands}', '{testfile}', {line_num})\n")
-        file.write(f"hex = instruction.hex({int(instruction_num, 16)}, [], [], False)\n")
+        file.write(f"hex = instruction.hex({int(instruction_num, 16)}, [], [], False, [])\n")
         file.write(f'assert hex == "{instruction_num.upper()} {instruction_hex[2:].upper()}{offset_hex.upper()}"\n')
         file.write(f'assert instruction._error == False\n')
         file.write('\n')

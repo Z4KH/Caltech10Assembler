@@ -37,8 +37,8 @@ class OperandInstruction(): # TODO extends Instruction
         Operands come in stripped.
         Checks if the instruction operands are valid. 
         Valid Operands include:
-            - (m) - constant(could be defined), single operand, memory address
-            - (p) - constant(could be defined), single operand, I/O port address
+            - (m) - constant(could be defined), single operand, hex memory address
+            - (p) - constant(could be defined), single operand, I/O hex port address
             -  k  - constant(could be defined), single operand
         
         Returns the operand
@@ -63,56 +63,54 @@ class OperandInstruction(): # TODO extends Instruction
         memory_instructions = ['LDD', 'STD', 'IN', 'OUT']
         # for ports and memory instructions, ensure that it is either a symbol/byte or hex
         if opcode in memory_instructions:
-            if operands[:2] != '0x' and operands[0].isalpha == False and operands != '':
+            if len(operands) > 3 and operands != '':
+                if operands[:2] != '0x' and operands[0].isalpha() == False :
+                    self.errors.append(error)
+                    self._error = True
+                    return operand_list
+                if opcode in memory_instructions[0:2]:
+                    operand_list['memory'] = True
+            elif len(operands) < 3 and operands != '' and operands[0].isalpha() == False:
                 self.errors.append(error)
                 self._error = True
-            if opcode in memory_instructions[0:2]:
-                operand_list['memory'] == True
+                return operand_list
+        
+        operand_list['offset'] = operands
+        return operand_list
+
         
     
     
     def _hex_opcode(self):
         """
         This private method is given a dict(operand_list), 
-        which contains the operands [memory, register, offset].
+        which contains the operands [memory, offset].
         It returns ERROR if the operands are invalid. Otherwise,
         it converts the opcode to hex based on the operands.
         The method assumes that the opcode is correct.
         """
-        opcode_bin = { # first 6 bits of opcode binary
-            'ADC': '011000',
-            'ADD': '011010',
-            'AND': '010001',
-            'CMP': '001100',
-            'OR': '011101',
-            'SBB': '000110',
-            'SUB': '000100',
-            'TST': '010011',
-            'XOR': '001101'
+        instructions = {
+            'ADCI': '01100011',
+            'ADDI': '01101011',
+            'ANDI': '01000111',
+            'CMPI': '00110011',
+            'ORI': '01110111',
+            'SBBI': '00011011',
+            'SUBI': '00010011',
+            'TSTI': '01001111',
+            'XORI': '00110111',
+            'LDI': '10001001',
+            'LDD': '10000000',
+            'STD': '10100000',
+            'IN': '10010000',
+            'OUT': '10110000',
         }
 
-        error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
-        operand_list = self._operand_list
-        opcode = self._opcode
         if self._error == True:
             return 'ERROR'
-        
-        
-        # addressing 00 is memory, 01 is X, 10 is S
-        if operand_list['memory'] == True:
-            addressing = '00'
-        elif operand_list['register'] == 'X':
-            addressing = '01'
-        elif operand_list['register'] == 'S':
-            addressing = '10'
-        else: # error that didn't get caught
-            self._error = True
-            self.errors.append(error)
-            return 'ERROR'
-        
-        bin = opcode_bin[opcode] + addressing
-        opcode_hex = hex(int(bin, 2))[2:]
-        return opcode_hex
+
+        hex_op = instructions[self._opcode]
+        return hex(int(hex_op, 2))[2:]
     
     
     def hex(self, instruction_num, symbols, labels, stack_init, bytes_table):
@@ -143,3 +141,8 @@ class OperandInstruction(): # TODO extends Instruction
         instruction_num = '0' * (4 - len(instruction_num)) + instruction_num
         hex_op = self._hexadecimal_opcode + offset
         return f'{instruction_num.upper()} {hex_op.upper()}'
+    
+
+# # for debugging purposes:
+# instruction = OperandInstruction('OUT', 'test', 'test', 620387)
+# hex = instruction.hex(2646, [], [], False, {'test': '2B'})

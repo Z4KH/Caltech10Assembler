@@ -83,6 +83,8 @@ class CallJmpInstruction(OperandInstruction):
         Opcodes come in upper case. Labels do not, and are case sensitive.
         Instruction_num is a decimal int
         """
+        if self._error == True:
+            return 'ERROR'
         opcode = self._opcode
         label = self._operand_list
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Label "{self._operands}"'
