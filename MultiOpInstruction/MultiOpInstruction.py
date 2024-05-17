@@ -54,7 +54,7 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
             'offset': ''    # if 0, then left blank
         }
         operands = self._operands
-        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
+        error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         
 
         # ensure operands are not blank
@@ -117,7 +117,7 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
             'XOR': '001101'
         }
 
-
+        error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         operand_list = self._operand_list
         opcode = self._opcode
         if self._error == True:
@@ -133,7 +133,7 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
             addressing = '10'
         else: # error that didn't get caught
             self._error = True
-            self.errors.append(error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"')
+            self.errors.append(error)
             return 'ERROR'
         
         bin = opcode_bin[opcode] + addressing
@@ -152,7 +152,7 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
         if self._error == True:
             return 'ERROR'
         operand_list = self._operand_list
-        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
+        error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         
         (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols)
         if warning == True:

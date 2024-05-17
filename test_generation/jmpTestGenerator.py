@@ -40,16 +40,22 @@ def generate_test(opcode, operands, testfile, line_num, instruction_hex, offset_
     instruction_numh = hex(instruction_num)[2:]
     instruction_numh = ('0' * (4 -len(instruction_numh))) + instruction_numh
     offset_hex = ('0' * (2 - len(offset_hex))) + offset_hex
-    with open('test_generation/testgenerator_output.txt', 'a') as file:
-        file.write(f'# {comment}\n')
-        file.write(f"instruction = CallJmpInstruction('{opcode}', 'label', '{testfile}', {line_num})\n")
-        file.write(f"hex = instruction.hex({instruction_num}, []," + "{'label': '" + label_num.upper() + "'}, False)\n")
-        if error == False:
-            file.write(f'assert hex == "{instruction_numh.upper()} {instruction_hex[2:].upper()}{offset_hex.upper()}"\n')
-            file.write(f'assert instruction._error == {str(error)}\n')
-        else:
-            file.write(f'assert instruction._error == {str(error)}\n')
-        file.write('\n\n')
+
+    opcodelist = [opcode]
+    if '/' in opcode:
+        opcodelist = opcode.split(' / ')
+
+    for opcode in opcodelist:
+        with open('test_generation/testgenerator_output.txt', 'a') as file:
+            file.write(f'# {comment}\n')
+            file.write(f"instruction = CallJmpInstruction('{opcode}', 'label', '{testfile}', {line_num})\n")
+            file.write(f"hex = instruction.hex({instruction_num}, []," + "{'label': '" + label_num.upper() + "'}, False)\n")
+            if error == False:
+                file.write(f'assert hex == "{instruction_numh.upper()} {instruction_hex[2:].upper()}{offset_hex.upper()}"\n')
+                file.write(f'assert instruction._error == {str(error)}\n')
+            else:
+                file.write(f'assert instruction._error == {str(error)}\n')
+            file.write('\n\n')
 
 if __name__ == '__main__':
     main()

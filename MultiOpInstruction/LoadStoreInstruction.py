@@ -34,7 +34,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
         +/i, pre/post will be empty string if reg unchanged
         If no offset, offset will return as ''
         """
-        error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid LD/ST Operands "{self._operands}"'
+        error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid LD/ST Operands "{self._operands}"'
         operands = self._operands
         operand_list = {
             'register': '',
