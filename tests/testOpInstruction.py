@@ -4,7 +4,7 @@ This class includes the instructions:
 ADCI, ADDI, ANDI, CMPI, ORI, SBBI, SUBI, TSTI, XORI, LDI, LDD, STD, IN, OUT
 """
 
-from OperandInstruction import OperandInstruction
+from OperandInstructions.OperandInstruction import OperandInstruction
 
 def test_opInstruction():
     # 01100011kkkkkkkk	ADCI	k

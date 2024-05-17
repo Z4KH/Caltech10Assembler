@@ -12,7 +12,6 @@ def main():
             instruction_hex = hex(int(instruction_split[0][:8].strip(), 2)) # instruction byte in hex
             line_num = random.randint(0,1000000)
             file = 'test'
-            instruction_num = random.randint(0, 8191) # range of PC
             offset = random.randint(-128, 255)
             opcode = instruction_split[1]
             operands = instruction_split[2].strip()

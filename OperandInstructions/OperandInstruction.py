@@ -9,9 +9,10 @@ class.
 Revision History
     5/17/2024   Zachary Pestrikov   Wrote File
 """
-from HexOffset import hex_offset
+from OperandInstructions.HexOffset import hex_offset
+from Instruction import Instruction
 
-class OperandInstruction(): # TODO extends Instruction
+class OperandInstruction(Instruction):
     """
     Implements all instructions whose opcodes can take only
     take one operand: ADCI, ADDI, ANDI, CMPI, 
@@ -20,17 +21,6 @@ class OperandInstruction(): # TODO extends Instruction
     of this class.
     The class assumes the opcode is correct.
     """
-
-    errors = []  # extended from OperandInstruction
-
-    def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
-        self._opcode = opcode
-        self._operands = operands
-        self._file = file
-        self._line_num = line_num
-        self._error = False
-        self._operand_list = self._validate_operands()
-        self._hexadecimal_opcode = self._hex_opcode()
 
     def _validate_operands(self):
         """

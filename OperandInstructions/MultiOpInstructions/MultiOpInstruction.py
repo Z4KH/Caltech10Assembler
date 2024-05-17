@@ -8,8 +8,8 @@ extend this class.
 Revision History
     5/16/2024   Zachary Pestrikov   Wrote File
 """
-from HexOffset import hex_offset
-from OperandInstruction import OperandInstruction
+from OperandInstructions.HexOffset import hex_offset
+from OperandInstructions.OperandInstruction import OperandInstruction
 
 class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
     """

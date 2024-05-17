@@ -4,7 +4,7 @@ This file implements the CALL and jump instructions for the Assembler.
 Revision History:
     5/16/2024   Zachary Pestrikov   Implemented Class
 """
-from OperandInstruction import OperandInstruction
+from OperandInstructions.OperandInstruction import OperandInstruction
 
 class CallJmpInstruction(OperandInstruction): 
     """

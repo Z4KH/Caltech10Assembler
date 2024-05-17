@@ -5,7 +5,7 @@ Revision History
     5/16/2024   Zachary Pestrikov   Added Initial Tests
 """
 
-from CallJmp import CallJmpInstruction
+from OperandInstructions.CallJmp import CallJmpInstruction
 
 def test_callJmp():
     """
