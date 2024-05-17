@@ -172,7 +172,6 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
     
 
 # tests for debugger
-# test memory address warning
-# instruction = MultiOpInstruction('SBB', '0x0', 'test', 954913)
-# hex = instruction.hex(3722, [], [], False)
+# instruction = MultiOpInstruction('SBB', 'test', 'test', 954913)
+# hex = instruction.hex(3722, {'test': '07'}, [], False, {})
   

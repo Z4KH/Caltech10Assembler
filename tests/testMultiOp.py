@@ -266,3 +266,15 @@ def test_multiop():
     instruction = MultiOpInstruction('SBB', 'test', 'test', 954913)
     hex = instruction.hex(3722, [], [], False, {})
     assert instruction._error == True
+
+    # test memory in symbols table => warning
+    instruction = MultiOpInstruction('SBB', 'test', 'test', 954913)
+    hex = instruction.hex(3722, {'test': '07'}, [], False, {})
+    assert hex == "0E8A 1807"
+    assert instruction._error == False
+    assert instruction.errors[len(instruction.errors) - 1][:6] == 'Memory'
+
+    # test memory not in hex => error
+    instruction = MultiOpInstruction('SBB', '0b00000000', 'test', 954913)
+    hex = instruction.hex(3722, {}, [], False, {})
+    assert instruction._error == True
