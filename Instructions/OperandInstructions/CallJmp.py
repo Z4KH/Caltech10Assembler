@@ -4,7 +4,7 @@ This file implements the CALL and jump instructions for the Assembler.
 Revision History:
     5/16/2024   Zachary Pestrikov   Implemented Class
 """
-from OperandInstructions.OperandInstruction import OperandInstruction
+from Instructions.OperandInstructions.OperandInstruction import OperandInstruction
 
 class CallJmpInstruction(OperandInstruction): 
     """
@@ -82,6 +82,8 @@ class CallJmpInstruction(OperandInstruction):
         is a relative jump and the label is too far, then an error will be issued.
         Opcodes come in upper case. Labels do not, and are case sensitive.
         Instruction_num is a decimal int
+
+        '$' => Program Counter
         """
         if self._error == True:
             return 'ERROR'
@@ -93,11 +95,15 @@ class CallJmpInstruction(OperandInstruction):
 
         absolute = ['CALL', 'JMP']
 
+
         # handle jmp/call first
         if opcode in absolute:
             if label in labels:
                 label_hex = labels[label]
                 label_bin = bin(int(label_hex, 16))[2:]
+                label_bin = '0' * (13 - len(label_bin)) + label_bin
+            elif label == '$': # PC
+                label_bin = bin(instruction_num)[2:]
                 label_bin = '0' * (13 - len(label_bin)) + label_bin
             else:
                 self.errors.append(error)
@@ -128,6 +134,8 @@ class CallJmpInstruction(OperandInstruction):
                         return 'ERROR'
                     else:
                         offset += 256
+            elif label == '$': #PC
+                offset = 255
             else: # label DNE
                 self.errors.append(error)
                 self._error = True

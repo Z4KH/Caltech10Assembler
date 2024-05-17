@@ -3,7 +3,7 @@ This file is used by pytest to test the Instruction class.
 This includes all instructions with no operands.
 """
 
-from Instruction import Instruction
+from Instructions.Instruction import Instruction
 
 def test_instruction():
     # 0111000100000001	ASR

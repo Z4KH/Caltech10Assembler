@@ -5,7 +5,7 @@ Revision History
     5/16/2024   Zachary Pestrikov   Added Initial Tests
 """
 
-from OperandInstructions.CallJmp import CallJmpInstruction
+from Instructions.OperandInstructions.CallJmp import CallJmpInstruction
 
 def test_callJmp():
     """
@@ -185,3 +185,18 @@ def test_callJmp():
     instruction = CallJmpInstruction('CALL', 'label', 'test', 310415)
     hex = instruction.hex(5410, [],{'label': '1597'}, False, {})
     assert instruction.errors[len(instruction.errors) - 1][0] == 'S'
+
+    # call pc
+    instruction = CallJmpInstruction('CALL', '$', 'test', 310415)
+    hex = instruction.hex(3, [],{'label': '1597'}, False, {})
+    assert hex == '0003 E003'
+
+    # JMP pc
+    instruction = CallJmpInstruction('JMP', '$', 'test', 310415)
+    hex = instruction.hex(2, [],{'label': '1597'}, False, {})
+    assert hex == '0002 C002'
+
+    # RJMP pc
+    instruction = CallJmpInstruction('JZ', '$', 'test', 310415)
+    hex = instruction.hex(0, [],{'label': '1597'}, False, {})
+    assert hex == '0000 9FFF'

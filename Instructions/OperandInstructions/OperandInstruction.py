@@ -9,8 +9,8 @@ class.
 Revision History
     5/17/2024   Zachary Pestrikov   Wrote File
 """
-from OperandInstructions.HexOffset import hex_offset
-from Instruction import Instruction
+from Instructions.OperandInstructions.HexOffset import hex_offset
+from Instructions.Instruction import Instruction
 
 class OperandInstruction(Instruction):
     """
