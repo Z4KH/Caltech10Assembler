@@ -8,7 +8,7 @@ Revision History
 """
 
 
-def hex_offset(offset, symbols):
+def hex_offset(offset, symbols, memory):
     """
     Given an offset(either a symbol or constant) and a symbols tabel,
     returns the offset in hex if it is proper syntax. Else, it returns
@@ -16,10 +16,14 @@ def hex_offset(offset, symbols):
 
     If the offset is in the symbol table, it assumes that it is already in 
     the proper format(hex without '0x'). Returns a warning if the offset will
-    be truncated.
+    be truncated. The function requires that if an offset  is a memory address,
+    it is in hex '0x...', and it will issue a warning because the
+    user is accessing memory that has not been allocated.
     """
     warning = False
     error = False
+    if memory == True and offset[:2].lower() != '0x' and offset not in symbols:
+        error = True
     if offset == '':
         offset = '00'
     elif offset[0] == '-' and offset[1:] in symbols:
@@ -39,6 +43,8 @@ def hex_offset(offset, symbols):
         # cases for offset are dec, hex (0x...), bin(0b...), char, truncation
         if offset[0:2].lower() == '0x': # add hex
             # sign extend
+            if memory == True:
+                warning = True
             if len(offset) > 2 and len(offset) < 5:
                 if int(offset[2], 16) > 7:
                     sign = 'F'

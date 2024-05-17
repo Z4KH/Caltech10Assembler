@@ -7,6 +7,7 @@ Revision History:
     5/14/2024   Zachary Pestrikov   Implemented Hexing Procedures
     5/15/2024   Zachary Pestrikov   Added Error Handling
     5/16/2024   Zachary Pestrikov   Finalized Class
+    5/17/2024   Zachary Pestrikov   Added memory to operand_list
 """
 from MultiOpInstruction.MultiOpInstruction import MultiOpInstruction
 
@@ -41,6 +42,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
             '+/-': '',
             'pre/post': '',
             'offset': '', # leaves in '-' if offset negative
+            'memory': False #unused
         }
         if operands == '':
             self.errors.append(error)

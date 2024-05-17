@@ -20,16 +20,16 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
     The class assumes the opcode is correct.
     """
 
-    # errors = []  # extended from OperandInstruction
+    errors = []  # extended from OperandInstruction
 
-    # def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
-    #     self._opcode = opcode
-    #     self._operands = operands
-    #     self._file = file
-    #     self._line_num = line_num
-    #     self._error = False
-    #     self._operand_list = self._validate_operands()
-    #     self._hexadecimal_opcode = self._hex_opcode()
+    def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
+        self._opcode = opcode
+        self._operands = operands
+        self._file = file
+        self._line_num = line_num
+        self._error = False
+        self._operand_list = self._validate_operands()
+        self._hexadecimal_opcode = self._hex_opcode()
 
     def _validate_operands(self):
         """
@@ -154,9 +154,11 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
         operand_list = self._operand_list
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         
-        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols)
-        if warning == True:
+        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols, operand_list['memory'])
+        if warning == True and operand_list['memory'] == False:
             self.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
+        if warning == True and operand_list['memory'] == True:
+            self.errors.append(f'Memory Access Warning/File {self._file}/Line {str(self._line_num)}/Byte "{self._operands}" Not Allocated')
         if invalid == True:
             self.errors.append(error)
             self._error = True
@@ -170,5 +172,7 @@ class MultiOpInstruction(): # TODO extends OperandInstruction
     
 
 # tests for debugger
-# instruction = MultiOpInstruction('XOR', 'S, -test', 'test', 959468)
-# hex = instruction.hex(54, {'test': 'F1'}, [], False)
+# test memory address warning
+# instruction = MultiOpInstruction('SBB', '0x0', 'test', 954913)
+# hex = instruction.hex(3722, [], [], False)
+  

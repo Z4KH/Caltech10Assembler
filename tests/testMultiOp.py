@@ -245,3 +245,13 @@ def test_multiop():
     hex = instruction.hex(3722, [], [], False)
     assert hex == "0E8A 1807"
     assert instruction._error == False
+
+    # test memory address not in hex
+    instruction = MultiOpInstruction('SBB', '0', 'test', 954913)
+    hex = instruction.hex(3722, [], [], False)
+    assert instruction._error == True
+
+    # test memory address warning
+    instruction = MultiOpInstruction('SBB', '0x0', 'test', 954913)
+    hex = instruction.hex(3722, [], [], False)
+    assert instruction.errors[len(instruction.errors) - 1][:6] == 'Memory'
