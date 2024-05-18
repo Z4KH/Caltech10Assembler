@@ -105,8 +105,8 @@ out.write('labels = {\n')
 for label_name, value in labels.items():
     out.write(f"'{label_name}': '{value.upper()}',\n")
 out.write('}\n')
-out.write('hex = macro.hex(arguments, instruction_num, symbols, labels, False, [])\n')
-out.write(f'assert hex == """\n{hex_out}"""\n\n')
+out.write('(hex, num) = macro.hex(arguments, instruction_num, symbols, labels, False, [])\n')
+out.write(f'assert hex == """{hex_out}"""\n\n')
 out.write('assert macro._error == False')
 out.close()
 

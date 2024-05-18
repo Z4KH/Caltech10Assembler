@@ -6,41 +6,44 @@ from Macro import Macro
 
 def test_macro():
     
-    arguments = "p2,o4"
+    arguments = "o3,m5,m7"
     lines = [
-    "DEC",
-    "JS label1",
-    "IN p2",
+    "JNV label0",
     "RLC",
-    "SUB X, o4",
-    "CLC",
-    "JB label6",
+    "JG label2",
+    "CMP S, o3",
+    "LSR",
+    "SBB m5",
+    "JNV label6",
+    "XOR m7",
     ]
     macro = Macro("macro", arguments, lines, "test", 2)
-    arguments = ["0x5f","0x37","0x2b","0xbd"]
-    instruction_num = 92
+    arguments = '0x86,0xac,0xf4'
+    instruction_num = 1662
     symbols = []
     labels = {
-    'label0': '1D',
-    'label1': '5F',
-    'label2': '37',
-    'label3': '12',
-    'label4': '2B',
-    'label5': '47',
-    'label6': '43',
+    'label0': '06D4',
+    'label1': '060F',
+    'label2': '06E6',
+    'label3': '0607',
+    'label4': '0645',
+    'label5': '062F',
+    'label6': '06E5',
+    'label7': '0679',
     }
-    hex = macro.hex(arguments, instruction_num, symbols, labels, False, [])
-    assert hex == """
-    005C 7B00
-    005D 9B5F
-    005E 9037
-    005F 5000
-    0060 112B
-    0061 07E4
-    0062 8FBD
-    """
+    (hex, num) = macro.hex(arguments, instruction_num, symbols, labels, False, [])
+    assert hex == """067E A855
+067F 5000
+0680 AF65
+0681 3286
+0682 7100
+0683 18AC
+0684 A860
+0685 34F4
+"""
 
     assert macro._error == False
+
 
 ################################################################################
 
