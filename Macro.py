@@ -3,6 +3,7 @@ This file implements the Macro class for the Caltech10 Assembler.
 
 Revision History
     5/17/2024   Zachary Pestrikov   Wrote File
+    5/18/2024   Zachary Pestrikov   Finalized Class and Ran Tests
 """
 
 from Instructions.Instruction import Instruction
@@ -236,41 +237,3 @@ class Macro():
             return ('ERROR', -1)
 
         return (hex_output, instruction_num)
-
-# # test macro with allocated memory and comments and spaces between operands
-# arguments = "k1,    m3, o4,k6   ,o9,k11 "
-# lines = [
-# "ASR",
-# "ORI k1; comment",
-# "STI",
-# "XOR m3",
-# "XOR S, o4  ; comment",
-# "NOP",
-# "XORI k6",
-# "INS",
-# "JV label8  ; comment",
-# "AND S, o9",
-# "LSR",
-# "SUBI k11",
-# ]
-# macro11 = Macro("macro11", arguments, lines, "test", 2)
-# arguments = "0x1f,memory,0x3e,0x6d,0x30,0x87"
-# instruction_num = 3592
-# symbols = []
-# labels = {
-# 'label0': '0DD5',
-# 'label1': '0E28',
-# 'label2': '0E4D',
-# 'label3': '0D9C',
-# 'label4': '0E4A',
-# 'label5': '0DEB',
-# 'label6': '0E7B',
-# 'label7': '0DD7',
-# 'label8': '0E60',
-# 'label9': '0E41',
-# 'label10': '0DF8',
-# 'label11': '0D9A',
-# }
-# print(macro11._error)
-# print(macro11._lines)
-# (hex, num) = macro11.hex(arguments, instruction_num, symbols, labels, False, {'memory': '91'})
