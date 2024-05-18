@@ -14,9 +14,9 @@ class Instruction():
     The class assumes the opcode is correct.
     """
 
-    errors = []  # extended from OperandInstruction
+    errors = [] 
 
-    def __init__(self, opcode, operands, file, line_num): # extended from OperandInstruction
+    def __init__(self, opcode, operands, file, line_num):
         self._opcode = opcode
         self._operands = operands
         self._file = file

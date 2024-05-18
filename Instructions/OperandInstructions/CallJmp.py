@@ -3,6 +3,7 @@ This file implements the CALL and jump instructions for the Assembler.
 
 Revision History:
     5/16/2024   Zachary Pestrikov   Implemented Class
+    5/18/2024   Zachary Pestrikov   Fixed Offset
 """
 from Instructions.OperandInstructions.OperandInstruction import OperandInstruction
 
@@ -120,14 +121,13 @@ class CallJmpInstruction(OperandInstruction):
             # turn label into relative
             if label in labels:
                 label_pc = int(labels[label], 16)
-                offset = label_pc - instruction_num + 1 # exec on next instruction
+                offset = label_pc - (instruction_num + 1) # exec on next instruction
                 # problems: offset > 127, offset < 0, offset < -127 
                 if offset > 127:
                     self.errors.append(range_error)
                     self._error = True
                     return 'ERROR'
                 elif offset < 0:
-                    offset -= 2 #  since label is before instruction, offset increases negatively
                     if offset < -127:
                         self.errors.append(range_error)
                         self._error = True

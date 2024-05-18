@@ -133,6 +133,3 @@ class OperandInstruction(Instruction):
         return f'{instruction_num.upper()} {hex_op.upper()}'
     
 
-# # for debugging purposes:
-# instruction = OperandInstruction('OUT', 'test', 'test', 620387)
-# hex = instruction.hex(2646, [], [], False, {'test': '2B'})

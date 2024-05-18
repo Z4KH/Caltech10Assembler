@@ -8,8 +8,8 @@ extend this class.
 Revision History
     5/16/2024   Zachary Pestrikov   Wrote File
 """
-from OperandInstructions.HexOffset import hex_offset
-from OperandInstructions.OperandInstruction import OperandInstruction
+from Instructions.OperandInstructions.HexOffset import hex_offset
+from Instructions.OperandInstructions.OperandInstruction import OperandInstruction
 
 class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
     """
@@ -162,7 +162,5 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         return f'{instruction_num.upper()} {hex_op.upper()}'
     
 
-# tests for debugger
-# instruction = MultiOpInstruction('SBB', '', 'test', 954913)
-# hex = instruction.hex(3722, {}, [], False, {})
+
   

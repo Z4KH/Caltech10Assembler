@@ -9,7 +9,7 @@ Revision History:
     5/16/2024   Zachary Pestrikov   Finalized Class
     5/17/2024   Zachary Pestrikov   Added memory to operand_list
 """
-from  OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
+from  Instructions.OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
 
 class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand instruction
     """

@@ -14,154 +14,123 @@ def test_callJmp():
     """
     # 10001000rrrrrrrr	JA	r
 
-    instruction = CallJmpInstruction('JA', 'label', 'test', 21100)
-    hex = instruction.hex(1267, [],{'label': '0521'}, False, {})
-    assert hex == "04F3 882F"
-    assert instruction._error == False
-
-
-    # 10001100rrrrrrrr	JAE / JNC	r
-
-    instruction = CallJmpInstruction('JAE', 'label', 'test', 756755)
-    hex = instruction.hex(787, [],{'label': '0649'}, False, {})
+    instruction = CallJmpInstruction('JA', 'label', 'test', 111039)
+    hex = instruction.hex(6059, [],{'label': '1C7B'}, False, [])
     assert instruction._error == True
 
 
-    # 10001100rrrrrrrr	JAE / JNC	r
+    # 10001100rrrrrrrr	JAE	r
 
-    instruction = CallJmpInstruction('JNC', 'label', 'test', 756755)
-    hex = instruction.hex(787, [],{'label': '0649'}, False, {})
+    instruction = CallJmpInstruction('JAE', 'label', 'test', 670726)
+    hex = instruction.hex(1696, [],{'label': '0C05'}, False, [])
     assert instruction._error == True
 
 
-    # 10001111rrrrrrrr	JB / JC	r
+    # 10001111rrrrrrrr	JB	r
 
-    instruction = CallJmpInstruction('JB', 'label', 'test', 724567)
-    hex = instruction.hex(6568, [],{'label': '1976'}, False, {})
-    assert hex == "19A8 8FCD"
-    assert instruction._error == False
-
-
-    # 10001111rrrrrrrr	JB / JC	r
-
-    instruction = CallJmpInstruction('JC', 'label', 'test', 724567)
-    hex = instruction.hex(6568, [],{'label': '1976'}, False, {})
-    assert hex == "19A8 8FCD"
+    instruction = CallJmpInstruction('JB', 'label', 'test', 318025)
+    hex = instruction.hex(2536, [],{'label': '0A11'}, False, [])
+    assert hex == "09E8 8F28"
     assert instruction._error == False
 
 
     # 10001011rrrrrrrr	JBE	r
 
-    instruction = CallJmpInstruction('JBE', 'label', 'test', 581778)
-    hex = instruction.hex(1467, [],{'label': '1ECF'}, False, {})
+    instruction = CallJmpInstruction('JBE', 'label', 'test', 882829)
+    hex = instruction.hex(2886, [],{'label': '165E'}, False, [])
     assert instruction._error == True
 
 
-    # 10011111rrrrrrrr	JE / JZ	r
+    # 10011111rrrrrrrr	JE	r
 
-    instruction = CallJmpInstruction('JE', 'label', 'test', 801828)
-    hex = instruction.hex(6548, [],{'label': '19F3'}, False, {})
-    assert hex == "1994 9F60"
-    assert instruction._error == False
-
-
-    # 10011111rrrrrrrr	JE / JZ	r
-
-    instruction = CallJmpInstruction('JZ', 'label', 'test', 801828)
-    hex = instruction.hex(6548, [],{'label': '19F3'}, False, {})
-    assert hex == "1994 9F60"
+    instruction = CallJmpInstruction('JE', 'label', 'test', 788429)
+    hex = instruction.hex(1294, [],{'label': '054A'}, False, [])
+    assert hex == "050E 9F3B"
     assert instruction._error == False
 
 
     # 10101111rrrrrrrr	JG	r
 
-    instruction = CallJmpInstruction('JG', 'label', 'test', 184235)
-    hex = instruction.hex(4211, [],{'label': '10AF'}, False, {})
-    assert hex == "1073 AF3D"
+    instruction = CallJmpInstruction('JG', 'label', 'test', 988640)
+    hex = instruction.hex(4548, [],{'label': '116A'}, False, [])
+    assert hex == "11C4 AFA5"
     assert instruction._error == False
 
 
     # 10111011rrrrrrrr	JGE	r
 
-    instruction = CallJmpInstruction('JGE', 'label', 'test', 718494)
-    hex = instruction.hex(3144, [],{'label': '1272'}, False, {})
+    instruction = CallJmpInstruction('JGE', 'label', 'test', 802612)
+    hex = instruction.hex(5025, [],{'label': '1E36'}, False, [])
     assert instruction._error == True
 
 
     # 10111000rrrrrrrr	JL	r
 
-    instruction = CallJmpInstruction('JL', 'label', 'test', 397189)
-    hex = instruction.hex(3591, [],{'label': '0E36'}, False, {})
-    assert hex == "0E07 B830"
-    assert instruction._error == False
+    instruction = CallJmpInstruction('JL', 'label', 'test', 455700)
+    hex = instruction.hex(1574, [],{'label': '1BBD'}, False, [])
+    assert instruction._error == True
 
 
     # 10101100rrrrrrrr	JLE	r
 
-    instruction = CallJmpInstruction('JLE', 'label', 'test', 553833)
-    hex = instruction.hex(522, [],{'label': '01DE'}, False, {})
-    assert hex == "020A ACD3"
-    assert instruction._error == False
+    instruction = CallJmpInstruction('JLE', 'label', 'test', 109675)
+    hex = instruction.hex(4786, [],{'label': '1D73'}, False, [])
+    assert instruction._error == True
 
 
-    # 10011100rrrrrrrr	JNE / JNZ	r
+    # 10011100rrrrrrrr	JNE	r
 
-    instruction = CallJmpInstruction('JNE', 'label', 'test', 625769)
-    hex = instruction.hex(5126, [],{'label': '13B0'}, False, {})
-    assert hex == "1406 9CA9"
-    assert instruction._error == False
-
-
-    # 10011100rrrrrrrr	JNE / JNZ	r
-
-    instruction = CallJmpInstruction('JNZ', 'label', 'test', 625769)
-    hex = instruction.hex(5126, [],{'label': '13B0'}, False, {})
-    assert hex == "1406 9CA9"
+    instruction = CallJmpInstruction('JNE', 'label', 'test', 994064)
+    hex = instruction.hex(5029, [],{'label': '1398'}, False, [])
+    assert hex == "13A5 9CF2"
     assert instruction._error == False
 
 
     # 10011000rrrrrrrr	JNS	r
 
-    instruction = CallJmpInstruction('JNS', 'label', 'test', 938618)
-    hex = instruction.hex(2892, [],{'label': '1AAA'}, False, {})
-    assert instruction._error == True
+    instruction = CallJmpInstruction('JNS', 'label', 'test', 85374)
+    hex = instruction.hex(2780, [],{'label': '0A62'}, False, [])
+    assert hex == "0ADC 9885"
+    assert instruction._error == False
 
 
     # 10111100rrrrrrrr	JNU	r
 
-    instruction = CallJmpInstruction('JNU', 'label', 'test', 463622)
-    hex = instruction.hex(1944, [],{'label': '07A4'}, False, {})
-    assert hex == "0798 BC0D"
+    instruction = CallJmpInstruction('JNU', 'label', 'test', 83006)
+    hex = instruction.hex(2962, [],{'label': '0BE6'}, False, [])
+    assert hex == "0B92 BC53"
     assert instruction._error == False
 
 
     # 10101000rrrrrrrr	JNV	r
 
-    instruction = CallJmpInstruction('JNV', 'label', 'test', 320947)
-    hex = instruction.hex(970, [],{'label': '1DE1'}, False, {})
-    assert instruction._error == True
+    instruction = CallJmpInstruction('JNV', 'label', 'test', 346182)
+    hex = instruction.hex(2933, [],{'label': '0B58'}, False, [])
+    assert hex == "0B75 A8E2"
+    assert instruction._error == False
 
 
     # 10011011rrrrrrrr	JS	r
 
-    instruction = CallJmpInstruction('JS', 'label', 'test', 273668)
-    hex = instruction.hex(7628, [],{'label': '1FE3'}, False, {})
+    instruction = CallJmpInstruction('JS', 'label', 'test', 427849)
+    hex = instruction.hex(6853, [],{'label': '1E1C'}, False, [])
     assert instruction._error == True
 
 
     # 10111111rrrrrrrr	JU	r
 
-    instruction = CallJmpInstruction('JU', 'label', 'test', 324467)
-    hex = instruction.hex(269, [],{'label': '010B'}, False, {})
-    assert hex == "010D BFFD"
+    instruction = CallJmpInstruction('JU', 'label', 'test', 158364)
+    hex = instruction.hex(1825, [],{'label': '0733'}, False, [])
+    assert hex == "0721 BF11"
     assert instruction._error == False
 
 
     # 10101011rrrrrrrr	JV	r
-    instruction = CallJmpInstruction('JV', 'label', 'test', 846373)
-    hex = instruction.hex(8155, [],{'label': '1F85'}, False, {})
-    assert hex == "1FDB ABA9"
-    assert instruction._error == False
+    instruction = CallJmpInstruction('JV', 'label', 'test', 561070)
+    hex = instruction.hex(7348, [],{'label': '1F41'}, False, [])
+    assert instruction._error == True
+
+
 
 #########################################################################
     # label DNE
