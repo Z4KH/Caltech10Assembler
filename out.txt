@@ -1,26 +1,37 @@
-arguments = "o2"
+arguments = "m5,o6"
 lines = [
-"JNU label0",
-"TXA",
-"XOR X, o2",
 "CLC",
-"NOP",
-"CLC",
+"JA label1",
+"JL label2",
+"RRC",
+"INC",
+"STD m5",
+"TST S, o6",
+"JNS label7",
 ]
 macro = Macro("macro", arguments, lines, "test", 2)
-arguments = "0xc4"
-instruction_num = 1311
+arguments = "0xe5,0xe1"
+instruction_num = 3652
 symbols = []
 labels = {
-'label0': '0543','label1': '04DF','label2': '04E5','label3': '053F','label4': '04DD','label5': '04F8',}
-hex = macro.hex(arguments, instruction_num, symbols, labels, False, [])
-assert hex == """
-051F BC23
-0520 6701
-0521 35C4
-0522 07E4
-0523 1F80
-0524 07E4
+'label0': '0DE0',
+'label1': '0DF9',
+'label2': '0E71',
+'label3': '0E44',
+'label4': '0E5B',
+'label5': '0E2E',
+'label6': '0E2B',
+'label7': '0DE6',
+}
+(hex, num) = macro.hex(arguments, instruction_num, symbols, labels, False, [])
+assert hex == """0E44 07E4
+0E45 88B3
+0E46 B82A
+0E47 7103
+0E48 0000
+0E49 A0E5
+0E4A 4EE1
+0E4B 989A
 """
 
 assert macro._error == False

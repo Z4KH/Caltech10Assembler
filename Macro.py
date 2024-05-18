@@ -94,6 +94,9 @@ class Macro():
             argument = argument.strip()
             if argument == '':
                 continue
+            elif argument in self._arguments: # cannon allow user to have two args with same name
+                self.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Duplicate Macro Arg "{argument}"')
+                self._error = True
             elif self._check_valid(argument) == True:
                 self._arguments.append(argument)
             else:
@@ -105,10 +108,10 @@ class Macro():
         # validate the lines don't have labels have opcodes and have
         line_tuples = []
         for (offset, line) in enumerate(lines):
-            if ';' in lines: # comment
+            if ';' in line: # comment
                 line = line.split(';')[0].strip()
                 lines[offset] = line
-            if line == '': # blank lines and commented lines will create blank lines in the output
+            if line.strip() == '': # blank lines and commented lines will create blank lines in the output
                 line_tuples.append(('', ''))
                 continue
             newline = False
@@ -178,8 +181,9 @@ class Macro():
         instruction_num -= 1 # so that can continouisly inc in the loop
         for (offset, line) in enumerate(lines):
         # ensure that blank lines are outputted as blank lines
-            if line == '':
+            if line[0] == '':
                 hex_output += '\n'
+                continue
             else:
                 instruction_num += 1
                 opcode = line[0]
@@ -191,7 +195,19 @@ class Macro():
                     self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Macro Arg Count({len(arguments)}, Expected {len(parameters)})')
                     return ('ERROR', instruction_num)
                 for (idx, param) in enumerate(parameters):
+                    if parameters.count(param) != 1:
+                        self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Duplicate Macro Arg "{param}"')
                     if param in operands: # param already stripped, case-sensitive
+                        # need to ensure that it is not just a shorter version of actual operand
+                        # ensure that other operands are not in there too
+                        # instructions will handle other errors
+                        go_next = False
+                        for param2 in parameters[idx + 1:]:
+                            if param2 in operands and len(param2) > len(param):
+                                go_next = True
+                                break
+                        if go_next == True: continue
+
                         op_list = operands.split(param)
                         operands = op_list[0] + arguments[idx].strip() + op_list[1]
 
@@ -220,43 +236,41 @@ class Macro():
             return ('ERROR', -1)
 
         return (hex_output, instruction_num)
-        
 
-# arguments = "o3,m5,m7"
+# # test macro with allocated memory and comments and spaces between operands
+# arguments = "k1,    m3, o4,k6   ,o9,k11 "
 # lines = [
-# "JNV label0",
-# "RLC",
-# "JG label2",
-# "CMP S, o3",
+# "ASR",
+# "ORI k1; comment",
+# "STI",
+# "XOR m3",
+# "XOR S, o4  ; comment",
+# "NOP",
+# "XORI k6",
+# "INS",
+# "JV label8  ; comment",
+# "AND S, o9",
 # "LSR",
-# "SBB m5",
-# "JNV label6",
-# "XOR m7",
+# "SUBI k11",
 # ]
-# macro = Macro("macro", arguments, lines, "test", 2)
-# arguments = '0x86,0xac,0xf4'
-# instruction_num = 1662
+# macro11 = Macro("macro11", arguments, lines, "test", 2)
+# arguments = "0x1f,memory,0x3e,0x6d,0x30,0x87"
+# instruction_num = 3592
 # symbols = []
 # labels = {
-# 'label0': '06D4',
-# 'label1': '060F',
-# 'label2': '06E6',
-# 'label3': '0607',
-# 'label4': '0645',
-# 'label5': '062F',
-# 'label6': '06E5',
-# 'label7': '0679',
+# 'label0': '0DD5',
+# 'label1': '0E28',
+# 'label2': '0E4D',
+# 'label3': '0D9C',
+# 'label4': '0E4A',
+# 'label5': '0DEB',
+# 'label6': '0E7B',
+# 'label7': '0DD7',
+# 'label8': '0E60',
+# 'label9': '0E41',
+# 'label10': '0DF8',
+# 'label11': '0D9A',
 # }
-# hex = macro.hex(arguments, instruction_num, symbols, labels, False, [])
-# print(str(hex))
-# hex == """
-# 067E A855
-# 067F 5000
-# 0680 AF65
-# 0681 3286
-# 0682 7100
-# 0683 18AC
-# 0684 A860
-# 0685 34F4
-# """
-
+# print(macro11._error)
+# print(macro11._lines)
+# (hex, num) = macro11.hex(arguments, instruction_num, symbols, labels, False, {'memory': '91'})
