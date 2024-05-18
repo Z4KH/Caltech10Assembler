@@ -106,5 +106,5 @@ class Macro():
 
     def hex(self, arguments, instruction_num, symbols, labels, stack_init, bytes_table):
         # ensure that blank lines are outputted as blank lines
-
+# ensure that instruction num doesnt go past 1fff
         pass

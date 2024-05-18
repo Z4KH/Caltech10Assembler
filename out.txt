@@ -1,0 +1,56 @@
+arguments = "o1,m5,k9,m11,o13"
+lines = [
+"DEX",
+"SBB S, o1",
+"RTS",
+"ROL",
+"DEX",
+"SBB m5",
+"JG label6",
+"JB label7",
+"JGE label8",
+"SBBI k9",
+"LSR",
+"XOR m11",
+"JV label12",
+"CMP S, o13",
+]
+macro = Macro("macro", arguments, lines, "test", 2)
+arguments = ["2a","cb","7e","75","4c","96","8c","43","a8"]
+instruction_num = 2203
+symbols = []
+labels = {
+'label0': '3B',
+'label1': '2A',
+'label2': '5F',
+'label3': '48',
+'label4': '49',
+'label5': '35',
+'label6': '7E',
+'label7': '75',
+'label8': '4C',
+'label9': '6A',
+'label10': '6F',
+'label11': '74',
+'label12': '43',
+'label13': '58',
+}
+hex = macro.hex(arguments, instruction_num, symbols, labels, False, [])
+assert hex == """
+089C 0D80
+089D 1A2A
+089E 1F00
+089F 5200
+08A0 0D80
+08A1 18CB
+08A2 AF7E
+08A3 8F75
+08A4 BB4C
+08A5 1B96
+08A6 7100
+08A7 348C
+08A8 AB43
+08A9 32A8
+"""
+
+assert macro._error == False
