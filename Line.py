@@ -18,17 +18,17 @@ class Line():
     assembler. Each line in each file is converted to a Line object.
     The line class then determines the instruction type.
     If the line is not an instruction, macro, 
-    pseudo-op, blank line, or commented line the line class issues an error.
+    pseudo-op, blank line, or commented line, then the line class issues an error.
     """
     include_files = []
-    org = -1
-    cseg = False  # code segment - True, data segment - False
+    org = False
+    seg = -1  # -1 => neither, 0=> data, 1=> code
     symbols = {}
     macros = []
     errors = []
     instructions = 0
     data = [] # list of lists for data alloc handled at the end
-    code = [] # for code that was found and not in org
+    preOrg = [] # for code that was found and not in org
 
     def __init__(self, line, file, line_num, macro_lines):
         """
@@ -38,65 +38,50 @@ class Line():
         the input 'line' is a stripped string.
         If a macro is identified, then line will be the macro
         definition, and lines will be the instructions in the macro.
+        Lines, file names, macro lines all come in stripped
         """
-        self.error = False
-        self._line = ''
-        # split the line into labels, operands, and opcodes
-        line = line.strip()
+        # self._ismacro
+        self._line = line
+        self._ismacro = False
+        self._file = file
+        self._line_num = line_num
+        self._macro_lines = macro_lines
+
+        # remove comments
+        if ';' in line:
+            idx = line.index(';')
+            line = line[:5].strip()
+            self._line = line
+        # if line is blank, then want to print blank line
         if line == '':
             return
-        elif line.lower() == '#code':
-            self.cseg = True
-            self._line = ''
-        elif self.cseg == False:
-            self.data.append([line, file, line_num, macro_lines])
-            return
-        elif line.lower().startswith('#macro'):
-            if '(' not in line or ')' not in line or '{' not in line:
-                self.error == True
-                self.errors.append(f'Definition Error/File {file}/Line {line_num}/Invalide Macro Definition \n{line}')
-                self._line = ''
-            else:
-                # get arguments
-                line = line[6:].strip() # remove #macro
-                line = line[:len(line) - 1].strip() # remove {
-                line = line.split('(') # args in the second argument up to last char
-                macro_name = line[0].strip()
-                self._line = Macro(macro_name, line[1][:len(line[1]) - 1], macro_lines, file, line_num)
-                if self._line.error == False:
-                    self.macros[macro_name] = self._line
-        elif line.lower().startswith('#include'):
-            line = line[8:] # remove #include
-            self.include_files.append(line.strip())
-            self._line = ''
-        # finish pseudo-ops
-        # implement the handle_includes, handle_code(for code before org), handle_data function
-        if line.lower() == '#org':
-            self.org = line_num
-        if self.org == -1:
-            self.code.append[line,file,line_num,macro_lines]
+        # first check if pseudo-op and handle if it is
+        if line.startswith('#'): self._handle_pseudo_op()
+        # next, check if origin has been found yet, if not then add the line to preOrg
         else:
-            # instructions
+            if self.org == False:
+                self.preOrg.append(line, file, line_num, macro_lines)
+            else:
+                if self.seg 
+        # if origin found check if data, else, add to data
+        # if origin found and code
+            # split into label, opcode, operand
+            # add label to table
+            # distribute instruction (if not a valid opcode, then macro, so check if have (), andset ismacro to true)
+    
+    def handle_data(self):
+        pass
 
-            
-            # #macro (args) {macro_lines}
+    def handle_preOrg(self):
+        pass
 
+    def _handle_pseudo_op(self):
+        pass
 
-        pseudo_opcodes = ['#INCLUDE', '#ORG', '#CODE', '#DATA', '#=', 
-                   '#MACRO', '#BYTE', '#WORD', '#STACK']
-        
-        # get operands into a list
-        # can be split by tab or space
-        operands = list(operands)
-
-
-        # handle the pseudo_op's operands based off its opcode
-        if opcode == 'INCLUDE':
-            include(operands, file, line_num)
-        elif opcode == 'ORG':
-            org(operands, file, line_num)
-        
-        
+    def hex(self):
+        # if self._line is '', return '\n'
+        #if hex.strip!= '' instruction_num ++
+        pass
 
 
     
