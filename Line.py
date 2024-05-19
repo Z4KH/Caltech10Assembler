@@ -22,12 +22,13 @@ class Line():
     """
     include_files = []
     org = -1
-    code = False  # code segment - True, data segment - False
+    cseg = False  # code segment - True, data segment - False
     symbols = {}
     macros = []
     errors = []
     instructions = 0
     data = [] # list of lists for data alloc handled at the end
+    code = [] # for code that was found and not in org
 
     def __init__(self, line, file, line_num, macro_lines):
         """
@@ -45,9 +46,9 @@ class Line():
         if line == '':
             return
         elif line.lower() == '#code':
-            self.code = True
+            self.cseg = True
             self._line = ''
-        elif self.code == False:
+        elif self.cseg == False:
             self.data.append([line, file, line_num, macro_lines])
             return
         elif line.lower().startswith('#macro'):
@@ -68,8 +69,14 @@ class Line():
             line = line[8:] # remove #include
             self.include_files.append(line.strip())
             self._line = ''
-        elif line.lower() == '#org':
-            org = line_num
+        # finish pseudo-ops
+        # implement the handle_includes, handle_code(for code before org), handle_data function
+        if line.lower() == '#org':
+            self.org = line_num
+        if self.org == -1:
+            self.code.append[line,file,line_num,macro_lines]
+        else:
+            # instructions
 
             
             # #macro (args) {macro_lines}
