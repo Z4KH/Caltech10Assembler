@@ -70,12 +70,12 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
                 return operand_list
             else:
                 self.errors.append(error)
-                self._error = True
+                self.error = True
         else: # operand is memory address
             if ' ' not in operands:
                 # do not allow negative memory address
                 if operands.startswith('-'):
-                    self._error = True
+                    self.error = True
                     self.errors.append(error)
                 else:
                     operand_list['offset'] = operands
@@ -83,7 +83,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
                 return operand_list
         
         # anything else is an error
-        self._error = True
+        self.error = True
         self.errors.append(error)
         return operand_list
     
@@ -111,7 +111,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         operand_list = self._operand_list
         opcode = self._opcode
-        if self._error == True:
+        if self.error == True:
             return 'ERROR'
         
         
@@ -123,7 +123,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         elif operand_list['register'] == 'S':
             addressing = '10'
         else: # error that didn't get caught
-            self._error = True
+            self.error = True
             self.errors.append(error)
             return 'ERROR'
         
@@ -140,7 +140,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         The function assumes that instruction_num is positive and less than 1FFF (PC max).
         The instruction number should be in decimal.
         """
-        if self._error == True:
+        if self.error == True:
             return 'ERROR'
         operand_list = self._operand_list
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
@@ -152,7 +152,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
             self.errors.append(f'Memory Access Warning/File {self._file}/Line {str(self._line_num)}/Byte "{self._operands}" Not Allocated')
         if invalid == True:
             self.errors.append(error)
-            self._error = True
+            self.error = True
 
         # convert instruction to hex
         instruction_num = str(hex(instruction_num))[2:] 

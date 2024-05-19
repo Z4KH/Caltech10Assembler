@@ -21,7 +21,7 @@ class Instruction():
         self._operands = operands
         self._file = file
         self._line_num = line_num
-        self._error = False
+        self.error = False
         self._operand_list = self._validate_operands()
         self._hexadecimal_opcode = self._hex_opcode()
 
@@ -38,7 +38,7 @@ class Instruction():
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/{self._opcode} Expects No Operands/Recieved "{self._operands}"'
         
         if operands != '':
-            self._error = True
+            self.error = True
             self.errors.append(error)
         
         return operands
@@ -84,7 +84,7 @@ class Instruction():
             'PUSHF': '0000111000000000'
         }
 
-        if self._error == True:
+        if self.error == True:
             return 'ERROR'
         
 

@@ -48,7 +48,7 @@ class OperandInstruction(Instruction):
         # only one operand
         if '\t' in operands or ' ' in operands or ',' in operands:
             self.errors.append(error)
-            self._error = True
+            self.error = True
 
         memory_instructions = ['LDD', 'STD', 'IN', 'OUT']
         # for ports and memory instructions, ensure that it is either a symbol/byte or hex
@@ -56,13 +56,13 @@ class OperandInstruction(Instruction):
             if len(operands) > 3 and operands != '':
                 if operands[:2] != '0x' and operands[0].isalpha() == False :
                     self.errors.append(error)
-                    self._error = True
+                    self.error = True
                     return operand_list
                 if opcode in memory_instructions[0:2]:
                     operand_list['memory'] = True
             elif len(operands) < 3 and operands != '' and operands[0].isalpha() == False:
                 self.errors.append(error)
-                self._error = True
+                self.error = True
                 return operand_list
         
         operand_list['offset'] = operands
@@ -96,7 +96,7 @@ class OperandInstruction(Instruction):
             'OUT': '10110000',
         }
 
-        if self._error == True:
+        if self.error == True:
             return 'ERROR'
 
         hex_op = instructions[self._opcode]
@@ -111,7 +111,7 @@ class OperandInstruction(Instruction):
         The function assumes that instruction_num is positive and less than 1FFF (PC max).
         The instruction number should be in decimal.
         """
-        if self._error == True:
+        if self.error == True:
             return 'ERROR'
         operand_list = self._operand_list
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
@@ -123,7 +123,7 @@ class OperandInstruction(Instruction):
             self.errors.append(f'Memory Access Warning/File {self._file}/Line {str(self._line_num)}/Byte "{self._operands}" Not Allocated')
         if invalid == True:
             self.errors.append(error)
-            self._error = True
+            self.error = True
 
         # convert instruction to hex
         instruction_num = str(hex(instruction_num))[2:] 

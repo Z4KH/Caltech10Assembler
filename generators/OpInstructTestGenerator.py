@@ -38,7 +38,7 @@ def generate_test(opcode, operands, testfile, line_num, instruction_hex, offset_
         file.write(f"instruction = OperandInstruction('{opcode}', '{operands}', '{testfile}', {line_num})\n")
         file.write(f"hex = instruction.hex({int(instruction_num, 16)}, [], [], False, [])\n")
         file.write(f'assert hex == "{instruction_num.upper()} {instruction_hex[2:].upper()}{offset_hex.upper()}"\n')
-        file.write(f'assert instruction._error == False\n')
+        file.write(f'assert instruction.error == False\n')
         file.write('\n')
 
 if __name__ == '__main__':
@@ -48,4 +48,4 @@ if __name__ == '__main__':
 # instruction = LoadStoreInstruction('LD', 'X+4', 'test', 1)
 # hex = instruction.hex(42, {}, [], False)
 # assert hex == '002A 9704'
-# assert instruction._error == False
+# assert instruction.error == False

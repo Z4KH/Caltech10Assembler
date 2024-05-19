@@ -17,7 +17,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
     Assumes that the opcode is correct and in uppercase
     Extends the MultiOperandInstruction class.
     Initialized with opcode, operands(str), file, line_num.
-    Initialized with self._error = False
+    Initialized with self.error = False
     """
 
     def _validate_operands(self):
@@ -46,7 +46,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
         }
         if operands == '':
             self.errors.append(error)
-            self._error = True
+            self.error = True
             return operand_list
         # first character is either +,-,X,S
         if operands[0] == '+' or operands[0] == '-':
@@ -55,7 +55,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
             try: operands = operands[1:].strip() # find reg
             except: 
                     self.errors.append(error)
-                    self._error = True
+                    self.error = True
             operands = operands[0].upper() + operands[1:]
             if operands[0] == 'X' or operands[0] == 'S':
                 operand_list['register'] = operands[0]
@@ -118,7 +118,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
                     operand_list['offset'] = operands
                 return operand_list
         self.errors.append(error)
-        self._error = True
+        self.error = True
 
 
 
@@ -130,7 +130,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
         it converts the opcode to hex based on the operands
         """
         operand_list = self._operand_list
-        if self._error == True:
+        if self.error == True:
             return 'ERROR'
         ldst = '00'
         prepost = '0'

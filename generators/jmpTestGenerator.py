@@ -52,9 +52,9 @@ def generate_test(opcode, operands, testfile, line_num, instruction_hex, offset_
             file.write(f"hex = instruction.hex({instruction_num}, []," + "{'label': '" + label_num.upper() + "'}, False, [])\n")
             if error == False:
                 file.write(f'assert hex == "{instruction_numh.upper()} {instruction_hex[2:].upper()}{offset_hex.upper()}"\n')
-                file.write(f'assert instruction._error == {str(error)}\n')
+                file.write(f'assert instruction.error == {str(error)}\n')
             else:
-                file.write(f'assert instruction._error == {str(error)}\n')
+                file.write(f'assert instruction.error == {str(error)}\n')
             file.write('\n\n')
 
 if __name__ == '__main__':
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 # instruction = CallJmpInstruction('JMP', 'label', 'test', 1)
 # hex = instruction.hex(42, symbols[], {label: PCaddress}, stackInit)
 # assert hex == '002A 9704'
-# assert instruction._error == False
+# assert instruction.error == False
 
 # must test 110aaaaaaaaaaaaa	JMP	a
 # 111aaaaaaaaaaaaa	CALL	a in addition

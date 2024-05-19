@@ -70,7 +70,7 @@ def test_macro():
     }
     (hex, num) = macro.hex(arguments, instruction_num, symbols, labels, False, [])
     assert hex == hex1
-    assert macro._error == False
+    assert macro.error == False
     assert num == 1669
 
 
@@ -119,7 +119,7 @@ def test_macro():
     (hex, num) = macro.hex(arguments, instruction_num, symbols, labels, False, [])
     assert hex == hex2
 
-    assert macro._error == False
+    assert macro.error == False
     assert num == instruction_num + 15
 
 
@@ -153,7 +153,7 @@ def test_macro():
 1A93 A82D
 """
 
-    assert macro._error == False
+    assert macro.error == False
     assert num == instruction_num + 5
 
 
@@ -185,7 +185,7 @@ def test_macro():
     (hex, num) = macro.hex(arguments, instruction_num, symbols, labels, False, [])
     assert hex == hex3
 
-    assert macro._error == False
+    assert macro.error == False
     assert num == instruction_num + 5
 
     # test macro with LD St instructions
@@ -227,7 +227,7 @@ def test_macro():
 1E7D 9701
 """
 
-    assert macro._error == False
+    assert macro.error == False
     assert num == instruction_num + 8
 
     # test macro with jmp call
@@ -271,7 +271,7 @@ def test_macro():
 02AA E2E2
 """
 
-    assert macro6._error == False
+    assert macro6.error == False
     assert num == instruction_num + 9
 
 
@@ -333,7 +333,7 @@ def test_macro():
 187D 2700
 """
 
-    assert macro._error == False
+    assert macro.error == False
     assert instruction_num + 14 == num
 
     # test macro with symbol table args => should choose macro arg, not symbol 
@@ -370,7 +370,7 @@ def test_macro():
 1624 BFE6
 """
 
-    assert macro8._error == False
+    assert macro8.error == False
     assert num == instruction_num + 6
 
     # test macro with errors in opcodes => error
@@ -407,7 +407,7 @@ def test_macro():
     }
     (hex, num) = macro9.hex(arguments, instruction_num, symbols, labels, False, [])
 
-    assert macro9._error == True
+    assert macro9.error == True
 
     # test macro with duplicate init arguments => errors
     arguments = "o4,o4"
@@ -433,7 +433,7 @@ def test_macro():
     }
     (hex, num) = macro10.hex(arguments, instruction_num, symbols, labels, False, [])
 
-    assert macro10._error == True
+    assert macro10.error == True
 
     # test macro with allocated memory and comments and spaces between operands
     arguments = "k1,    m3, o4,k6   ,o9,k11 "
@@ -469,7 +469,7 @@ def test_macro():
     'label10': '0DF8',
     'label11': '0D9A',
     }
-    print(macro11._error)
+    print(macro11.error)
     print(macro11._lines)
     (hex, num) = macro11.hex(arguments, instruction_num, symbols, labels, False, {'memory': '91'})
     assert hex == """0E08 7101
@@ -486,7 +486,7 @@ def test_macro():
 0E13 1387
 """
 
-    assert macro11._error == False
+    assert macro11.error == False
     assert num == instruction_num + 11
 
     # test label in macro => error
@@ -530,7 +530,7 @@ def test_macro():
     (hex, num) = macro12.hex(arguments, instruction_num, symbols, labels, False, [])
 
 
-    assert macro12._error == True
+    assert macro12.error == True
 
 
     # test final instruction num > 1fff => error
@@ -558,7 +558,7 @@ def test_macro():
     }
     (hex, num) = macro.hex(arguments, instruction_num, symbols, labels, False, [])
 
-    assert macro._error == True
+    assert macro.error == True
 
 
 

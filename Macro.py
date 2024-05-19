@@ -78,7 +78,7 @@ class Macro():
         The macro name and arguments are case sensitive.
         Lines come in stripped
         """
-        self._error = False
+        self.error = False
         self._name = name
         self._arguments = []
         self._file = file
@@ -87,7 +87,7 @@ class Macro():
         # validate name
         if self._check_valid(name) == False:
             self.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Invalid Macro Name {name}')
-            self._error = True
+            self.error = True
         
         # valide arguments
         arguments = arguments.split(',')
@@ -97,12 +97,12 @@ class Macro():
                 continue
             elif argument in self._arguments: # cannon allow user to have two args with same name
                 self.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Duplicate Macro Arg "{argument}"')
-                self._error = True
+                self.error = True
             elif self._check_valid(argument) == True:
                 self._arguments.append(argument)
             else:
                 self.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Invalid Argument Name {argument}')
-                self._error = True
+                self.error = True
         
         # Line num is the number that the macro's definition begins.
         # Thus, the first instruction in the macro is on line_num+1
@@ -120,7 +120,7 @@ class Macro():
                 if char == '\t' or char == ' ':
                     line_list = line.split(char)
                     if line_list[0].upper().strip() not in self._opcodes: # first thing in line must be opcode
-                        self._error = True
+                        self.error = True
                         self.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
                     else:
                         line_tuples.append((line_list[0].strip().upper(), ''.join(line_list[1:]).strip()))
@@ -128,12 +128,12 @@ class Macro():
                     break
             if newline == False:
                 if line.upper() not in self._opcodes: # must be no operand instruction
-                    self._error = True
+                    self.error = True
                     self.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
                 else: line_tuples.append((line.strip().upper(), ''))
         self._lines = line_tuples
 
-        if self._error == False:
+        if self.error == False:
             self.macros.append(name.strip())
 
 
@@ -143,7 +143,7 @@ class Macro():
         checks whether the code is valid.
         Valid codes are not opcodes or existing macros, start with letters,
         and only contain letters and numbers(no special characters).
-        Underscores are allowed
+        Underscores and square brackets are allowed.
 
         Macro names and arguments are case sensitive.
         """
@@ -156,11 +156,25 @@ class Macro():
         if code.upper() in opcodes or code in self.macros or code[0].isalpha() == False:
             return False
         
+        allowable_special_chars = ['_', '[', ']']
         for letter in code:
-            if letter.isalpha() == False and letter.isdigit() == False and letter != '_':
+            if letter.isalpha() == False and letter.isdigit() == False and letter not in allowable_special_chars:
                 return False
             
         return True
+    
+    def num_instructions(self):
+        if self.error == True:
+            return 0
+        lines = self._lines
+        instruction_num = 0
+        for line in lines:
+            if line[0] == '':
+                continue
+            else:
+                instruction_num += 1
+        return instruction_num
+
     
 
     def hex(self, arguments, instruction_num, symbols, labels, stack_init, bytes_table):
@@ -174,7 +188,7 @@ class Macro():
         lines = self._lines
         hex_output = ''
 
-        if self._error == True:
+        if self.error == True:
             return ('ERROR\n', instruction_num)
 
         arguments = arguments.split(',')
@@ -192,7 +206,7 @@ class Macro():
 
                 # switch out the operands for the arguments
                 if len(parameters) != len(arguments):
-                    self._error = True
+                    self.error = True
                     self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Macro Arg Count({len(arguments)}, Expected {len(parameters)})')
                     return ('ERROR', instruction_num)
                 for (idx, param) in enumerate(parameters):
@@ -224,7 +238,7 @@ class Macro():
                     line = LoadStoreInstruction(opcode, operands, self._file, self._line_num + offset + 1)
                 else:
                     self.errors.append(f'Definition Error/File {self._file}/Line {self._line_num + offset + 1}/Invalid Opcode "{opcode}"')
-                    self._error = True
+                    self.error = True
                     return ('ERROR', instruction_num)
                 # instruction num is the next instruction
                 hex_line = line.hex(instruction_num, symbols, labels, stack_init, bytes_table)
@@ -232,7 +246,7 @@ class Macro():
 
         # ensure instruction_num < 0x1fff + 1 (PC max)
         if instruction_num > 8191:
-            self._error = True
+            self.error = True
             self.errors.append(f'Range Error/File {self._file}/Line {self._line_num}/Exceeds Max Instruction Count 0x1FFF')
             return ('ERROR', -1)
 
