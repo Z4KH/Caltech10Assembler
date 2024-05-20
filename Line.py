@@ -28,9 +28,8 @@ class Line():
     macros = {}
     errors = []
     instructions = 0
-    data = [] # list of lists for data alloc handled at the end
     preOrg = [] # for code that was found and not in org
-    bytes = [] # bytes allocated
+    bytes = {} # bytes allocated
     instructions_hexed = 0 # for PC
     labels = {} # label: instruction_num(4 digit hex)
     next_byte = 1 # addr of next byte allocated
@@ -65,16 +64,23 @@ class Line():
             return
         # first check if pseudo-op and handle if it is
         if line.startswith('#'): 
+            # ensure that it is not a data pseudo-op in code
+                # I suppose data seg is not necessary becasue 
+                # caltech10 cpu can't load program memory anyway
+            four_dig = line[1:5].lower()
+            if (four_dig == 'word' or four_dig == 'byte' or four_dig == 'stac') and Line.seg != 0:
+                self.error = True
+                self.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Data in Code Segment "{line}"')
             self._handle_pseudo_op(line)
             self._line = ''
         # next, check if origin has been found yet, if not then add the line to preOrg
         else:
-            if self.org == False:
-                self.preOrg.append((line, file, line_num, macro_lines))
+            if Line.org == False:
+                Line.preOrg.append((line, file, line_num, macro_lines))
                 self._line = ''
             else:
-                if self.seg == 0: # if origin found, then must be pseudo-op
-                    self._handle_pseudo_op(self, line)
+                if Line.seg == 0: # if origin found and in dseg, then must be pseudo-op
+                    self._handle_pseudo_op(line)
                     self._line = ''
                 else:# if origin found and code
                     self._handle_code(line)
@@ -87,14 +93,14 @@ class Line():
         if ':' in line:
             line = line.split(':')
             label = line[0].strip()
-            instruction = ''.join(line[1:])
+            line = ''.join(line[1:]).strip()
             validation = self._handle_label(label)
             if validation == False:
                 self.error = True
-                self.errors.append(f'LabelError/File {self._file}/Line {self._line_num}/Duplicate Label "{label}"')
+                Line.errors.append(f'LabelError/File {self._file}/Line {self._line_num}/Duplicate Label "{label}"')
                 self._line = ''
                 return
-        self._handle_instruction(instruction.strip())
+        self._handle_instruction(line.strip())
         # comments, blanks, pseudo-ops, instructions all considered - all possible lines
                     
 
@@ -128,19 +134,20 @@ class Line():
             try: idx = line[1].index(')')
             except ValueError:
                 self.error = True
-                self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Args ({line[1]}')
+                Line.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Args ({line[1]}')
                 self._line = ''
                 return
             args = line[1][:idx].strip()
             name = line[0].strip()
             self._line = (name, args)
             # add to instructions
-            self.instructions += self._line.num_instructions()
+            Line.instructions += self.macros[name].num_instructions()
             return
         # if not macro then must be instruction
         # first check for no operand instructions
         if line in Macro.no_operand_instructions:
             self._line = Instruction(line, '', self._file, self._line_num)
+            Line.instructions += 1
             return
         # now know that there must be operands => separate by space or tab
         if ' ' in line:
@@ -150,7 +157,8 @@ class Line():
             line = line.split('\t')
             self._distribute_instruction(line)
         else: # invalid line
-            self.errors.append(f'Syntax Error/File {self._file}/Line {self._line}/Invalid Instruction "{line}"')
+            Line.errors.append(f'Syntax Error/File {self._file}/Line {self._line}/Invalid Instruction "{line}"')
+            self.error = True
             self._line = ''
 
     def _distribute_instruction(self, line):
@@ -172,11 +180,11 @@ class Line():
         elif opcode in Macro.load_store_instructions:
             self._line = LoadStoreInstruction(opcode, operands, self._file, self._line_num)
         else:
-            self.errors.append(f'Definition Error/File {self._file}/Line {self._line_num}/Invalid Opcode "{opcode}"')
+            Line.errors.append(f'Definition Error/File {self._file}/Line {self._line_num}/Invalid Opcode "{opcode}"')
             self.error = True
             self._line = ''
             return
-        self.instructions += 1
+        Line.instructions += 1
 
         
 
@@ -196,7 +204,7 @@ class Line():
         if self.error == True:
             return False
         
-        if label in self.labels:
+        if label in Line.labels:
             return False
         
         # check if label valid
@@ -204,41 +212,34 @@ class Line():
             return False
 
         # cannot have already been defined and cannot be an opcode, must start with letter
-        if label.upper() in Macro.opcodes or label in self.macros or label[0].isalpha() == False:
+        if label.upper() in Macro.opcodes or label in Line.macros or label[0].isalpha() == False:
             return False
         
         for letter in label:
             if letter.isalpha() == False and letter.isdigit() == False and letter != '_':
                 return False
         
-        label_hex = hex(self.instructions + 1)[2:]
-        label_hex = '0' * (4 - len(label_hex)[2:]) + label_hex
-        self.labels[label] = label_hex
+        label_hex = hex(Line.instructions + 1)[2:]
+        label_hex = '0' * (4 - len(label_hex)) + label_hex
+        Line.labels[label] = label_hex.upper()
         return True
-        
-    
-    def handle_data(self):
-        """
-        This method handles all assembly in the data
-        segments. Every line in here must be a pseudo-op.
-        Thus, this method simply validates that each line is
-        a pseudo-op, and calls the handle_pseudo_op method
-        for each valid line
-        """
-
-        for line in self.data:
-            if line.startswith('#'):
-                self._handle_pseudo_op(line)
 
 
     def _handle_pseudo_op(self, pseudo_instruction):
+        """
+        This private method handles all encountered pseudo-ops,
+        and modifies the class variables accordingly.
+        """
+        
+        if self.error == True:
+            return
 
         pseudo_instruction = pseudo_instruction.strip()
         if pseudo_instruction == '':
             return
         if pseudo_instruction.startswith('#') == False:
             self.error = True
-            self.errors.append(f'Data Seg Error/File {self._file}/Line {self._line_num}/Invalid Data "{pseudo_instruction}"')
+            Line.errors.append(f'Data Seg Error/File {self._file}/Line {self._line_num}/Invalid Data "{pseudo_instruction}"')
 
         no_operand_pseudos = [
             '#org',
@@ -249,25 +250,25 @@ class Line():
         # check if operands
         if pseudo_instruction.lower() in no_operand_pseudos:
             if pseudo_instruction.lower() == '#org':
-                if self.org == False: self.org = True
+                if Line.org == False: Line.org = True
                 else:  # no duplicate orgs
-                    self.errors.append(f'Origin Error/File {self._file}/Line {self._line}/Duplicate Origin')
+                    Line.errors.append(f'Origin Error/File {self._file}/Line {self._line}/Duplicate Origin')
                     self.error = True
             elif pseudo_instruction.lower() == '#code':
-                self.seg = 1
+                Line.seg = 1
             elif pseudo_instruction.lower() == '#data':
-                self.seg = 0
+                Line.seg = 0
         else:
             # get pseudo-op code and operands
             if ' ' in pseudo_instruction: 
                 pseudo_instruction = pseudo_instruction.split(' ')
-                self._handle_operand_pseudo_ops(pseudo_instruction[0].strip(), ''.join(pseudo_instruction[1:].strip()))
+                self._handle_operand_pseudo_ops(pseudo_instruction[0].strip(), ''.join(pseudo_instruction[1:]).strip())
             elif '\t' in pseudo_instruction:
                 pseudo_instruction = pseudo_instruction.split('\t')
-                self._handle_operand_pseudo_ops(pseudo_instruction[0].strip(), ''.join(pseudo_instruction[1:].strip()))
+                self._handle_operand_pseudo_ops(pseudo_instruction[0].strip(), ''.join(pseudo_instruction[1:]).strip())
             else: 
                 self.error = True
-                self.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid PseudoOp "{pseudo_instruction}"')
+                Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid PseudoOp "{pseudo_instruction}"')
 
 
     def _handle_operand_pseudo_ops(self, pseudo_opcode, operands, byte_addr=''):
@@ -288,41 +289,40 @@ class Line():
 
         if pseudo_opcode.lower() not in opcodes or operands == '':
             self.error = True
-            self.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid PseudoOp "{pseudo_opcode} {operands}"')
+            Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid PseudoOp "{pseudo_opcode} {operands}"')
             return
         
         if pseudo_opcode.lower() == '#include':
             if '"' in operands:
                 operands = operands.split('"')
-                try: self.include_files.append(operands[1])
+                try: Line.include_files.append(operands[1])
                 except IndexError:
                     self.error = True
-                    self.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
+                    Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
                     return
             elif "'" in operands:
                 operands = operands.split("'")
-                try: self.include_files.append(operands[1])
+                try: Line.include_files.append(operands[1])
                 except IndexError:
                     self.error = True
-                    self.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
+                    Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
                     return
             else: 
                 self.error = True
-                self.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
+                Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
                 return
         elif pseudo_opcode.lower() == '#=':
             try: 
-                operands = operands[2:].strip()
                 operands = operands.split('<-')
                 symbol = operands[0].strip()
                 self._validate_name(symbol)
 
                 definition = hex_offset(operands[1].strip(), {}, {}, {})
                 if definition[2] == True: raise ValueError
-                self.symbols[operands[0].strip()] = definition[0]
+                Line.symbols[operands[0].strip()] = definition[0]
             except:
                 self.error = True
-                self.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid Definition {operands}')
+                Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid Definition {operands}')
                 return
         elif pseudo_opcode.lower() == '#macro':
             if '(' in operands and ')' in operands: 
@@ -331,68 +331,74 @@ class Line():
                 try: idx = operands[1].index(')')
                 except ValueError:
                     self.error = True
-                    self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Args ({line[1]}')
+                    Line.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Args ({line[1]}')
                     return
                 args = operands[1][:idx].strip()
                 name = operands[0].strip()
                 macro = Macro(name, args, self._macro_lines, self._file, self._line_num)
-                self.macros[name] = macro
+                Line.macros[name] = macro
         elif pseudo_opcode.lower() == '#byte':
-            allocated_bytes = list(self.bytes.keys())
-            try: 
-                self._validate_name(operands) 
-                if operands in allocated_bytes or f'{operands}[LOW]' in allocated_bytes or f'{operands}[HIGH]' in allocated_bytes: raise ValueError
-            except:
+            # only allow during data seg
+            if Line.seg != 0:
                 self.error = True
-                self.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid Byte Name "{operands}"')
-                return
+                Line.errors.append(f'Allocation Error/File {self._file}/Line {self._line}/Allocating in Code')
+            allocated_bytes = list(Line.bytes.keys())
             # get address
-            if byte_addr != '':
-                if self.next_byte == 256:
+            if byte_addr == '':
+                try: 
+                    self._validate_name(operands) 
+                    if operands in allocated_bytes or f'{operands}[LOW]' in allocated_bytes or f'{operands}[HIGH]' in allocated_bytes: raise ValueError
+                except:
                     self.error = True
-                    self.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Memory Overflow')
+                    Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid Byte Name "{operands}"')
                     return
-                addr = self.next_byte
-                self.next_byte += 1
+                if Line.next_byte == 256:
+                    self.error = True
+                    Line.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Memory Overflow')
+                    return
+                addr = Line.next_byte
+                Line.next_byte += 1
                 addr = hex(addr)[2:]
                 addr = '0' * (2 - len(addr)) + addr
-                if addr in list(self.bytes.values()):
+                if addr in list(Line.bytes.values()):
                     self.error = True
-                    self.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Memory Overflow')
+                    Line.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Memory Overflow')
                     return
-                self.bytes[operands] = addr
+                Line.bytes[operands] = addr
             else:
                 addr = byte_addr
-                if addr in list(self.bytes.values()):
+                if addr in list(Line.bytes.values()):
                     self.error = True
-                    self.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Memory Overflow')
+                    Line.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Memory Overflow')
                     return
-                self.bytes[operands] = addr 
+                Line.bytes[operands] = addr 
         elif pseudo_opcode.lower() == '#word':
-            self._handle_operands('#byte', f'{operands}[LOW]')
-            self._handle_operands('#byte', f'{operands}[HIGH]')
+            self._handle_operand_pseudo_ops('#byte', f'{operands}[LOW]')
+            self._handle_operand_pseudo_ops('#byte', f'{operands}[HIGH]')
         else: # must be #stack
             try: 
+                if Line.stack == True: raise ValueError
                 stack_size = int(operands)
                 if stack_size > 255 or stack_size < 1: raise ValueError
-                for byte in range(stack_size - 1):
-                    byte_addr = hex(255 - byte)
+                for byte in range(stack_size - 1):  # first byte of stack always 00
+                    byte_addr = hex(255 - byte)[2:].upper()
                     byte_addr = '0' * (2- len(byte_addr)) + byte_addr
                     self._handle_operand_pseudo_ops('#byte', f'$tack{byte}', byte_addr)
-                self.stack = True
+                Line.stack = True
             except ValueError: 
                 self.error = True
-                self.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Invalid Stack {operands}')
+                Line.errors.append(f'Allocation Error/File {self._file}/Line {self._line_num}/Invalid or Duplicate Stack Initialization')
                 return
             
     def _validate_name(self, name):
         """
         Validates the name of a constant.
         """
-        if name.upper() in Macro.opcodes or name in self.macros or name[0].isalpha() == False:
+        special_chars = ['_', '[', ']']
+        if name.upper() in Macro.opcodes or name in Line.macros or name[0].isalpha() == False:
             raise ValueError
         for letter in name:
-            if letter.isalpha() == False and letter.isdigit() == False and letter != '_':
+            if letter.isalpha() == False and letter.isdigit() == False and letter not in special_chars:
                 raise ValueError
 
 
@@ -410,23 +416,16 @@ class Line():
         if self._ismacro == True:
             name = self._line[0]
             args = self._line[1]
-            if name not in self.macros:
+            if name not in Line.macros:
                 self.error = True
-                self.errors.append(f'Syntax Error/File {self._file}/Line {self._line_num}/Invalid Macro "{name}"')
+                Line.errors.append(f'Syntax Error/File {self._file}/Line {self._line_num}/Invalid Macro "{name}"')
                 return 'ERROR'
             else:
-                (hex, num) = self.macros[name].hex(args, self.instructions_hexed, 
-                                      self.symbols, self.labels, self.stack, self.bytes)
-                self.instructions_hexed = num + 1 # last instruction in macro hexed = num
+                (hex, num) = Line.macros[name].hex(args, Line.instructions_hexed, 
+                                      Line.symbols, Line.labels, Line.stack, Line.bytes)
+                Line.instructions_hexed = num + 1 # last instruction in macro hexed = num
         else:
-            hex = self._line.hex(self.instructions_hexed, self.symbols, 
-                                 self.labels, self.stack, self.bytes)
-            self.instructions_hexed += 1
-        return f'{hex}\n'
-
-
-
-
-
-    
-
+            hex = self._line.hex(Line.instructions_hexed, Line.symbols, 
+                                 Line.labels, Line.stack, Line.bytes)
+            Line.instructions_hexed += 1
+        return f'{hex}'

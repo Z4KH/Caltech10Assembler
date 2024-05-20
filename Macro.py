@@ -25,7 +25,7 @@ class Macro():
     They will be called in the form.
     Label: MacroName(Arguments) ; comments
     """
-    _opcodes = ['LDI', 'LDD', 'LD', 'STD', 'ST', 'JMP', 'JA', 'JAE', 'JNC',
+    opcodes = ['LDI', 'LDD', 'LD', 'STD', 'ST', 'JMP', 'JA', 'JAE', 'JNC',
         'JB', 'JC', 'JBE', 'JE', 'JZ', 'JG', 'JGE', 'JL', 'JLE', 'JNE', 
         'JNZ', 'JNS', 'JNU', 'JNV', 'JS', 'JU', 'JV', 'CALL', 'RTS', 'POPF', 
         'PUSHF', 'IN', 'OUT', 'NOP', 'TAX', 'TXA', 'INX', 'DEX', 'TAS', 'TSA', 
@@ -119,7 +119,7 @@ class Macro():
             for char in line:
                 if char == '\t' or char == ' ':
                     line_list = line.split(char)
-                    if line_list[0].upper().strip() not in self._opcodes: # first thing in line must be opcode
+                    if line_list[0].upper().strip() not in self.opcodes: # first thing in line must be opcode
                         self.error = True
                         self.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
                     else:
@@ -127,7 +127,7 @@ class Macro():
                     newline = True
                     break
             if newline == False:
-                if line.upper() not in self._opcodes: # must be no operand instruction
+                if line.upper() not in self.opcodes: # must be no operand instruction
                     self.error = True
                     self.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
                 else: line_tuples.append((line.strip().upper(), ''))
@@ -147,7 +147,7 @@ class Macro():
 
         Macro names and arguments are case sensitive.
         """
-        opcodes = self._opcodes
+        opcodes = self.opcodes
 
         if code == '':
             return False

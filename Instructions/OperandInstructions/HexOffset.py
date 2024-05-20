@@ -49,15 +49,10 @@ def hex_offset(offset, symbols, memory, bytes_table):
         # handle converting constant offset to hex
         # cases for offset are dec, hex (0x...), bin(0b...), char, truncation
         if offset[0:2].lower() == '0x': # add hex
-            # sign extend
+            # hex values are not sign extended
             if memory == True:
                 warning = True
             if len(offset) > 2 and len(offset) < 5:
-                if int(offset[2], 16) > 7:
-                    sign = 'F'
-                else:
-                    sign = '0'
-                offset = '0x' + (sign * (2 - len(offset[2:]))) + offset[2:]
                 try: offset = int(offset, 16)
                 except ValueError:
                     offset = 'ERROR'
@@ -69,13 +64,8 @@ def hex_offset(offset, symbols, memory, bytes_table):
             if memory == True and offset not in symbols: # if made it this far without catching memory not in hex/not allocated
                 error = True
             if offset[0:3].lower() == '-0x':# subtract hex
-                # sign extend
+                # hex values are not sign extended
                 if len(offset) > 3 and len(offset) < 5:
-                    if int(offset[3], 16) > 7:
-                        sign = 'F'
-                    else:
-                        sign = '0'
-                    offset = '-0x' + (sign * (2 - len(offset[3:]))) + offset[3:]
                     try: 
                         offset = int(offset, 16)
                         offset += 256 # flip bits

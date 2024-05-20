@@ -1,2003 +1,1603 @@
-# 00011001oooooooo SBB X, o
-text = "SBB X, 102"
+# 10011000rrrrrrrr JNS r
+text = "JNS label0"
 line0 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line0.hex()
-assert hex == "0101 1966"
+assert hex == "0BF9 98C6"
 assert line0.error == False
 
-# 0000011110000000 TAX 
-text = "TAX"
+# 0101000000000000 RLC 
+text = "RLC"
 line1 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line1.hex()
-assert hex == "0102 0780"
+assert hex == "0BFA 5000"
 assert line1.error == False
 
-# 10001001kkkkkkkk LDI k
-text = "LDI k"
+# 0111111100100010 STU 
+text = "STU"
 line2 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line2.hex()
-assert hex == "0103 8943"
+assert hex == "0BFB 7F22"
 assert line2.error == False
-
-# 01001111kkkkkkkk TSTI k
-text = "TSTI k"
-line3 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line3.hex()
-assert hex == "0104 4F15"
-assert line3.error == False
-
-# 0000011111100100 CLC 
-text = "CLC"
-line4 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line4.hex()
-assert hex == "0105 07E4"
-assert line4.error == False
-
-# 0000011101010000 TAS 
-text = "TAS"
-line5 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line5.hex()
-assert hex == "0106 0750"
-assert line5.error == False
-
-# 10111000rrrrrrrr JL r
-text = "JL label6"
-line6 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line6.hex()
-assert hex == "0107 B887"
-assert line6.error == False
-
-# 0111000100000010 ROR 
-text = "ROR"
-line7 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line7.hex()
-assert hex == "0108 7102"
-assert line7.error == False
-
-# 10001000rrrrrrrr JA r
-text = "JA label8"
-line8 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line8.hex()
-assert hex == "0109 88F6"
-assert line8.error == False
-
-# 0000011110000000 TAX 
-text = "TAX"
-line9 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line9.hex()
-assert hex == "010A 0780"
-assert line9.error == False
 
 # 0001111110000000 NOP 
 text = "NOP"
-line10 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line10.hex()
-assert hex == "010B 1F80"
-assert line10.error == False
-
-# 0111000100000011 RRC 
-text = "RRC"
-line11 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line11.hex()
-assert hex == "010C 7103"
-assert line11.error == False
-
-# 00110001oooooooo CMP X, o
-text = "CMP X, 162"
-line12 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line12.hex()
-assert hex == "010D 31A2"
-assert line12.error == False
+line3 = Line(text, "test", 2, [])
+hex = line3.hex()
+assert hex == "0BFC 1F80"
+assert line3.error == False
 
 # 00010001oooooooo SUB X, o
-text = "SUB X, 190"
+text = "SUB X, 226"
+line4 = Line(text, "test", 2, [])
+hex = line4.hex()
+assert hex == "0BFD 11E2"
+assert line4.error == False
+
+# 00011001oooooooo SBB X, o
+text = "SBB X, 21"
+line5 = Line(text, "test", 2, [])
+hex = line5.hex()
+assert hex == "0BFE 1915"
+assert line5.error == False
+
+# 0001111100000000 RTS 
+text = "RTS"
+line6 = Line(text, "test", 2, [])
+hex = line6.hex()
+assert hex == "0BFF 1F00"
+assert line6.error == False
+
+# 10101100rrrrrrrr JLE r
+text = "JLE label7"
+line7 = Line(text, "test", 2, [])
+hex = line7.hex()
+assert hex == "0C00 AC2C"
+assert line7.error == False
+
+# 0000011001000000 INS 
+text = "INS"
+line8 = Line(text, "test", 2, [])
+hex = line8.hex()
+assert hex == "0C01 0640"
+assert line8.error == False
+
+# 0000011101010000 TAS 
+text = "TAS"
+line9 = Line(text, "test", 2, [])
+hex = line9.hex()
+assert hex == "0C02 0750"
+assert line9.error == False
+
+# 10001011rrrrrrrr JBE r
+text = "JBE label10"
+line10 = Line(text, "test", 2, [])
+hex = line10.hex()
+assert hex == "0C03 8B9C"
+assert line10.error == False
+
+# 10101111rrrrrrrr JG r
+text = "JG label11"
+line11 = Line(text, "test", 2, [])
+hex = line11.hex()
+assert hex == "0C04 AF4C"
+assert line11.error == False
+
+# 10001011rrrrrrrr JBE r
+text = "JBE label12"
+line12 = Line(text, "test", 2, [])
+hex = line12.hex()
+assert hex == "0C05 8BEC"
+assert line12.error == False
+
+# 00110001oooooooo CMP X, o
+text = "CMP X, 97"
 line13 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line13.hex()
-assert hex == "010E 11BE"
+assert hex == "0C06 3161"
 assert line13.error == False
 
-# 0000011111100100 CLC 
-text = "CLC"
+# 01001101oooooooo TST X, o
+text = "TST X, 34"
 line14 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line14.hex()
-assert hex == "010F 07E4"
+assert hex == "0C07 4D22"
 assert line14.error == False
 
-# 01000111kkkkkkkk ANDI k
-text = "ANDI k"
+# 10101000rrrrrrrr JNV r
+text = "JNV label15"
 line15 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line15.hex()
-assert hex == "0110 471C"
+assert hex == "0C08 A87B"
 assert line15.error == False
 
-# 10101000rrrrrrrr JNV r
-text = "JNV label16"
+# 0111101100000000 DEC 
+text = "DEC"
 line16 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line16.hex()
-assert hex == "0111 A854"
+assert hex == "0C09 7B00"
 assert line16.error == False
 
 # 0111000100000000 LSR 
 text = "LSR"
 line17 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line17.hex()
-assert hex == "0112 7100"
+assert hex == "0C0A 7100"
 assert line17.error == False
 
-# 10011100rrrrrrrr JNE r
-text = "JNE label18"
+# 0111111100001100 STC 
+text = "STC"
 line18 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line18.hex()
-assert hex == "0113 9C24"
+assert hex == "0C0B 7F0C"
 assert line18.error == False
 
-# 00110000mmmmmmmm CMP m
-text = "CMP m"
+# 01000100mmmmmmmm AND m
+text = "AND 0x6c"
 line19 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line19.hex()
-assert hex == "0114 30FE"
+assert hex == "0C0C 446C"
 assert line19.error == False
 
-# 0111000100000010 ROR 
-text = "ROR"
+# 0010110100000000 NOT 
+text = "NOT"
 line20 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line20.hex()
-assert hex == "0115 7102"
+assert hex == "0C0D 2D00"
 assert line20.error == False
-
-# 0000011001000000 INS 
-text = "INS"
-line21 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line21.hex()
-assert hex == "0116 0640"
-assert line21.error == False
-
-# 00110010oooooooo CMP S, o
-text = "CMP S, 143"
-line22 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line22.hex()
-assert hex == "0117 328F"
-assert line22.error == False
-
-# 0111000100000010 ROR 
-text = "ROR"
-line23 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line23.hex()
-assert hex == "0118 7102"
-assert line23.error == False
-
-# 0001111110000000 NOP 
-text = "NOP"
-line24 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line24.hex()
-assert hex == "0119 1F80"
-assert line24.error == False
-
-# 0111000100000010 ROR 
-text = "ROR"
-line25 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line25.hex()
-assert hex == "011A 7102"
-assert line25.error == False
-
-# 01000101oooooooo AND X, o
-text = "AND X, 216"
-line26 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line26.hex()
-assert hex == "011B 45D8"
-assert line26.error == False
-
-# 01110100mmmmmmmm OR m
-text = "OR m"
-line27 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line27.hex()
-assert hex == "011C 7436"
-assert line27.error == False
-
-# 00110111kkkkkkkk XORI k
-text = "XORI k"
-line28 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line28.hex()
-assert hex == "011D 37C7"
-assert line28.error == False
-
-# 0101000000000000 RLC 
-text = "RLC"
-line29 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line29.hex()
-assert hex == "011E 5000"
-assert line29.error == False
-
-# 01001111kkkkkkkk TSTI k
-text = "TSTI k"
-line30 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line30.hex()
-assert hex == "011F 4F7B"
-assert line30.error == False
-
-# 10001001kkkkkkkk LDI k
-text = "LDI k"
-line31 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line31.hex()
-assert hex == "0120 8973"
-assert line31.error == False
-
-# 00010001oooooooo SUB X, o
-text = "SUB X, 164"
-line32 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line32.hex()
-assert hex == "0121 11A4"
-assert line32.error == False
-
-# 0000010110000000 INX 
-text = "INX"
-line33 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line33.hex()
-assert hex == "0122 0580"
-assert line33.error == False
-
-# 0000000000000000 INC 
-text = "INC"
-line34 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line34.hex()
-assert hex == "0123 0000"
-assert line34.error == False
-
-# 01110100mmmmmmmm OR m
-text = "OR m"
-line35 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line35.hex()
-assert hex == "0124 74C7"
-assert line35.error == False
-
-# 0111111110000001 STI 
-text = "STI"
-line36 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line36.hex()
-assert hex == "0125 7F81"
-assert line36.error == False
-
-# 0111000100000010 ROR 
-text = "ROR"
-line37 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line37.hex()
-assert hex == "0126 7102"
-assert line37.error == False
-
-# 0000011101010000 TAS 
-text = "TAS"
-line38 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line38.hex()
-assert hex == "0127 0750"
-assert line38.error == False
-
-# 00110101oooooooo XOR X, o
-text = "XOR X, 186"
-line39 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line39.hex()
-assert hex == "0128 35BA"
-assert line39.error == False
-
-# 00011011kkkkkkkk SBBI k
-text = "SBBI k"
-line40 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line40.hex()
-assert hex == "0129 1B84"
-assert line40.error == False
-
-# 0110011100000000 TSA 
-text = "TSA"
-line41 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line41.hex()
-assert hex == "012A 6700"
-assert line41.error == False
-
-# 00011000mmmmmmmm SBB m
-text = "SBB m"
-line42 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line42.hex()
-assert hex == "012B 1876"
-assert line42.error == False
-
-# 01001110oooooooo TST S, o
-text = "TST S, 219"
-line43 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line43.hex()
-assert hex == "012C 4EDB"
-assert line43.error == False
-
-# 0000011101101001 CLI 
-text = "CLI"
-line44 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line44.hex()
-assert hex == "012D 0769"
-assert line44.error == False
-
-# 00110111kkkkkkkk XORI k
-text = "XORI k"
-line45 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line45.hex()
-assert hex == "012E 377B"
-assert line45.error == False
-
-# 01110110oooooooo OR S, o
-text = "OR S, 199"
-line46 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line46.hex()
-assert hex == "012F 76C7"
-assert line46.error == False
-
-# 0000000000000000 INC 
-text = "INC"
-line47 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line47.hex()
-assert hex == "0130 0000"
-assert line47.error == False
-
-# 0010011100000000 NEG 
-text = "NEG"
-line48 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line48.hex()
-assert hex == "0131 2700"
-assert line48.error == False
-
-# 10101100rrrrrrrr JLE r
-text = "JLE label49"
-line49 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line49.hex()
-assert hex == "0132 ACF2"
-assert line49.error == False
-
-# 01110101oooooooo OR X, o
-text = "OR X, 23"
-line50 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line50.hex()
-assert hex == "0133 7517"
-assert line50.error == False
-
-# 01001100mmmmmmmm TST m
-text = "TST m"
-line51 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line51.hex()
-assert hex == "0134 4C86"
-assert line51.error == False
-
-# 10001100rrrrrrrr JAE r
-text = "JAE label52"
-line52 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line52.hex()
-assert hex == "0135 8C2E"
-assert line52.error == False
-
-# 00110100mmmmmmmm XOR m
-text = "XOR m"
-line53 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line53.hex()
-assert hex == "0136 3443"
-assert line53.error == False
-
-# 00110111kkkkkkkk XORI k
-text = "XORI k"
-line54 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line54.hex()
-assert hex == "0137 37F4"
-assert line54.error == False
-
-# 10000000mmmmmmmm LDD m
-text = "LDD m"
-line55 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line55.hex()
-assert hex == "0138 805A"
-assert line55.error == False
-
-# 0000011110000000 TAX 
-text = "TAX"
-line56 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line56.hex()
-assert hex == "0139 0780"
-assert line56.error == False
-
-# 00010000mmmmmmmm SUB m
-text = "SUB m"
-line57 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line57.hex()
-assert hex == "013A 105E"
-assert line57.error == False
-
-# 0101100000000000 LSL 
-text = "LSL"
-line58 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line58.hex()
-assert hex == "013B 5800"
-assert line58.error == False
-
-# 10011111rrrrrrrr JE r
-text = "JE label59"
-line59 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line59.hex()
-assert hex == "013C 9F17"
-assert line59.error == False
-
-# 01001111kkkkkkkk TSTI k
-text = "TSTI k"
-line60 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line60.hex()
-assert hex == "013D 4FF9"
-assert line60.error == False
-
-# 10001000rrrrrrrr JA r
-text = "JA label61"
-line61 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line61.hex()
-assert hex == "013E 88ED"
-assert line61.error == False
-
-# 10001001kkkkkkkk LDI k
-text = "LDI k"
-line62 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line62.hex()
-assert hex == "013F 8952"
-assert line62.error == False
-
-# 01110110oooooooo OR S, o
-text = "OR S, 46"
-line63 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line63.hex()
-assert hex == "0140 762E"
-assert line63.error == False
-
-# 0111000100000000 LSR 
-text = "LSR"
-line64 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line64.hex()
-assert hex == "0141 7100"
-assert line64.error == False
-
-# 0001111100000000 RTS 
-text = "RTS"
-line65 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line65.hex()
-assert hex == "0142 1F00"
-assert line65.error == False
-
-# 00110111kkkkkkkk XORI k
-text = "XORI k"
-line66 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line66.hex()
-assert hex == "0143 3796"
-assert line66.error == False
-
-# 00011010oooooooo SBB S, o
-text = "SBB S, 235"
-line67 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line67.hex()
-assert hex == "0144 1AEB"
-assert line67.error == False
-
-# 01110111kkkkkkkk ORI k
-text = "ORI k"
-line68 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line68.hex()
-assert hex == "0145 7723"
-assert line68.error == False
-
-# 10011100rrrrrrrr JNE r
-text = "JNE label69"
-line69 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line69.hex()
-assert hex == "0146 9C3B"
-assert line69.error == False
-
-# 0010011100000000 NEG 
-text = "NEG"
-line70 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line70.hex()
-assert hex == "0147 2700"
-assert line70.error == False
-
-# 0111000100000010 ROR 
-text = "ROR"
-line71 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line71.hex()
-assert hex == "0148 7102"
-assert line71.error == False
-
-# 0101100000000000 LSL 
-text = "LSL"
-line72 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line72.hex()
-assert hex == "0149 5800"
-assert line72.error == False
-
-# 10101100rrrrrrrr JLE r
-text = "JLE label73"
-line73 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line73.hex()
-assert hex == "014A ACD9"
-assert line73.error == False
-
-# 10011100rrrrrrrr JNE r
-text = "JNE label74"
-line74 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line74.hex()
-assert hex == "014B 9CF1"
-assert line74.error == False
-
-# 0111000100000000 LSR 
-text = "LSR"
-line75 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line75.hex()
-assert hex == "014C 7100"
-assert line75.error == False
-
-# 01110111kkkkkkkk ORI k
-text = "ORI k"
-line76 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line76.hex()
-assert hex == "014D 7731"
-assert line76.error == False
-
-# 10101100rrrrrrrr JLE r
-text = "JLE label77"
-line77 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line77.hex()
-assert hex == "014E ACAD"
-assert line77.error == False
-
-# 01001100mmmmmmmm TST m
-text = "TST m"
-line78 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line78.hex()
-assert hex == "014F 4CDD"
-assert line78.error == False
-
-# 0000111000000000 PUSHF 
-text = "PUSHF"
-line79 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line79.hex()
-assert hex == "0150 0E00"
-assert line79.error == False
 
 # 0000011111100100 CLC 
 text = "CLC"
-line80 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line80.hex()
-assert hex == "0151 07E4"
-assert line80.error == False
-
-# 0000011111001010 CLU 
-text = "CLU"
-line81 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line81.hex()
-assert hex == "0152 07CA"
-assert line81.error == False
-
-# 10011100rrrrrrrr JNE r
-text = "JNE label82"
-line82 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line82.hex()
-assert hex == "0153 9CX1"
-assert line82.error == False
-
-# 0000000000000000 INC 
-text = "INC"
-line83 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line83.hex()
-assert hex == "0154 0000"
-assert line83.error == False
-
-# 10011011rrrrrrrr JS r
-text = "JS label84"
-line84 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line84.hex()
-assert hex == "0155 9B07"
-assert line84.error == False
-
-# 0101100000000000 LSL 
-text = "LSL"
-line85 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line85.hex()
-assert hex == "0156 5800"
-assert line85.error == False
-
-# 0001111100000000 RTS 
-text = "RTS"
-line86 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line86.hex()
-assert hex == "0157 1F00"
-assert line86.error == False
-
-# 0111000100000001 ASR 
-text = "ASR"
-line87 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line87.hex()
-assert hex == "0158 7101"
-assert line87.error == False
-
-# 0000011101101001 CLI 
-text = "CLI"
-line88 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line88.hex()
-assert hex == "0159 0769"
-assert line88.error == False
-
-# 0001111100000000 RTS 
-text = "RTS"
-line89 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line89.hex()
-assert hex == "015A 1F00"
-assert line89.error == False
-
-# 0111000100000001 ASR 
-text = "ASR"
-line90 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line90.hex()
-assert hex == "015B 7101"
-assert line90.error == False
-
-# 10111011rrrrrrrr JGE r
-text = "JGE label91"
-line91 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line91.hex()
-assert hex == "015C BB9D"
-assert line91.error == False
-
-# 10111000rrrrrrrr JL r
-text = "JL label92"
-line92 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line92.hex()
-assert hex == "015D B8DE"
-assert line92.error == False
-
-# 0111000100000011 RRC 
-text = "RRC"
-line93 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line93.hex()
-assert hex == "015E 7103"
-assert line93.error == False
-
-# 0000110110000000 DEX 
-text = "DEX"
-line94 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line94.hex()
-assert hex == "015F 0D80"
-assert line94.error == False
-
-# 00011001oooooooo SBB X, o
-text = "SBB X, 186"
-line95 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line95.hex()
-assert hex == "0160 19BA"
-assert line95.error == False
-
-# 00011001oooooooo SBB X, o
-text = "SBB X, 172"
-line96 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line96.hex()
-assert hex == "0161 19AC"
-assert line96.error == False
-
-# 10001111rrrrrrrr JB r
-text = "JB label97"
-line97 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line97.hex()
-assert hex == "0162 8F59"
-assert line97.error == False
-
-# 10111011rrrrrrrr JGE r
-text = "JGE label98"
-line98 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line98.hex()
-assert hex == "0163 BB0F"
-assert line98.error == False
-
-# 00010001oooooooo SUB X, o
-text = "SUB X, 209"
-line99 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line99.hex()
-assert hex == "0164 11D1"
-assert line99.error == False
-
-# 0111111110000001 STI 
-text = "STI"
-line100 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line100.hex()
-assert hex == "0165 7F81"
-assert line100.error == False
-
-# 0101001000000000 ROL 
-text = "ROL"
-line101 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line101.hex()
-assert hex == "0166 5200"
-assert line101.error == False
-
-# 0000011110000000 TAX 
-text = "TAX"
-line102 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line102.hex()
-assert hex == "0167 0780"
-assert line102.error == False
-
-# 10001111rrrrrrrr JB r
-text = "JB label103"
-line103 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line103.hex()
-assert hex == "0168 8F48"
-assert line103.error == False
-
-# 0001111110000000 NOP 
-text = "NOP"
-line104 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line104.hex()
-assert hex == "0169 1F80"
-assert line104.error == False
-
-# 0111111100100010 STU 
-text = "STU"
-line105 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line105.hex()
-assert hex == "016A 7F22"
-assert line105.error == False
-
-# 10011000rrrrrrrr JNS r
-text = "JNS label106"
-line106 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line106.hex()
-assert hex == "016B 98BD"
-assert line106.error == False
-
-# 0000011110000000 TAX 
-text = "TAX"
-line107 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line107.hex()
-assert hex == "016C 0780"
-assert line107.error == False
-
-# 0000010110000000 INX 
-text = "INX"
-line108 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line108.hex()
-assert hex == "016D 0580"
-assert line108.error == False
-
-# 0111000100000010 ROR 
-text = "ROR"
-line109 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line109.hex()
-assert hex == "016E 7102"
-assert line109.error == False
-
-# 01000101oooooooo AND X, o
-text = "AND X, 84"
-line110 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line110.hex()
-assert hex == "016F 4554"
-assert line110.error == False
-
-# 10101111rrrrrrrr JG r
-text = "JG label111"
-line111 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line111.hex()
-assert hex == "0170 AF07"
-assert line111.error == False
-
-# 0111000100000011 RRC 
-text = "RRC"
-line112 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line112.hex()
-assert hex == "0171 7103"
-assert line112.error == False
-
-# 10000000mmmmmmmm LDD m
-text = "LDD m"
-line113 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line113.hex()
-assert hex == "0172 8060"
-assert line113.error == False
-
-# 10101100rrrrrrrr JLE r
-text = "JLE label114"
-line114 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line114.hex()
-assert hex == "0173 AC14"
-assert line114.error == False
-
-# 10011100rrrrrrrr JNE r
-text = "JNE label115"
-line115 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line115.hex()
-assert hex == "0174 9CA1"
-assert line115.error == False
-
-# 01110110oooooooo OR S, o
-text = "OR S, 165"
-line116 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line116.hex()
-assert hex == "0175 76A5"
-assert line116.error == False
-
-# 00110001oooooooo CMP X, o
-text = "CMP X, 211"
-line117 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line117.hex()
-assert hex == "0176 31D3"
-assert line117.error == False
-
-# 00110100mmmmmmmm XOR m
-text = "XOR m"
-line118 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line118.hex()
-assert hex == "0177 3492"
-assert line118.error == False
-
-# 00010011kkkkkkkk SUBI k
-text = "SUBI k"
-line119 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line119.hex()
-assert hex == "0178 1323"
-assert line119.error == False
-
-# 0000110110000000 DEX 
-text = "DEX"
-line120 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line120.hex()
-assert hex == "0179 0D80"
-assert line120.error == False
-
-# 0000010110000000 INX 
-text = "INX"
-line121 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line121.hex()
-assert hex == "017A 0580"
-assert line121.error == False
-
-# 0111111110000001 STI 
-text = "STI"
-line122 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line122.hex()
-assert hex == "017B 7F81"
-assert line122.error == False
-
-# 10001100rrrrrrrr JAE r
-text = "JAE label123"
-line123 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line123.hex()
-assert hex == "017C 8CC5"
-assert line123.error == False
-
-# 00011000mmmmmmmm SBB m
-text = "SBB m"
-line124 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line124.hex()
-assert hex == "017D 1871"
-assert line124.error == False
-
-# 10111000rrrrrrrr JL r
-text = "JL label125"
-line125 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line125.hex()
-assert hex == "017E B828"
-assert line125.error == False
-
-# 00110010oooooooo CMP S, o
-text = "CMP S, 232"
-line126 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line126.hex()
-assert hex == "017F 32E8"
-assert line126.error == False
-
-# 0010110100000000 NOT 
-text = "NOT"
-line127 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line127.hex()
-assert hex == "0180 2D00"
-assert line127.error == False
-
-# 10111011rrrrrrrr JGE r
-text = "JGE label128"
-line128 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line128.hex()
-assert hex == "0181 BBBE"
-assert line128.error == False
-
-# 01001100mmmmmmmm TST m
-text = "TST m"
-line129 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line129.hex()
-assert hex == "0182 4CAE"
-assert line129.error == False
-
-# 10011100rrrrrrrr JNE r
-text = "JNE label130"
-line130 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line130.hex()
-assert hex == "0183 9CAE"
-assert line130.error == False
-
-# 01000100mmmmmmmm AND m
-text = "AND m"
-line131 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line131.hex()
-assert hex == "0184 4423"
-assert line131.error == False
-
-# 0000001000000000 POPF 
-text = "POPF"
-line132 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line132.hex()
-assert hex == "0185 0200"
-assert line132.error == False
-
-# 0001111100000000 RTS 
-text = "RTS"
-line133 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line133.hex()
-assert hex == "0186 1F00"
-assert line133.error == False
-
-# 0000011101101001 CLI 
-text = "CLI"
-line134 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line134.hex()
-assert hex == "0187 0769"
-assert line134.error == False
-
-# 0000011110000000 TAX 
-text = "TAX"
-line135 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line135.hex()
-assert hex == "0188 0780"
-assert line135.error == False
-
-# 10111111rrrrrrrr JU r
-text = "JU label136"
-line136 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line136.hex()
-assert hex == "0189 BFE9"
-assert line136.error == False
-
-# 0111101100000000 DEC 
-text = "DEC"
-line137 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line137.hex()
-assert hex == "018A 7B00"
-assert line137.error == False
-
-# 10001001kkkkkkkk LDI k
-text = "LDI k"
-line138 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line138.hex()
-assert hex == "018B 89FE"
-assert line138.error == False
-
-# 10100000mmmmmmmm STD m
-text = "STD m"
-line139 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line139.hex()
-assert hex == "018C A037"
-assert line139.error == False
-
-# 0001111110000000 NOP 
-text = "NOP"
-line140 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line140.hex()
-assert hex == "018D 1F80"
-assert line140.error == False
-
-# 0111111110000001 STI 
-text = "STI"
-line141 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line141.hex()
-assert hex == "018E 7F81"
-assert line141.error == False
-
-# 0000000000000000 INC 
-text = "INC"
-line142 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line142.hex()
-assert hex == "018F 0000"
-assert line142.error == False
-
-# 00110111kkkkkkkk XORI k
-text = "XORI k"
-line143 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line143.hex()
-assert hex == "0190 372F"
-assert line143.error == False
-
-# 00011000mmmmmmmm SBB m
-text = "SBB m"
-line144 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line144.hex()
-assert hex == "0191 182A"
-assert line144.error == False
-
-# 10001111rrrrrrrr JB r
-text = "JB label145"
-line145 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line145.hex()
-assert hex == "0192 8FB7"
-assert line145.error == False
-
-# 01001100mmmmmmmm TST m
-text = "TST m"
-line146 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line146.hex()
-assert hex == "0193 4C5F"
-assert line146.error == False
-
-# 10111011rrrrrrrr JGE r
-text = "JGE label147"
-line147 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line147.hex()
-assert hex == "0194 BB32"
-assert line147.error == False
-
-# 00110011kkkkkkkk CMPI k
-text = "CMPI k"
-line148 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line148.hex()
-assert hex == "0195 33B4"
-assert line148.error == False
-
-# 10011011rrrrrrrr JS r
-text = "JS label149"
-line149 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line149.hex()
-assert hex == "0196 9BBF"
-assert line149.error == False
-
-# 0101000000000000 RLC 
-text = "RLC"
-line150 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line150.hex()
-assert hex == "0197 5000"
-assert line150.error == False
-
-# 10111100rrrrrrrr JNU r
-text = "JNU label151"
-line151 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line151.hex()
-assert hex == "0198 BC38"
-assert line151.error == False
-
-# 01110110oooooooo OR S, o
-text = "OR S, 5"
-line152 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line152.hex()
-assert hex == "0199 7605"
-assert line152.error == False
-
-# 0111111110000001 STI 
-text = "STI"
-line153 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line153.hex()
-assert hex == "019A 7F81"
-assert line153.error == False
-
-# 10000000mmmmmmmm LDD m
-text = "LDD m"
-line154 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line154.hex()
-assert hex == "019B 80E5"
-assert line154.error == False
-
-# 0111000100000001 ASR 
-text = "ASR"
-line155 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line155.hex()
-assert hex == "019C 7101"
-assert line155.error == False
-
-# 00110000mmmmmmmm CMP m
-text = "CMP m"
-line156 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line156.hex()
-assert hex == "019D 3016"
-assert line156.error == False
-
-# 0000111000000000 PUSHF 
-text = "PUSHF"
-line157 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line157.hex()
-assert hex == "019E 0E00"
-assert line157.error == False
-
-# 0000010110000000 INX 
-text = "INX"
-line158 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line158.hex()
-assert hex == "019F 0580"
-assert line158.error == False
-
-# 10011100rrrrrrrr JNE r
-text = "JNE label159"
-line159 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line159.hex()
-assert hex == "01A0 9C74"
-assert line159.error == False
-
-# 01110111kkkkkkkk ORI k
-text = "ORI k"
-line160 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line160.hex()
-assert hex == "01A1 7791"
-assert line160.error == False
-
-# 00010001oooooooo SUB X, o
-text = "SUB X, 232"
-line161 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line161.hex()
-assert hex == "01A2 11E8"
-assert line161.error == False
-
-# 0101000000000000 RLC 
-text = "RLC"
-line162 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line162.hex()
-assert hex == "01A3 5000"
-assert line162.error == False
-
-# 0111111100100010 STU 
-text = "STU"
-line163 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line163.hex()
-assert hex == "01A4 7F22"
-assert line163.error == False
-
-# 01000101oooooooo AND X, o
-text = "AND X, 190"
-line164 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line164.hex()
-assert hex == "01A5 45BE"
-assert line164.error == False
-
-# 00011010oooooooo SBB S, o
-text = "SBB S, 226"
-line165 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line165.hex()
-assert hex == "01A6 1AE2"
-assert line165.error == False
-
-# 00011000mmmmmmmm SBB m
-text = "SBB m"
-line166 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line166.hex()
-assert hex == "01A7 18C8"
-assert line166.error == False
-
-# 01001101oooooooo TST X, o
-text = "TST X, 11"
-line167 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line167.hex()
-assert hex == "01A8 4D0B"
-assert line167.error == False
-
-# 00110011kkkkkkkk CMPI k
-text = "CMPI k"
-line168 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line168.hex()
-assert hex == "01A9 33B3"
-assert line168.error == False
-
-# 0000011101010000 TAS 
-text = "TAS"
-line169 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line169.hex()
-assert hex == "01AA 0750"
-assert line169.error == False
-
-# 00110001oooooooo CMP X, o
-text = "CMP X, 151"
-line170 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line170.hex()
-assert hex == "01AB 3197"
-assert line170.error == False
-
-# 01000111kkkkkkkk ANDI k
-text = "ANDI k"
-line171 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line171.hex()
-assert hex == "01AC 4745"
-assert line171.error == False
-
-# 10101000rrrrrrrr JNV r
-text = "JNV label172"
-line172 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line172.hex()
-assert hex == "01AD A8C4"
-assert line172.error == False
-
-# 0000011101010000 TAS 
-text = "TAS"
-line173 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line173.hex()
-assert hex == "01AE 0750"
-assert line173.error == False
-
-# 0000011110000000 TAX 
-text = "TAX"
-line174 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line174.hex()
-assert hex == "01AF 0780"
-assert line174.error == False
-
-# 10101000rrrrrrrr JNV r
-text = "JNV label175"
-line175 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line175.hex()
-assert hex == "01B0 A8A4"
-assert line175.error == False
-
-# 0111000100000010 ROR 
-text = "ROR"
-line176 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line176.hex()
-assert hex == "01B1 7102"
-assert line176.error == False
-
-# 10111011rrrrrrrr JGE r
-text = "JGE label177"
-line177 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line177.hex()
-assert hex == "01B2 BB55"
-assert line177.error == False
-
-# 10001011rrrrrrrr JBE r
-text = "JBE label178"
-line178 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line178.hex()
-assert hex == "01B3 8B75"
-assert line178.error == False
-
-# 0101000000000000 RLC 
-text = "RLC"
-line179 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line179.hex()
-assert hex == "01B4 5000"
-assert line179.error == False
-
-# 01110110oooooooo OR S, o
-text = "OR S, 29"
-line180 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line180.hex()
-assert hex == "01B5 761D"
-assert line180.error == False
-
-# 0010110100000000 NOT 
-text = "NOT"
-line181 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line181.hex()
-assert hex == "01B6 2D00"
-assert line181.error == False
-
-# 0000011101101001 CLI 
-text = "CLI"
-line182 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line182.hex()
-assert hex == "01B7 0769"
-assert line182.error == False
-
-# 0000110110000000 DEX 
-text = "DEX"
-line183 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line183.hex()
-assert hex == "01B8 0D80"
-assert line183.error == False
-
-# 01110111kkkkkkkk ORI k
-text = "ORI k"
-line184 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line184.hex()
-assert hex == "01B9 7738"
-assert line184.error == False
-
-# 00110100mmmmmmmm XOR m
-text = "XOR m"
-line185 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line185.hex()
-assert hex == "01BA 3454"
-assert line185.error == False
-
-# 0001111110000000 NOP 
-text = "NOP"
-line186 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line186.hex()
-assert hex == "01BB 1F80"
-assert line186.error == False
-
-# 10001100rrrrrrrr JAE r
-text = "JAE label187"
-line187 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line187.hex()
-assert hex == "01BC 8CED"
-assert line187.error == False
-
-# 10110000pppppppp OUT p
-text = "OUT p"
-line188 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line188.hex()
-assert hex == "01BD B0D2"
-assert line188.error == False
-
-# 10101100rrrrrrrr JLE r
-text = "JLE label189"
-line189 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line189.hex()
-assert hex == "01BE ACD2"
-assert line189.error == False
-
-# 0000111001000000 DES 
-text = "DES"
-line190 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line190.hex()
-assert hex == "01BF 0E40"
-assert line190.error == False
-
-# 10101000rrrrrrrr JNV r
-text = "JNV label191"
-line191 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line191.hex()
-assert hex == "01C0 A822"
-assert line191.error == False
-
-# 01000101oooooooo AND X, o
-text = "AND X, 139"
-line192 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line192.hex()
-assert hex == "01C1 458B"
-assert line192.error == False
-
-# 0000110110000000 DEX 
-text = "DEX"
-line193 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line193.hex()
-assert hex == "01C2 0D80"
-assert line193.error == False
-
-# 10100000mmmmmmmm STD m
-text = "STD m"
-line194 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line194.hex()
-assert hex == "01C3 A020"
-assert line194.error == False
-
-# 0000011111001010 CLU 
-text = "CLU"
-line195 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line195.hex()
-assert hex == "01C4 07CA"
-assert line195.error == False
-
-# 0000010110000000 INX 
-text = "INX"
-line196 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line196.hex()
-assert hex == "01C5 0580"
-assert line196.error == False
+line21 = Line(text, "test", 2, [])
+hex = line21.hex()
+assert hex == "0C0E 07E4"
+assert line21.error == False
+
+# 10001000rrrrrrrr JA r
+text = "JA label22"
+line22 = Line(text, "test", 2, [])
+hex = line22.hex()
+assert hex == "0C0F 88AE"
+assert line22.error == False
 
 # 0010011100000000 NEG 
 text = "NEG"
-line197 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line197.hex()
-assert hex == "01C6 2700"
-assert line197.error == False
+line23 = Line(text, "test", 2, [])
+hex = line23.hex()
+assert hex == "0C10 2700"
+assert line23.error == False
 
-# 00110011kkkkkkkk CMPI k
-text = "CMPI k"
-line198 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
-hex = line198.hex()
-assert hex == "01C7 33B8"
-assert line198.error == False
+# 10101111rrrrrrrr JG r
+text = "JG label24"
+line24 = Line(text, "test", 2, [])
+hex = line24.hex()
+assert hex == "0C11 AF84"
+assert line24.error == False
+
+# 01001101oooooooo TST X, o
+text = "TST X, 251"
+line25 = Line(text, "test", 2, [])
+hex = line25.hex()
+assert hex == "0C12 4DFB"
+assert line25.error == False
+
+# 01110101oooooooo OR X, o
+text = "OR X, 154"
+line26 = Line(text, "test", 2, [])
+hex = line26.hex()
+assert hex == "0C13 759A"
+assert line26.error == False
+
+# 01110100mmmmmmmm OR m
+text = "OR 0x7f"
+line27 = Line(text, "test", 2, [])
+hex = line27.hex()
+assert hex == "0C14 747F"
+assert line27.error == False
+
+# 00011000mmmmmmmm SBB m
+text = "SBB 0x3b"
+line28 = Line(text, "test", 2, [])
+hex = line28.hex()
+assert hex == "0C15 183B"
+assert line28.error == False
+
+# 0000011111001010 CLU 
+text = "CLU"
+line29 = Line(text, "test", 2, [])
+hex = line29.hex()
+assert hex == "0C16 07CA"
+assert line29.error == False
+
+# 0000111001000000 DES 
+text = "DES"
+line30 = Line(text, "test", 2, [])
+hex = line30.hex()
+assert hex == "0C17 0E40"
+assert line30.error == False
+
+# 10001111rrrrrrrr JB r
+text = "JB label31"
+line31 = Line(text, "test", 2, [])
+hex = line31.hex()
+assert hex == "0C18 8F46"
+assert line31.error == False
+
+# 0000111001000000 DES 
+text = "DES"
+line32 = Line(text, "test", 2, [])
+hex = line32.hex()
+assert hex == "0C19 0E40"
+assert line32.error == False
+
+# 01000111kkkkkkkk ANDI k
+text = "ANDI 101"
+line33 = Line(text, "test", 2, [])
+hex = line33.hex()
+assert hex == "0C1A 4765"
+assert line33.error == False
+
+# 0000011111100100 CLC 
+text = "CLC"
+line34 = Line(text, "test", 2, [])
+hex = line34.hex()
+assert hex == "0C1B 07E4"
+assert line34.error == False
+
+# 10001111rrrrrrrr JB r
+text = "JB label35"
+line35 = Line(text, "test", 2, [])
+hex = line35.hex()
+assert hex == "0C1C 8FB4"
+assert line35.error == False
+
+# 0111111100100010 STU 
+text = "STU"
+line36 = Line(text, "test", 2, [])
+hex = line36.hex()
+assert hex == "0C1D 7F22"
+assert line36.error == False
+
+# 10101000rrrrrrrr JNV r
+text = "JNV label37"
+line37 = Line(text, "test", 2, [])
+hex = line37.hex()
+assert hex == "0C1E A8B2"
+assert line37.error == False
+
+# 0000011111001010 CLU 
+text = "CLU"
+line38 = Line(text, "test", 2, [])
+hex = line38.hex()
+assert hex == "0C1F 07CA"
+assert line38.error == False
+
+# 00010001oooooooo SUB X, o
+text = "SUB X, 9"
+line39 = Line(text, "test", 2, [])
+hex = line39.hex()
+assert hex == "0C20 1109"
+assert line39.error == False
+
+# 00110101oooooooo XOR X, o
+text = "XOR X, 203"
+line40 = Line(text, "test", 2, [])
+hex = line40.hex()
+assert hex == "0C21 35CB"
+assert line40.error == False
+
+# 00110000mmmmmmmm CMP m
+text = "CMP 0xc3"
+line41 = Line(text, "test", 2, [])
+hex = line41.hex()
+assert hex == "0C22 30C3"
+assert line41.error == False
+
+# 0000011110000000 TAX 
+text = "TAX"
+line42 = Line(text, "test", 2, [])
+hex = line42.hex()
+assert hex == "0C23 0780"
+assert line42.error == False
+
+# 0101001000000000 ROL 
+text = "ROL"
+line43 = Line(text, "test", 2, [])
+hex = line43.hex()
+assert hex == "0C24 5200"
+assert line43.error == False
+
+# 0111000100000000 LSR 
+text = "LSR"
+line44 = Line(text, "test", 2, [])
+hex = line44.hex()
+assert hex == "0C25 7100"
+assert line44.error == False
+
+# 00010011kkkkkkkk SUBI k
+text = "SUBI 17"
+line45 = Line(text, "test", 2, [])
+hex = line45.hex()
+assert hex == "0C26 1311"
+assert line45.error == False
+
+# 00110100mmmmmmmm XOR m
+text = "XOR 0x6d"
+line46 = Line(text, "test", 2, [])
+hex = line46.hex()
+assert hex == "0C27 346D"
+assert line46.error == False
+
+# 0010011100000000 NEG 
+text = "NEG"
+line47 = Line(text, "test", 2, [])
+hex = line47.hex()
+assert hex == "0C28 2700"
+assert line47.error == False
+
+# 01000100mmmmmmmm AND m
+text = "AND 0x82"
+line48 = Line(text, "test", 2, [])
+hex = line48.hex()
+assert hex == "0C29 4482"
+assert line48.error == False
+
+# 0010011100000000 NEG 
+text = "NEG"
+line49 = Line(text, "test", 2, [])
+hex = line49.hex()
+assert hex == "0C2A 2700"
+assert line49.error == False
+
+# 10011111rrrrrrrr JE r
+text = "JE label50"
+line50 = Line(text, "test", 2, [])
+hex = line50.hex()
+assert hex == "0C2B 9F82"
+assert line50.error == False
+
+# 10111011rrrrrrrr JGE r
+text = "JGE label51"
+line51 = Line(text, "test", 2, [])
+hex = line51.hex()
+assert hex == "0C2C BB75"
+assert line51.error == False
+
+# 10101111rrrrrrrr JG r
+text = "JG label52"
+line52 = Line(text, "test", 2, [])
+hex = line52.hex()
+assert hex == "0C2D AFAC"
+assert line52.error == False
+
+# 0000011101101001 CLI 
+text = "CLI"
+line53 = Line(text, "test", 2, [])
+hex = line53.hex()
+assert hex == "0C2E 0769"
+assert line53.error == False
+
+# 10001011rrrrrrrr JBE r
+text = "JBE label54"
+line54 = Line(text, "test", 2, [])
+hex = line54.hex()
+assert hex == "0C2F 8B91"
+assert line54.error == False
+
+# 0000011001000000 INS 
+text = "INS"
+line55 = Line(text, "test", 2, [])
+hex = line55.hex()
+assert hex == "0C30 0640"
+assert line55.error == False
+
+# 0010110100000000 NOT 
+text = "NOT"
+line56 = Line(text, "test", 2, [])
+hex = line56.hex()
+assert hex == "0C31 2D00"
+assert line56.error == False
+
+# 10111011rrrrrrrr JGE r
+text = "JGE label57"
+line57 = Line(text, "test", 2, [])
+hex = line57.hex()
+assert hex == "0C32 BBDB"
+assert line57.error == False
+
+# 0101001000000000 ROL 
+text = "ROL"
+line58 = Line(text, "test", 2, [])
+hex = line58.hex()
+assert hex == "0C33 5200"
+assert line58.error == False
+
+# 00110100mmmmmmmm XOR m
+text = "XOR 0x76"
+line59 = Line(text, "test", 2, [])
+hex = line59.hex()
+assert hex == "0C34 3476"
+assert line59.error == False
+
+# 00110110oooooooo XOR S, o
+text = "XOR S, 178"
+line60 = Line(text, "test", 2, [])
+hex = line60.hex()
+assert hex == "0C35 36B2"
+assert line60.error == False
+
+# 01000100mmmmmmmm AND m
+text = "AND 0x1f"
+line61 = Line(text, "test", 2, [])
+hex = line61.hex()
+assert hex == "0C36 441F"
+assert line61.error == False
+
+# 01110110oooooooo OR S, o
+text = "OR S, 102"
+line62 = Line(text, "test", 2, [])
+hex = line62.hex()
+assert hex == "0C37 7666"
+assert line62.error == False
+
+# 0000011101010000 TAS 
+text = "TAS"
+line63 = Line(text, "test", 2, [])
+hex = line63.hex()
+assert hex == "0C38 0750"
+assert line63.error == False
+
+# 10010000pppppppp IN p
+text = "IN 0xae"
+line64 = Line(text, "test", 2, [])
+hex = line64.hex()
+assert hex == "0C39 90AE"
+assert line64.error == False
+
+# 00110101oooooooo XOR X, o
+text = "XOR X, 18"
+line65 = Line(text, "test", 2, [])
+hex = line65.hex()
+assert hex == "0C3A 3512"
+assert line65.error == False
+
+# 00110000mmmmmmmm CMP m
+text = "CMP 0xda"
+line66 = Line(text, "test", 2, [])
+hex = line66.hex()
+assert hex == "0C3B 30DA"
+assert line66.error == False
+
+# 10111011rrrrrrrr JGE r
+text = "JGE label67"
+line67 = Line(text, "test", 2, [])
+hex = line67.hex()
+assert hex == "0C3C BB91"
+assert line67.error == False
+
+# 00010011kkkkkkkk SUBI k
+text = "SUBI 54"
+line68 = Line(text, "test", 2, [])
+hex = line68.hex()
+assert hex == "0C3D 1336"
+assert line68.error == False
+
+# 0111101100000000 DEC 
+text = "DEC"
+line69 = Line(text, "test", 2, [])
+hex = line69.hex()
+assert hex == "0C3E 7B00"
+assert line69.error == False
+
+# 10101100rrrrrrrr JLE r
+text = "JLE label70"
+line70 = Line(text, "test", 2, [])
+hex = line70.hex()
+assert hex == "0C3F ACF0"
+assert line70.error == False
+
+# 01110110oooooooo OR S, o
+text = "OR S, 175"
+line71 = Line(text, "test", 2, [])
+hex = line71.hex()
+assert hex == "0C40 76AF"
+assert line71.error == False
+
+# 01110101oooooooo OR X, o
+text = "OR X, 92"
+line72 = Line(text, "test", 2, [])
+hex = line72.hex()
+assert hex == "0C41 755C"
+assert line72.error == False
+
+# 0000111001000000 DES 
+text = "DES"
+line73 = Line(text, "test", 2, [])
+hex = line73.hex()
+assert hex == "0C42 0E40"
+assert line73.error == False
+
+# 0000010110000000 INX 
+text = "INX"
+line74 = Line(text, "test", 2, [])
+hex = line74.hex()
+assert hex == "0C43 0580"
+assert line74.error == False
+
+# 0000011111001010 CLU 
+text = "CLU"
+line75 = Line(text, "test", 2, [])
+hex = line75.hex()
+assert hex == "0C44 07CA"
+assert line75.error == False
+
+# 10110000pppppppp OUT p
+text = "OUT 0x3e"
+line76 = Line(text, "test", 2, [])
+hex = line76.hex()
+assert hex == "0C45 B03E"
+assert line76.error == False
+
+# 10000000mmmmmmmm LDD m
+text = "LDD 0x21"
+line77 = Line(text, "test", 2, [])
+hex = line77.hex()
+assert hex == "0C46 8021"
+assert line77.error == False
+
+# 01001111kkkkkkkk TSTI k
+text = "TSTI 28"
+line78 = Line(text, "test", 2, [])
+hex = line78.hex()
+assert hex == "0C47 4F1C"
+assert line78.error == False
+
+# 10111100rrrrrrrr JNU r
+text = "JNU label79"
+line79 = Line(text, "test", 2, [])
+hex = line79.hex()
+assert hex == "0C48 BC8C"
+assert line79.error == False
+
+# 00011010oooooooo SBB S, o
+text = "SBB S, 255"
+line80 = Line(text, "test", 2, [])
+hex = line80.hex()
+assert hex == "0C49 1AFF"
+assert line80.error == False
+
+# 10101100rrrrrrrr JLE r
+text = "JLE label81"
+line81 = Line(text, "test", 2, [])
+hex = line81.hex()
+assert hex == "0C4A ACD1"
+assert line81.error == False
+
+# 00110000mmmmmmmm CMP m
+text = "CMP 0xb4"
+line82 = Line(text, "test", 2, [])
+hex = line82.hex()
+assert hex == "0C4B 30B4"
+assert line82.error == False
+
+# 0110011100000001 TXA 
+text = "TXA"
+line83 = Line(text, "test", 2, [])
+hex = line83.hex()
+assert hex == "0C4C 6701"
+assert line83.error == False
+
+# 00110100mmmmmmmm XOR m
+text = "XOR 0x4"
+line84 = Line(text, "test", 2, [])
+hex = line84.hex()
+assert hex == "0C4D 3404"
+assert line84.error == False
+
+# 10111000rrrrrrrr JL r
+text = "JL label85"
+line85 = Line(text, "test", 2, [])
+hex = line85.hex()
+assert hex == "0C4E B85D"
+assert line85.error == False
+
+# 10010000pppppppp IN p
+text = "IN 0xc5"
+line86 = Line(text, "test", 2, [])
+hex = line86.hex()
+assert hex == "0C4F 90C5"
+assert line86.error == False
+
+# 0101000000000000 RLC 
+text = "RLC"
+line87 = Line(text, "test", 2, [])
+hex = line87.hex()
+assert hex == "0C50 5000"
+assert line87.error == False
+
+# 00110101oooooooo XOR X, o
+text = "XOR X, 132"
+line88 = Line(text, "test", 2, [])
+hex = line88.hex()
+assert hex == "0C51 3584"
+assert line88.error == False
+
+# 0000000000000000 INC 
+text = "INC"
+line89 = Line(text, "test", 2, [])
+hex = line89.hex()
+assert hex == "0C52 0000"
+assert line89.error == False
+
+# 00110101oooooooo XOR X, o
+text = "XOR X, 1"
+line90 = Line(text, "test", 2, [])
+hex = line90.hex()
+assert hex == "0C53 3501"
+assert line90.error == False
+
+# 10000000mmmmmmmm LDD m
+text = "LDD 0x4a"
+line91 = Line(text, "test", 2, [])
+hex = line91.hex()
+assert hex == "0C54 804A"
+assert line91.error == False
+
+# 0001111100000000 RTS 
+text = "RTS"
+line92 = Line(text, "test", 2, [])
+hex = line92.hex()
+assert hex == "0C55 1F00"
+assert line92.error == False
+
+# 10001100rrrrrrrr JAE r
+text = "JAE label93"
+line93 = Line(text, "test", 2, [])
+hex = line93.hex()
+assert hex == "0C56 8CAF"
+assert line93.error == False
+
+# 10111000rrrrrrrr JL r
+text = "JL label94"
+line94 = Line(text, "test", 2, [])
+hex = line94.hex()
+assert hex == "0C57 B8DC"
+assert line94.error == False
+
+# 10111100rrrrrrrr JNU r
+text = "JNU label95"
+line95 = Line(text, "test", 2, [])
+hex = line95.hex()
+assert hex == "0C58 BCEF"
+assert line95.error == False
+
+# 01001101oooooooo TST X, o
+text = "TST X, 166"
+line96 = Line(text, "test", 2, [])
+hex = line96.hex()
+assert hex == "0C59 4DA6"
+assert line96.error == False
+
+# 0101100000000000 LSL 
+text = "LSL"
+line97 = Line(text, "test", 2, [])
+hex = line97.hex()
+assert hex == "0C5A 5800"
+assert line97.error == False
+
+# 0110011100000000 TSA 
+text = "TSA"
+line98 = Line(text, "test", 2, [])
+hex = line98.hex()
+assert hex == "0C5B 6700"
+assert line98.error == False
+
+# 01110111kkkkkkkk ORI k
+text = "ORI 25"
+line99 = Line(text, "test", 2, [])
+hex = line99.hex()
+assert hex == "0C5C 7719"
+assert line99.error == False
+
+# 0000000000000000 INC 
+text = "INC"
+line100 = Line(text, "test", 2, [])
+hex = line100.hex()
+assert hex == "0C5D 0000"
+assert line100.error == False
+
+# 0000011111001010 CLU 
+text = "CLU"
+line101 = Line(text, "test", 2, [])
+hex = line101.hex()
+assert hex == "0C5E 07CA"
+assert line101.error == False
+
+# 00011010oooooooo SBB S, o
+text = "SBB S, 243"
+line102 = Line(text, "test", 2, [])
+hex = line102.hex()
+assert hex == "0C5F 1AF3"
+assert line102.error == False
+
+# 0111000100000011 RRC 
+text = "RRC"
+line103 = Line(text, "test", 2, [])
+hex = line103.hex()
+assert hex == "0C60 7103"
+assert line103.error == False
+
+# 00010001oooooooo SUB X, o
+text = "SUB X, 4"
+line104 = Line(text, "test", 2, [])
+hex = line104.hex()
+assert hex == "0C61 1104"
+assert line104.error == False
+
+# 00010011kkkkkkkk SUBI k
+text = "SUBI 9"
+line105 = Line(text, "test", 2, [])
+hex = line105.hex()
+assert hex == "0C62 1309"
+assert line105.error == False
+
+# 0000011111001010 CLU 
+text = "CLU"
+line106 = Line(text, "test", 2, [])
+hex = line106.hex()
+assert hex == "0C63 07CA"
+assert line106.error == False
+
+# 10111011rrrrrrrr JGE r
+text = "JGE label107"
+line107 = Line(text, "test", 2, [])
+hex = line107.hex()
+assert hex == "0C64 BB01"
+assert line107.error == False
+
+# 01110111kkkkkkkk ORI k
+text = "ORI 50"
+line108 = Line(text, "test", 2, [])
+hex = line108.hex()
+assert hex == "0C65 7732"
+assert line108.error == False
+
+# 00010011kkkkkkkk SUBI k
+text = "SUBI 72"
+line109 = Line(text, "test", 2, [])
+hex = line109.hex()
+assert hex == "0C66 1348"
+assert line109.error == False
+
+# 00010010oooooooo SUB S, o
+text = "SUB S, 63"
+line110 = Line(text, "test", 2, [])
+hex = line110.hex()
+assert hex == "0C67 123F"
+assert line110.error == False
+
+# 0000001000000000 POPF 
+text = "POPF"
+line111 = Line(text, "test", 2, [])
+hex = line111.hex()
+assert hex == "0C68 0200"
+assert line111.error == False
+
+# 0010011100000000 NEG 
+text = "NEG"
+line112 = Line(text, "test", 2, [])
+hex = line112.hex()
+assert hex == "0C69 2700"
+assert line112.error == False
+
+# 00110110oooooooo XOR S, o
+text = "XOR S, 140"
+line113 = Line(text, "test", 2, [])
+hex = line113.hex()
+assert hex == "0C6A 368C"
+assert line113.error == False
+
+# 0000111001000000 DES 
+text = "DES"
+line114 = Line(text, "test", 2, [])
+hex = line114.hex()
+assert hex == "0C6B 0E40"
+assert line114.error == False
+
+# 0000111001000000 DES 
+text = "DES"
+line115 = Line(text, "test", 2, [])
+hex = line115.hex()
+assert hex == "0C6C 0E40"
+assert line115.error == False
+
+# 0000011001000000 INS 
+text = "INS"
+line116 = Line(text, "test", 2, [])
+hex = line116.hex()
+assert hex == "0C6D 0640"
+assert line116.error == False
+
+# 0000011110000000 TAX 
+text = "TAX"
+line117 = Line(text, "test", 2, [])
+hex = line117.hex()
+assert hex == "0C6E 0780"
+assert line117.error == False
+
+# 0000001000000000 POPF 
+text = "POPF"
+line118 = Line(text, "test", 2, [])
+hex = line118.hex()
+assert hex == "0C6F 0200"
+assert line118.error == False
+
+# 01000111kkkkkkkk ANDI k
+text = "ANDI 65"
+line119 = Line(text, "test", 2, [])
+hex = line119.hex()
+assert hex == "0C70 4741"
+assert line119.error == False
+
+# 0000001000000000 POPF 
+text = "POPF"
+line120 = Line(text, "test", 2, [])
+hex = line120.hex()
+assert hex == "0C71 0200"
+assert line120.error == False
+
+# 0110011100000001 TXA 
+text = "TXA"
+line121 = Line(text, "test", 2, [])
+hex = line121.hex()
+assert hex == "0C72 6701"
+assert line121.error == False
+
+# 00011000mmmmmmmm SBB m
+text = "SBB 0x3f"
+line122 = Line(text, "test", 2, [])
+hex = line122.hex()
+assert hex == "0C73 183F"
+assert line122.error == False
+
+# 00110111kkkkkkkk XORI k
+text = "XORI 228"
+line123 = Line(text, "test", 2, [])
+hex = line123.hex()
+assert hex == "0C74 37E4"
+assert line123.error == False
+
+# 01110110oooooooo OR S, o
+text = "OR S, 20"
+line124 = Line(text, "test", 2, [])
+hex = line124.hex()
+assert hex == "0C75 7614"
+assert line124.error == False
+
+# 00010010oooooooo SUB S, o
+text = "SUB S, 218"
+line125 = Line(text, "test", 2, [])
+hex = line125.hex()
+assert hex == "0C76 12DA"
+assert line125.error == False
+
+# 10101011rrrrrrrr JV r
+text = "JV label126"
+line126 = Line(text, "test", 2, [])
+hex = line126.hex()
+assert hex == "0C77 AB4F"
+assert line126.error == False
+
+# 10001100rrrrrrrr JAE r
+text = "JAE label127"
+line127 = Line(text, "test", 2, [])
+hex = line127.hex()
+assert hex == "0C78 8C1B"
+assert line127.error == False
+
+# 01110101oooooooo OR X, o
+text = "OR X, 53"
+line128 = Line(text, "test", 2, [])
+hex = line128.hex()
+assert hex == "0C79 7535"
+assert line128.error == False
+
+# 0101000000000000 RLC 
+text = "RLC"
+line129 = Line(text, "test", 2, [])
+hex = line129.hex()
+assert hex == "0C7A 5000"
+assert line129.error == False
+
+# 0111000100000001 ASR 
+text = "ASR"
+line130 = Line(text, "test", 2, [])
+hex = line130.hex()
+assert hex == "0C7B 7101"
+assert line130.error == False
+
+# 10011111rrrrrrrr JE r
+text = "JE label131"
+line131 = Line(text, "test", 2, [])
+hex = line131.hex()
+assert hex == "0C7C 9FB4"
+assert line131.error == False
+
+# 00010011kkkkkkkk SUBI k
+text = "SUBI 191"
+line132 = Line(text, "test", 2, [])
+hex = line132.hex()
+assert hex == "0C7D 13BF"
+assert line132.error == False
+
+# 01000111kkkkkkkk ANDI k
+text = "ANDI 178"
+line133 = Line(text, "test", 2, [])
+hex = line133.hex()
+assert hex == "0C7E 47B2"
+assert line133.error == False
+
+# 10011000rrrrrrrr JNS r
+text = "JNS label134"
+line134 = Line(text, "test", 2, [])
+hex = line134.hex()
+assert hex == "0C7F 9845"
+assert line134.error == False
+
+# 10101100rrrrrrrr JLE r
+text = "JLE label135"
+line135 = Line(text, "test", 2, [])
+hex = line135.hex()
+assert hex == "0C80 AC8D"
+assert line135.error == False
+
+# 0110011100000000 TSA 
+text = "TSA"
+line136 = Line(text, "test", 2, [])
+hex = line136.hex()
+assert hex == "0C81 6700"
+assert line136.error == False
+
+# 01001101oooooooo TST X, o
+text = "TST X, 38"
+line137 = Line(text, "test", 2, [])
+hex = line137.hex()
+assert hex == "0C82 4D26"
+assert line137.error == False
+
+# 10111100rrrrrrrr JNU r
+text = "JNU label138"
+line138 = Line(text, "test", 2, [])
+hex = line138.hex()
+assert hex == "0C83 BC36"
+assert line138.error == False
+
+# 10001001kkkkkkkk LDI k
+text = "LDI 242"
+line139 = Line(text, "test", 2, [])
+hex = line139.hex()
+assert hex == "0C84 89F2"
+assert line139.error == False
+
+# 10000000mmmmmmmm LDD m
+text = "LDD 0xe4"
+line140 = Line(text, "test", 2, [])
+hex = line140.hex()
+assert hex == "0C85 80E4"
+assert line140.error == False
+
+# 01001110oooooooo TST S, o
+text = "TST S, 33"
+line141 = Line(text, "test", 2, [])
+hex = line141.hex()
+assert hex == "0C86 4E21"
+assert line141.error == False
+
+# 0001111100000000 RTS 
+text = "RTS"
+line142 = Line(text, "test", 2, [])
+hex = line142.hex()
+assert hex == "0C87 1F00"
+assert line142.error == False
+
+# 01000110oooooooo AND S, o
+text = "AND S, 122"
+line143 = Line(text, "test", 2, [])
+hex = line143.hex()
+assert hex == "0C88 467A"
+assert line143.error == False
+
+# 00010000mmmmmmmm SUB m
+text = "SUB 0x20"
+line144 = Line(text, "test", 2, [])
+hex = line144.hex()
+assert hex == "0C89 1020"
+assert line144.error == False
+
+# 01001111kkkkkkkk TSTI k
+text = "TSTI 52"
+line145 = Line(text, "test", 2, [])
+hex = line145.hex()
+assert hex == "0C8A 4F34"
+assert line145.error == False
+
+# 10111011rrrrrrrr JGE r
+text = "JGE label146"
+line146 = Line(text, "test", 2, [])
+hex = line146.hex()
+assert hex == "0C8B BBD1"
+assert line146.error == False
+
+# 10010000pppppppp IN p
+text = "IN 0x23"
+line147 = Line(text, "test", 2, [])
+hex = line147.hex()
+assert hex == "0C8C 9023"
+assert line147.error == False
+
+# 0111111110000001 STI 
+text = "STI"
+line148 = Line(text, "test", 2, [])
+hex = line148.hex()
+assert hex == "0C8D 7F81"
+assert line148.error == False
+
+# 0101100000000000 LSL 
+text = "LSL"
+line149 = Line(text, "test", 2, [])
+hex = line149.hex()
+assert hex == "0C8E 5800"
+assert line149.error == False
+
+# 0010011100000000 NEG 
+text = "NEG"
+line150 = Line(text, "test", 2, [])
+hex = line150.hex()
+assert hex == "0C8F 2700"
+assert line150.error == False
+
+# 10001100rrrrrrrr JAE r
+text = "JAE label151"
+line151 = Line(text, "test", 2, [])
+hex = line151.hex()
+assert hex == "0C90 8C03"
+assert line151.error == False
+
+# 01001101oooooooo TST X, o
+text = "TST X, 162"
+line152 = Line(text, "test", 2, [])
+hex = line152.hex()
+assert hex == "0C91 4DA2"
+assert line152.error == False
+
+# 0110011100000001 TXA 
+text = "TXA"
+line153 = Line(text, "test", 2, [])
+hex = line153.hex()
+assert hex == "0C92 6701"
+assert line153.error == False
+
+# 01110111kkkkkkkk ORI k
+text = "ORI 106"
+line154 = Line(text, "test", 2, [])
+hex = line154.hex()
+assert hex == "0C93 776A"
+assert line154.error == False
+
+# 00110111kkkkkkkk XORI k
+text = "XORI 44"
+line155 = Line(text, "test", 2, [])
+hex = line155.hex()
+assert hex == "0C94 372C"
+assert line155.error == False
+
+# 01000101oooooooo AND X, o
+text = "AND X, 154"
+line156 = Line(text, "test", 2, [])
+hex = line156.hex()
+assert hex == "0C95 459A"
+assert line156.error == False
+
+# 0001111110000000 NOP 
+text = "NOP"
+line157 = Line(text, "test", 2, [])
+hex = line157.hex()
+assert hex == "0C96 1F80"
+assert line157.error == False
+
+# 01110101oooooooo OR X, o
+text = "OR X, 62"
+line158 = Line(text, "test", 2, [])
+hex = line158.hex()
+assert hex == "0C97 753E"
+assert line158.error == False
+
+# 10010000pppppppp IN p
+text = "IN 0x32"
+line159 = Line(text, "test", 2, [])
+hex = line159.hex()
+assert hex == "0C98 9032"
+assert line159.error == False
+
+# 0001111100000000 RTS 
+text = "RTS"
+line160 = Line(text, "test", 2, [])
+hex = line160.hex()
+assert hex == "0C99 1F00"
+assert line160.error == False
+
+# 0000000000000000 INC 
+text = "INC"
+line161 = Line(text, "test", 2, [])
+hex = line161.hex()
+assert hex == "0C9A 0000"
+assert line161.error == False
+
+# 01000110oooooooo AND S, o
+text = "AND S, 65"
+line162 = Line(text, "test", 2, [])
+hex = line162.hex()
+assert hex == "0C9B 4641"
+assert line162.error == False
+
+# 00010001oooooooo SUB X, o
+text = "SUB X, 43"
+line163 = Line(text, "test", 2, [])
+hex = line163.hex()
+assert hex == "0C9C 112B"
+assert line163.error == False
+
+# 00010001oooooooo SUB X, o
+text = "SUB X, 122"
+line164 = Line(text, "test", 2, [])
+hex = line164.hex()
+assert hex == "0C9D 117A"
+assert line164.error == False
+
+# 10001011rrrrrrrr JBE r
+text = "JBE label165"
+line165 = Line(text, "test", 2, [])
+hex = line165.hex()
+assert hex == "0C9E 8B79"
+assert line165.error == False
 
 # 01001100mmmmmmmm TST m
-text = "TST m"
+text = "TST 0xab"
+line166 = Line(text, "test", 2, [])
+hex = line166.hex()
+assert hex == "0C9F 4CAB"
+assert line166.error == False
+
+# 10111011rrrrrrrr JGE r
+text = "JGE label167"
+line167 = Line(text, "test", 2, [])
+hex = line167.hex()
+assert hex == "0CA0 BBB4"
+assert line167.error == False
+
+# 10101100rrrrrrrr JLE r
+text = "JLE label168"
+line168 = Line(text, "test", 2, [])
+hex = line168.hex()
+assert hex == "0CA1 AC8B"
+assert line168.error == False
+
+# 10101100rrrrrrrr JLE r
+text = "JLE label169"
+line169 = Line(text, "test", 2, [])
+hex = line169.hex()
+assert hex == "0CA2 AC0E"
+assert line169.error == False
+
+# 0111111100100010 STU 
+text = "STU"
+line170 = Line(text, "test", 2, [])
+hex = line170.hex()
+assert hex == "0CA3 7F22"
+assert line170.error == False
+
+# 0000110110000000 DEX 
+text = "DEX"
+line171 = Line(text, "test", 2, [])
+hex = line171.hex()
+assert hex == "0CA4 0D80"
+assert line171.error == False
+
+# 0101000000000000 RLC 
+text = "RLC"
+line172 = Line(text, "test", 2, [])
+hex = line172.hex()
+assert hex == "0CA5 5000"
+assert line172.error == False
+
+# 01001101oooooooo TST X, o
+text = "TST X, 43"
+line173 = Line(text, "test", 2, [])
+hex = line173.hex()
+assert hex == "0CA6 4D2B"
+assert line173.error == False
+
+# 01000101oooooooo AND X, o
+text = "AND X, 51"
+line174 = Line(text, "test", 2, [])
+hex = line174.hex()
+assert hex == "0CA7 4533"
+assert line174.error == False
+
+# 00110011kkkkkkkk CMPI k
+text = "CMPI 190"
+line175 = Line(text, "test", 2, [])
+hex = line175.hex()
+assert hex == "0CA8 33BE"
+assert line175.error == False
+
+# 00110110oooooooo XOR S, o
+text = "XOR S, 11"
+line176 = Line(text, "test", 2, [])
+hex = line176.hex()
+assert hex == "0CA9 360B"
+assert line176.error == False
+
+# 0110011100000001 TXA 
+text = "TXA"
+line177 = Line(text, "test", 2, [])
+hex = line177.hex()
+assert hex == "0CAA 6701"
+assert line177.error == False
+
+# 00010010oooooooo SUB S, o
+text = "SUB S, 24"
+line178 = Line(text, "test", 2, [])
+hex = line178.hex()
+assert hex == "0CAB 1218"
+assert line178.error == False
+
+# 0111000100000001 ASR 
+text = "ASR"
+line179 = Line(text, "test", 2, [])
+hex = line179.hex()
+assert hex == "0CAC 7101"
+assert line179.error == False
+
+# 10101011rrrrrrrr JV r
+text = "JV label180"
+line180 = Line(text, "test", 2, [])
+hex = line180.hex()
+assert hex == "0CAD AB4D"
+assert line180.error == False
+
+# 10010000pppppppp IN p
+text = "IN 0x60"
+line181 = Line(text, "test", 2, [])
+hex = line181.hex()
+assert hex == "0CAE 9060"
+assert line181.error == False
+
+# 10101011rrrrrrrr JV r
+text = "JV label182"
+line182 = Line(text, "test", 2, [])
+hex = line182.hex()
+assert hex == "0CAF AB65"
+assert line182.error == False
+
+# 10001000rrrrrrrr JA r
+text = "JA label183"
+line183 = Line(text, "test", 2, [])
+hex = line183.hex()
+assert hex == "0CB0 88CB"
+assert line183.error == False
+
+# 0000011111001010 CLU 
+text = "CLU"
+line184 = Line(text, "test", 2, [])
+hex = line184.hex()
+assert hex == "0CB1 07CA"
+assert line184.error == False
+
+# 01110100mmmmmmmm OR m
+text = "OR 0xc5"
+line185 = Line(text, "test", 2, [])
+hex = line185.hex()
+assert hex == "0CB2 74C5"
+assert line185.error == False
+
+# 0101100000000000 LSL 
+text = "LSL"
+line186 = Line(text, "test", 2, [])
+hex = line186.hex()
+assert hex == "0CB3 5800"
+assert line186.error == False
+
+# 10100000mmmmmmmm STD m
+text = "STD 0xa6"
+line187 = Line(text, "test", 2, [])
+hex = line187.hex()
+assert hex == "0CB4 A0A6"
+assert line187.error == False
+
+# 00010001oooooooo SUB X, o
+text = "SUB X, 44"
+line188 = Line(text, "test", 2, [])
+hex = line188.hex()
+assert hex == "0CB5 112C"
+assert line188.error == False
+
+# 10001100rrrrrrrr JAE r
+text = "JAE label189"
+line189 = Line(text, "test", 2, [])
+hex = line189.hex()
+assert hex == "0CB6 8CC3"
+assert line189.error == False
+
+# 00110000mmmmmmmm CMP m
+text = "CMP 0xfe"
+line190 = Line(text, "test", 2, [])
+hex = line190.hex()
+assert hex == "0CB7 30FE"
+assert line190.error == False
+
+# 0010011100000000 NEG 
+text = "NEG"
+line191 = Line(text, "test", 2, [])
+hex = line191.hex()
+assert hex == "0CB8 2700"
+assert line191.error == False
+
+# 01000101oooooooo AND X, o
+text = "AND X, 221"
+line192 = Line(text, "test", 2, [])
+hex = line192.hex()
+assert hex == "0CB9 45DD"
+assert line192.error == False
+
+# 10001100rrrrrrrr JAE r
+text = "JAE label193"
+line193 = Line(text, "test", 2, [])
+hex = line193.hex()
+assert hex == "0CBA 8CE4"
+assert line193.error == False
+
+# 0111000100000011 RRC 
+text = "RRC"
+line194 = Line(text, "test", 2, [])
+hex = line194.hex()
+assert hex == "0CBB 7103"
+assert line194.error == False
+
+# 0101000000000000 RLC 
+text = "RLC"
+line195 = Line(text, "test", 2, [])
+hex = line195.hex()
+assert hex == "0CBC 5000"
+assert line195.error == False
+
+# 01001110oooooooo TST S, o
+text = "TST S, 120"
+line196 = Line(text, "test", 2, [])
+hex = line196.hex()
+assert hex == "0CBD 4E78"
+assert line196.error == False
+
+# 0000011101101001 CLI 
+text = "CLI"
+line197 = Line(text, "test", 2, [])
+hex = line197.hex()
+assert hex == "0CBE 0769"
+assert line197.error == False
+
+# 0010110100000000 NOT 
+text = "NOT"
+line198 = Line(text, "test", 2, [])
+hex = line198.hex()
+assert hex == "0CBF 2D00"
+assert line198.error == False
+
+# 10011100rrrrrrrr JNE r
+text = "JNE label199"
 line199 = Line(text, "test", 2, [])
-instruction_num = 257
-symbols = []
 hex = line199.hex()
-assert hex == "01C8 4C1C"
+assert hex == "0CC0 9C66"
 assert line199.error == False
 
 labels = {
-'label0': '0167',
-'label1': '00F8',
-'label2': '0146',
-'label3': '0119',
-'label4': '0144',
-'label5': '00BD',
-'label6': '008F',
-'label7': '0138',
-'label8': '0100',
-'label9': '0091',
-'label10': '00C6',
-'label11': '00B2',
-'label12': '00AF',
-'label13': '00CC',
-'label14': '013C',
-'label15': '012C',
-'label16': '0166',
-'label17': '00C4',
-'label18': '0138',
-'label19': '0112',
-'label20': '00F1',
-'label21': '00E3',
-'label22': '00A6',
-'label23': '0138',
-'label24': '012D',
-'label25': '00F5',
-'label26': '00F3',
-'label27': '0152',
-'label28': '00E4',
-'label29': '00EA',
-'label30': '019A',
-'label31': '0193',
-'label32': '00C5',
-'label33': '0146',
-'label34': '016D',
-'label35': '00EB',
-'label36': '0102',
-'label37': '00F4',
-'label38': '0190',
-'label39': '00E2',
-'label40': '00AD',
-'label41': '0192',
-'label42': '01A1',
-'label43': '0107',
-'label44': '010E',
-'label45': '01A9',
-'label46': '00F6',
-'label47': '0105',
-'label48': '0167',
-'label49': '0125',
-'label50': '014A',
-'label51': '00BA',
-'label52': '0164',
-'label53': '0179',
-'label54': '012B',
-'label55': '0192',
-'label56': '010E',
-'label57': '0198',
-'label58': '019C',
-'label59': '0154',
-'label60': '0136',
-'label61': '012C',
-'label62': '0191',
-'label63': '016E',
-'label64': '012F',
-'label65': '0104',
-'label66': '00D9',
-'label67': '012F',
-'label68': '0168',
-'label69': '0182',
-'label70': '013B',
-'label71': '00F4',
-'label72': '0166',
-'label73': '0124',
-'label74': '013D',
-'label75': '01C0',
-'label76': '017E',
-'label77': '00FC',
-'label78': '012C',
-'label79': '00D6',
-'label80': '0156',
-'label81': '0148',
-'label82': '0153',
-'label83': '010D',
-'label84': '015D',
-'label85': '00E0',
-'label86': '01A0',
-'label87': '01D6',
-'label88': '014F',
-'label89': '00F9',
-'label90': '0150',
-'label91': '00FA',
-'label92': '013C',
-'label93': '0102',
-'label94': '017C',
-'label95': '011A',
-'label96': '010D',
-'label97': '01BC',
-'label98': '0173',
-'label99': '0135',
-'label100': '01CA',
-'label101': '01DD',
-'label102': '01B6',
-'label103': '01B1',
-'label104': '0150',
-'label105': '011C',
-'label106': '0129',
-'label107': '00F6',
-'label108': '013B',
-'label109': '01DE',
-'label110': '01C3',
-'label111': '0178',
-'label112': '01DB',
-'label113': '01D2',
-'label114': '0188',
-'label115': '0116',
-'label116': '011A',
-'label117': '0149',
-'label118': '0109',
-'label119': '019B',
-'label120': '011E',
-'label121': '01AA',
-'label122': '01E4',
-'label123': '0142',
-'label124': '01EE',
-'label125': '01A7',
-'label126': '0167',
-'label127': '0131',
-'label128': '0140',
-'label129': '0130',
-'label130': '0132',
-'label131': '01A7',
-'label132': '011B',
-'label133': '0186',
-'label134': '01F1',
-'label135': '01E0',
-'label136': '0173',
-'label137': '0113',
-'label138': '0189',
-'label139': '01C3',
-'label140': '015B',
-'label141': '01CC',
-'label142': '019B',
-'label143': '01BF',
-'label144': '01BB',
-'label145': '014A',
-'label146': '01F2',
-'label147': '01C7',
-'label148': '0149',
-'label149': '0156',
-'label150': '01A9',
-'label151': '01D1',
-'label152': '019E',
-'label153': '01B7',
-'label154': '0180',
-'label155': '01E5',
-'label156': '01B3',
-'label157': '0199',
-'label158': '0212',
-'label159': '0215',
-'label160': '0132',
-'label161': '018A',
-'label162': '0202',
-'label163': '013E',
-'label164': '0163',
-'label165': '0188',
-'label166': '016F',
-'label167': '01B3',
-'label168': '015C',
-'label169': '01FE',
-'label170': '0142',
-'label171': '01F1',
-'label172': '0172',
-'label173': '0222',
-'label174': '015F',
-'label175': '0155',
-'label176': '01AA',
-'label177': '0208',
-'label178': '0229',
-'label179': '018A',
-'label180': '01D2',
-'label181': '0156',
-'label182': '01BD',
-'label183': '01A3',
-'label184': '01F1',
-'label185': '020E',
-'label186': '019D',
-'label187': '01AA',
-'label188': '018F',
-'label189': '0191',
-'label190': '016F',
-'label191': '01E3',
-'label192': '014C',
-'label193': '014E',
-'label194': '01E3',
-'label195': '0214',
-'label196': '01FB',
-'label197': '01D0',
-'label198': '017F',
-'label199': '01E4',
+'label0': '0BC0',
+'label1': '0BF6',
+'label2': '0C6A',
+'label3': '0BE1',
+'label4': '0BDF',
+'label5': '0C13',
+'label6': '0BE4',
+'label7': '0C2D',
+'label8': '0B86',
+'label9': '0BA1',
+'label10': '0BA0',
+'label11': '0C51',
+'label12': '0BF2',
+'label13': '0C67',
+'label14': '0C29',
+'label15': '0C84',
+'label16': '0C73',
+'label17': '0C7C',
+'label18': '0C41',
+'label19': '0C78',
+'label20': '0C24',
+'label21': '0C55',
+'label22': '0BBE',
+'label23': '0C6E',
+'label24': '0B96',
+'label25': '0C0D',
+'label26': '0BAD',
+'label27': '0C93',
+'label28': '0C50',
+'label29': '0BCF',
+'label30': '0C6D',
+'label31': '0C5F',
+'label32': '0C2A',
+'label33': '0C7F',
+'label34': '0BE4',
+'label35': '0BD1',
+'label36': '0BD1',
+'label37': '0BD1',
+'label38': '0C97',
+'label39': '0C29',
+'label40': '0BEC',
+'label41': '0BE5',
+'label42': '0C4C',
+'label43': '0C97',
+'label44': '0C0E',
+'label45': '0C37',
+'label46': '0C94',
+'label47': '0C07',
+'label48': '0BAB',
+'label49': '0C65',
+'label50': '0BAE',
+'label51': '0CA2',
+'label52': '0BDA',
+'label53': '0BEB',
+'label54': '0BC1',
+'label55': '0BB3',
+'label56': '0C60',
+'label57': '0C0E',
+'label58': '0C4F',
+'label59': '0CAA',
+'label60': '0BE7',
+'label61': '0C55',
+'label62': '0C9D',
+'label63': '0C39',
+'label64': '0BE7',
+'label65': '0C4C',
+'label66': '0C15',
+'label67': '0BCE',
+'label68': '0C73',
+'label69': '0C9B',
+'label70': '0C30',
+'label71': '0BEF',
+'label72': '0C9D',
+'label73': '0BDB',
+'label74': '0BCD',
+'label75': '0C4E',
+'label76': '0C83',
+'label77': '0C67',
+'label78': '0C63',
+'label79': '0BD5',
+'label80': '0C48',
+'label81': '0C1C',
+'label82': '0BFF',
+'label83': '0C7C',
+'label84': '0C51',
+'label85': '0CAC',
+'label86': '0C14',
+'label87': '0C36',
+'label88': '0BD5',
+'label89': '0C3C',
+'label90': '0C54',
+'label91': '0C9E',
+'label92': '0CCC',
+'label93': '0C06',
+'label94': '0C34',
+'label95': '0C48',
+'label96': '0BFF',
+'label97': '0CCC',
+'label98': '0CA1',
+'label99': '0C75',
+'label100': '0C99',
+'label101': '0BFE',
+'label102': '0C52',
+'label103': '0CC8',
+'label104': '0C65',
+'label105': '0C6B',
+'label106': '0CBF',
+'label107': '0C66',
+'label108': '0C97',
+'label109': '0CAE',
+'label110': '0CA6',
+'label111': '0C12',
+'label112': '0C29',
+'label113': '0BF6',
+'label114': '0CB7',
+'label115': '0BF9',
+'label116': '0C08',
+'label117': '0C6D',
+'label118': '0CC6',
+'label119': '0CB1',
+'label120': '0CE2',
+'label121': '0C49',
+'label122': '0CB2',
+'label123': '0C58',
+'label124': '0C89',
+'label125': '0C50',
+'label126': '0CC7',
+'label127': '0C94',
+'label128': '0CAE',
+'label129': '0CD6',
+'label130': '0C45',
+'label131': '0C31',
+'label132': '0C3C',
+'label133': '0C30',
+'label134': '0CC5',
+'label135': '0C0E',
+'label136': '0CBB',
+'label137': '0CA8',
+'label138': '0CBA',
+'label139': '0C76',
+'label140': '0C69',
+'label141': '0CA7',
+'label142': '0C7D',
+'label143': '0D02',
+'label144': '0CA9',
+'label145': '0CBE',
+'label146': '0C5D',
+'label147': '0CAF',
+'label148': '0C21',
+'label149': '0CB4',
+'label150': '0C27',
+'label151': '0C94',
+'label152': '0C33',
+'label153': '0CC5',
+'label154': '0CFD',
+'label155': '0CC0',
+'label156': '0C2F',
+'label157': '0C66',
+'label158': '0CD5',
+'label159': '0CCA',
+'label160': '0C62',
+'label161': '0CDA',
+'label162': '0CDC',
+'label163': '0CC7',
+'label164': '0D17',
+'label165': '0D18',
+'label166': '0C4A',
+'label167': '0C55',
+'label168': '0C2D',
+'label169': '0CB1',
+'label170': '0CC3',
+'label171': '0D11',
+'label172': '0C3D',
+'label173': '0CD1',
+'label174': '0CDA',
+'label175': '0C66',
+'label176': '0CB4',
+'label177': '0D23',
+'label178': '0CC3',
+'label179': '0CC1',
+'label180': '0CFB',
+'label181': '0D0E',
+'label182': '0D15',
+'label183': '0C7C',
+'label184': '0D2D',
+'label185': '0C77',
+'label186': '0CD7',
+'label187': '0C5A',
+'label188': '0CE1',
+'label189': '0C7A',
+'label190': '0CB5',
+'label191': '0D19',
+'label192': '0C96',
+'label193': '0C9F',
+'label194': '0CB0',
+'label195': '0CE7',
+'label196': '0D35',
+'label197': '0CBC',
+'label198': '0C72',
+'label199': '0D27',
 }
 Line.labels = labels
