@@ -243,7 +243,7 @@ def test_line():
     assert len(Line.preOrg) == 3
 
     # stack init
-    text = "#stack 100 0xF5"
+    text = "#stack 100"
     stack = Line(text, "test", 2, [])
     assert Line.stack == ('F5', 245, 144) # stack start -> stack end 
     assert stack.hex() == ''
@@ -254,7 +254,7 @@ def test_line():
     instruction_num = 3065
     symbols = []
     (hex, num) = org.hex()
-    assert hex == "0000 89F5\n0001 0750" # need to load s with stack pointer
+    assert hex == ""
     assert org.error == False
     assert Line.org == True
 

@@ -164,6 +164,10 @@ class Macro():
         return True
     
     def num_instructions(self):
+        """
+        This method returns the number of instructions in 
+        the macro.
+        """
         if self.error == True:
             return 0
         lines = self._lines
