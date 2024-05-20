@@ -2,7 +2,7 @@
 This file is used by pytest to test the Macro class.
 """
 
-from Macro import Macro
+from Lines.Macro import Macro
 
 hex1 = """067E A855
 067F 5000

@@ -9,7 +9,7 @@ Revision History:
     5/16/2024   Zachary Pestrikov   Finalized Class
     5/17/2024   Zachary Pestrikov   Added memory to operand_list
 """
-from  Instructions.OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
+from  Lines.Instructions.OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
 
 class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand instruction
     """
@@ -45,7 +45,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
             'memory': False #unused
         }
         if operands == '':
-            self.errors.append(error)
+            LoadStoreInstruction.errors.append(error)
             self.error = True
             return operand_list
         # first character is either +,-,X,S
@@ -54,7 +54,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
             operand_list['+/-'] = operands[0]
             try: operands = operands[1:].strip() # find reg
             except: 
-                    self.errors.append(error)
+                    LoadStoreInstruction.errors.append(error)
                     self.error = True
             operands = operands[0].upper() + operands[1:]
             if operands[0] == 'X' or operands[0] == 'S':
@@ -117,7 +117,7 @@ class LoadStoreInstruction(MultiOpInstruction): # TODO extends multioperand inst
                 else: # x+offset
                     operand_list['offset'] = operands
                 return operand_list
-        self.errors.append(error)
+        LoadStoreInstruction.errors.append(error)
         self.error = True
 
 

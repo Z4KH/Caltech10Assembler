@@ -39,7 +39,7 @@ class Instruction():
         
         if operands != '':
             self.error = True
-            self.errors.append(error)
+            Instruction.errors.append(error)
         
         return operands
 
@@ -103,7 +103,7 @@ class Instruction():
         # handle stack warnings
         stack_instructions = ['RTS', 'POPF', 'PUSHF']
         if opcode in stack_instructions and stack_init == False:
-            self.errors.append(f'Stack Warning/File {self._file}/Line{str(self._line_num)}/Stack Not Initialized')
+            Instruction.errors.append(f'Stack Warning/File {self._file}/Line{str(self._line_num)}/Stack Not Initialized')
         
         instruction_num = hex(instruction_num)[2:]
         instruction_num = '0' * (4 - len(instruction_num)) + instruction_num

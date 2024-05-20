@@ -6,11 +6,11 @@ Revision History
     5/18/2024   Zachary Pestrikov   Finalized Class and Ran Tests
 """
 
-from Instructions.Instruction import Instruction
-from Instructions.OperandInstructions.OperandInstruction import OperandInstruction
-from Instructions.OperandInstructions.CallJmp import CallJmpInstruction
-from Instructions.OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
-from Instructions.OperandInstructions.MultiOpInstructions.LoadStoreInstruction import LoadStoreInstruction
+from Lines.Instructions.Instruction import Instruction
+from Lines.Instructions.OperandInstructions.OperandInstruction import OperandInstruction
+from Lines.Instructions.OperandInstructions.CallJmp import CallJmpInstruction
+from Lines.Instructions.OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
+from Lines.Instructions.OperandInstructions.MultiOpInstructions.LoadStoreInstruction import LoadStoreInstruction
 
 class Macro():
     """
@@ -86,7 +86,7 @@ class Macro():
 
         # validate name
         if self._check_valid(name) == False:
-            self.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Invalid Macro Name {name}')
+            Macro.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Invalid Macro Name {name}')
             self.error = True
         
         # valide arguments
@@ -96,12 +96,12 @@ class Macro():
             if argument == '':
                 continue
             elif argument in self._arguments: # cannon allow user to have two args with same name
-                self.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Duplicate Macro Arg "{argument}"')
+                Macro.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Duplicate Macro Arg "{argument}"')
                 self.error = True
             elif self._check_valid(argument) == True:
                 self._arguments.append(argument)
             else:
-                self.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Invalid Argument Name {argument}')
+                Macro.errors.append(f'Definition Error/File: {file}/Line: {line_num}/Invalid Argument Name {argument}')
                 self.error = True
         
         # Line num is the number that the macro's definition begins.
@@ -121,7 +121,7 @@ class Macro():
                     line_list = line.split(char)
                     if line_list[0].upper().strip() not in self.opcodes: # first thing in line must be opcode
                         self.error = True
-                        self.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
+                        Macro.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
                     else:
                         line_tuples.append((line_list[0].strip().upper(), ''.join(line_list[1:]).strip()))
                     newline = True
@@ -129,7 +129,7 @@ class Macro():
             if newline == False:
                 if line.upper() not in self.opcodes: # must be no operand instruction
                     self.error = True
-                    self.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
+                    Macro.errors.append(f'Definition Error/File: {file}/Line: {line_num + offset + 1}/Invalid Opcode {line_list[0]}')
                 else: line_tuples.append((line.strip().upper(), ''))
         self._lines = line_tuples
 
@@ -211,11 +211,11 @@ class Macro():
                 # switch out the operands for the arguments
                 if len(parameters) != len(arguments):
                     self.error = True
-                    self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Macro Arg Count({len(arguments)}, Expected {len(parameters)})')
+                    Macro.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Macro Arg Count({len(arguments)}, Expected {len(parameters)})')
                     return ('ERROR', instruction_num)
                 for (idx, param) in enumerate(parameters):
                     if parameters.count(param) != 1:
-                        self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Duplicate Macro Arg "{param}"')
+                        Macro.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Duplicate Macro Arg "{param}"')
                     if param in operands: # param already stripped, case-sensitive
                         # need to ensure that it is not just a shorter version of actual operand
                         # ensure that other operands are not in there too
@@ -241,7 +241,7 @@ class Macro():
                 elif opcode in self.load_store_instructions:
                     line = LoadStoreInstruction(opcode, operands, self._file, self._line_num + offset + 1)
                 else:
-                    self.errors.append(f'Definition Error/File {self._file}/Line {self._line_num + offset + 1}/Invalid Opcode "{opcode}"')
+                    Macro.errors.append(f'Definition Error/File {self._file}/Line {self._line_num + offset + 1}/Invalid Opcode "{opcode}"')
                     self.error = True
                     return ('ERROR', instruction_num)
                 # instruction num is the next instruction
@@ -251,7 +251,7 @@ class Macro():
         # ensure instruction_num < 0x1fff + 1 (PC max)
         if instruction_num > 8191:
             self.error = True
-            self.errors.append(f'Range Error/File {self._file}/Line {self._line_num}/Exceeds Max Instruction Count 0x1FFF')
+            Macro.errors.append(f'Range Error/File {self._file}/Line {self._line_num}/Exceeds Max Instruction Count 0x1FFF')
             return ('ERROR', -1)
 
         return (hex_output, instruction_num)

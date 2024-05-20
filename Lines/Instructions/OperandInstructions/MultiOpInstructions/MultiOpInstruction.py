@@ -8,8 +8,8 @@ extend this class.
 Revision History
     5/16/2024   Zachary Pestrikov   Wrote File
 """
-from Instructions.OperandInstructions.HexOffset import hex_offset
-from Instructions.OperandInstructions.OperandInstruction import OperandInstruction
+from Lines.Instructions.OperandInstructions.HexOffset import hex_offset
+from Lines.Instructions.OperandInstructions.OperandInstruction import OperandInstruction
 
 class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
     """
@@ -50,7 +50,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         # ensure operands are not blank
         if operands == '':
             operand_list['memory'] = True
-            self.errors.append(f'Blank Operand Warning/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"')
+            MultiOpInstruction.errors.append(f'Blank Operand Warning/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"')
             return operand_list
         
         # determine whether register or memory
@@ -69,14 +69,14 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
             elif operands[0] == '':
                 return operand_list
             else:
-                self.errors.append(error)
+                MultiOpInstruction.errors.append(error)
                 self.error = True
         else: # operand is memory address
             if ' ' not in operands:
                 # do not allow negative memory address
                 if operands.startswith('-'):
                     self.error = True
-                    self.errors.append(error)
+                    MultiOpInstruction.errors.append(error)
                 else:
                     operand_list['offset'] = operands
                     operand_list['memory'] = True
@@ -84,7 +84,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         
         # anything else is an error
         self.error = True
-        self.errors.append(error)
+        MultiOpInstruction.errors.append(error)
         return operand_list
     
     
@@ -124,7 +124,7 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
             addressing = '10'
         else: # error that didn't get caught
             self.error = True
-            self.errors.append(error)
+            MultiOpInstruction.errors.append(error)
             return 'ERROR'
         
         bin = opcode_bin[opcode] + addressing
@@ -147,11 +147,11 @@ class MultiOpInstruction(OperandInstruction): # TODO extends OperandInstruction
         
         (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols, operand_list['memory'], bytes_table)
         if warning == True and operand_list['memory'] == False:
-            self.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
+            MultiOpInstruction.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
         if warning == True and operand_list['memory'] == True:
-            self.errors.append(f'Memory Access Warning/File {self._file}/Line {str(self._line_num)}/Byte "{self._operands}" Not Allocated')
+            MultiOpInstruction.errors.append(f'Memory Access Warning/File {self._file}/Line {str(self._line_num)}/Byte "{self._operands}" Not Allocated')
         if invalid == True:
-            self.errors.append(error)
+            MultiOpInstruction.errors.append(error)
             self.error = True
 
         # convert instruction to hex

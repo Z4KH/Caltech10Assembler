@@ -9,8 +9,8 @@ class.
 Revision History
     5/17/2024   Zachary Pestrikov   Wrote File
 """
-from Instructions.OperandInstructions.HexOffset import hex_offset
-from Instructions.Instruction import Instruction
+from Lines.Instructions.OperandInstructions.HexOffset import hex_offset
+from Lines.Instructions.Instruction import Instruction
 
 class OperandInstruction(Instruction):
     """
@@ -47,23 +47,13 @@ class OperandInstruction(Instruction):
         
         # only one operand
         if '\t' in operands or ' ' in operands or ',' in operands:
-            self.errors.append(error)
+            OperandInstruction.errors.append(error)
             self.error = True
 
         memory_instructions = ['LDD', 'STD', 'IN', 'OUT']
         # for ports and memory instructions, ensure that it is either a symbol/byte or hex
         if opcode in memory_instructions:
-            if len(operands) > 3 and operands != '':
-                if operands[:2] != '0x' and operands[0].isalpha() == False :
-                    self.errors.append(error)
-                    self.error = True
-                    return operand_list
-                if opcode in memory_instructions[0:2]:
-                    operand_list['memory'] = True
-            elif len(operands) < 3 and operands != '' and operands[0].isalpha() == False:
-                self.errors.append(error)
-                self.error = True
-                return operand_list
+            operand_list['memory'] = True
         
         operand_list['offset'] = operands
         return operand_list
@@ -118,11 +108,11 @@ class OperandInstruction(Instruction):
         
         (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols, operand_list['memory'], bytes_table)
         if warning == True and operand_list['memory'] == False:
-            self.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
+            OperandInstruction.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
         if warning == True and operand_list['memory'] == True:
-            self.errors.append(f'Memory Access Warning/File {self._file}/Line {str(self._line_num)}/Byte "{self._operands}" Not Allocated')
+            OperandInstruction.errors.append(f'Memory Access Warning/File {self._file}/Line {str(self._line_num)}/Byte "{self._operands}" Not Allocated')
         if invalid == True:
-            self.errors.append(error)
+            OperandInstruction.errors.append(error)
             self.error = True
 
         # convert instruction to hex

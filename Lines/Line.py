@@ -5,13 +5,13 @@ Revision History
     - 5/19/2024 Zachary Pestrikov   Wrote File
 """
 
-from Macro import Macro
-from Instructions.Instruction import Instruction
-from Instructions.OperandInstructions.CallJmp import CallJmpInstruction
-from Instructions.OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
-from Instructions.OperandInstructions.OperandInstruction import OperandInstruction
-from Instructions.OperandInstructions.MultiOpInstructions.LoadStoreInstruction import LoadStoreInstruction
-from Instructions.OperandInstructions.HexOffset import hex_offset
+from Lines.Macro import Macro
+from Lines.Instructions.Instruction import Instruction
+from Lines.Instructions.OperandInstructions.CallJmp import CallJmpInstruction
+from Lines.Instructions.OperandInstructions.MultiOpInstructions.MultiOpInstruction import MultiOpInstruction
+from Lines.Instructions.OperandInstructions.OperandInstruction import OperandInstruction
+from Lines.Instructions.OperandInstructions.MultiOpInstructions.LoadStoreInstruction import LoadStoreInstruction
+from Lines.Instructions.OperandInstructions.HexOffset import hex_offset
 
 class Line():
     """
@@ -56,7 +56,7 @@ class Line():
         # remove comments
         if ';' in line:
             idx = line.index(';')
-            line = line[:5].strip()
+            line = line[:idx].strip()
             self._line = line
         # if line is blank, then want to print blank line
         if line == '':
@@ -168,7 +168,7 @@ class Line():
 
         The method does not deal with NOP instructions
         """
-        opcode = line[0].strip()
+        opcode = line[0].strip().upper()
         operands = ''.join(line[1:]).strip()
 
         if opcode in Macro.call_jmp_instructions:
@@ -219,7 +219,7 @@ class Line():
             if letter.isalpha() == False and letter.isdigit() == False and letter != '_':
                 return False
         
-        label_hex = hex(Line.instructions + 1)[2:]
+        label_hex = hex(Line.instructions)[2:]
         label_hex = '0' * (4 - len(label_hex)) + label_hex
         Line.labels[label] = label_hex.upper()
         return True
@@ -294,15 +294,22 @@ class Line():
         
         if pseudo_opcode.lower() == '#include':
             if '"' in operands:
+
                 operands = operands.split('"')
-                try: Line.include_files.append(operands[1])
+                try: 
+                    file = operands[1]
+                    if file in Line.include_files: raise IndexError
+                    Line.include_files.append(file)
                 except IndexError:
                     self.error = True
                     Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
                     return
             elif "'" in operands:
                 operands = operands.split("'")
-                try: Line.include_files.append(operands[1])
+                try: 
+                    file = operands[1]
+                    if file in Line.include_files: raise IndexError
+                    Line.include_files.append(file)
                 except IndexError:
                     self.error = True
                     Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')

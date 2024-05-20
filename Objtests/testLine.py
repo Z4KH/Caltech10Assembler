@@ -2,7 +2,7 @@
 This file is used by pytest to test the Line class.
 """
 
-from Line import Line
+from Lines.Line import Line
 
 def test_line():
     labels = {
@@ -1812,7 +1812,7 @@ def test_line():
     assert line_code2.hex() == ''
 
     # test second org => error
-    text = "#org"
+    text = "#ORG"
     org2 = Line(text, "test", 2, [])
     assert org2.error == True
     assert Line.seg == 1
@@ -1840,6 +1840,18 @@ def test_line():
     result = tabopcodeoperands.hex()
     assert result == '0CC9 AB00'
     instruction_num += 1
+
+    # test include same file twice => error
+    text = "#INCLUDE 'testfile.asm'"
+    once_include = Line(text, 'test', 2, [])
+    assert once_include.error == False
+    assert 'testfile.asm' in Line.include_files
+    result = once_include.hex()
+    assert result == ''
+    twice_include = Line(text, 'test', 2, [])
+    assert twice_include.error == True
+
+
 
 if __name__ == '__main__':
     test_line()

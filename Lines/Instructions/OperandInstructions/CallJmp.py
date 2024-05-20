@@ -5,7 +5,7 @@ Revision History:
     5/16/2024   Zachary Pestrikov   Implemented Class
     5/18/2024   Zachary Pestrikov   Fixed Offset
 """
-from Instructions.OperandInstructions.OperandInstruction import OperandInstruction
+from Lines.Instructions.OperandInstructions.OperandInstruction import OperandInstruction
 
 class CallJmpInstruction(OperandInstruction): 
     """
@@ -29,7 +29,7 @@ class CallJmpInstruction(OperandInstruction):
         error = f'Syntax Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
 
         if ' ' in operands or '\t' in operands or ',' in operands:
-            self.errors.append(error)
+            CallJmpInstruction.errors.append(error)
             self.error = True
         return operands
         
@@ -107,12 +107,12 @@ class CallJmpInstruction(OperandInstruction):
                 label_bin = bin(instruction_num)[2:]
                 label_bin = '0' * (13 - len(label_bin)) + label_bin
             else:
-                self.errors.append(error)
+                CallJmpInstruction.errors.append(error)
                 self.error = True
                 return 'ERROR'
             if opcode == 'CALL':
                 if stack_init == False:
-                    self.errors.append(warning)
+                    CallJmpInstruction.errors.append(warning)
                 hex_op = hex(int('111' + label_bin, 2))[2:]
             else: hex_op = hex(int('110' + label_bin, 2))[2:]
         # handle relative jumps
@@ -124,12 +124,12 @@ class CallJmpInstruction(OperandInstruction):
                 offset = label_pc - (instruction_num + 1) # exec on next instruction
                 # problems: offset > 127, offset < 0, offset < -127 
                 if offset > 127:
-                    self.errors.append(rangeerror)
+                    CallJmpInstruction.errors.append(rangeerror)
                     self.error = True
                     return 'ERROR'
                 elif offset < 0:
                     if offset < -127:
-                        self.errors.append(rangeerror)
+                        CallJmpInstruction.errors.append(rangeerror)
                         self.error = True
                         return 'ERROR'
                     else:
@@ -137,7 +137,7 @@ class CallJmpInstruction(OperandInstruction):
             elif label == '$': #PC
                 offset = 255
             else: # label DNE
-                self.errors.append(error)
+                CallJmpInstruction.errors.append(error)
                 self.error = True
                 return 'ERROR'
             offset = hex(offset)[2:]
