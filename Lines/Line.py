@@ -157,7 +157,7 @@ class Line():
             line = line.split('\t')
             self._distribute_instruction(line)
         else: # invalid line
-            Line.errors.append(f'Syntax Error/File {self._file}/Line {self._line}/Invalid Instruction "{line}"')
+            Line.errors.append(f'Syntax Error/File {self._file}/Line {self._line_num}/Invalid Instruction "{line}"')
             self.error = True
             self._line = ''
 
@@ -298,25 +298,27 @@ class Line():
                 operands = operands.split('"')
                 try: 
                     file = operands[1]
-                    if file in Line.include_files: raise IndexError
+                    if file in Line.include_files: 
+                        raise IndexError
                     Line.include_files.append(file)
                 except IndexError:
                     self.error = True
-                    Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
+                    Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {''.join(operands)}')
                     return
             elif "'" in operands:
                 operands = operands.split("'")
                 try: 
                     file = operands[1]
-                    if file in Line.include_files: raise IndexError
+                    if file in Line.include_files: 
+                        raise IndexError
                     Line.include_files.append(file)
                 except IndexError:
                     self.error = True
-                    Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
+                    Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {''.join(operands)}')
                     return
             else: 
                 self.error = True
-                Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {operands}')
+                Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid File {''.join(operands)}')
                 return
         elif pseudo_opcode.lower() == '#=':
             try: 
@@ -329,7 +331,7 @@ class Line():
                 Line.symbols[operands[0].strip()] = definition[0]
             except:
                 self.error = True
-                Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid Definition {operands}')
+                Line.errors.append(f'PseudoOp Error/File {self._file}/Line {self._line_num}/Invalid Definition "{self._line}"')
                 return
         elif pseudo_opcode.lower() == '#macro':
             if '(' in operands and ')' in operands: 
@@ -402,7 +404,7 @@ class Line():
         Validates the name of a constant.
         """
         special_chars = ['_', '[', ']']
-        if name.upper() in Macro.opcodes or name in Line.macros or name[0].isalpha() == False:
+        if name.upper() in Macro.opcodes or name in Line.macros or name[0].isalpha() == False or name in Line.bytes or name in Line.symbols:
             raise ValueError
         for letter in name:
             if letter.isalpha() == False and letter.isdigit() == False and letter not in special_chars:
@@ -436,3 +438,15 @@ class Line():
                                  Line.labels, Line.stack, Line.bytes)
             Line.instructions_hexed += 1
         return f'{hex}'
+
+    def handle_preOrg(self):
+        """
+        This method is called after the main file
+        is done being parsed. It handles all
+        lines that came before the origin.
+        Returns a list of the preorg lines.
+        """
+        lines = []
+        for line in Line.preOrg:
+            lines.append(Line(line[0], line[1], line[2], line[3]))
+        return lines

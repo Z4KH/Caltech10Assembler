@@ -9,7 +9,6 @@
 
 
 #code
-#org
 initialize:
     LDD b
     CMPI 0         ;compare b to 0
@@ -19,6 +18,7 @@ initialize:
     JMP COMPARISON  ;compare a and b
     NOP
 
+#org
 COMPARISON:         ;compares a and b
     CMP b           ;compare a and b
     JGE WHILE       ;if a>=b, go to loop
@@ -44,7 +44,7 @@ ENDWHILE:           ;determines whether to go back to while loop
 SWAP:              ;swap a and b
 	TAX			    ;put a in X temporariliy
 	LDD   b 		;gets b
-	STD   a		    ;stores b in a
+	STD     a		    ;stores b in a
 	TXA			    ;get a back
 	STD   b	    	;store a in b
   JMP ENDWHILE    ;go to ENDWHILE
@@ -53,16 +53,20 @@ DONE:               ;output GCD
     LDD a           ;load a
     RTS             ;return
 
-
-
-
 #data
 #byte a
 #byte b
 ;00  ??  a   DB  ?   ;the variable a 
 ;01  ??  b   DB  ?   ;the variable b 
 
+#stack 100
+#include 'testASMfiles/test2.asm'
+#= k<- 0b11 ;sign extended
 
+#macro LoadConsts (o1, o2) {
+    LDI o1
+    LDI o2 ;testcomments
+}
 
     
 

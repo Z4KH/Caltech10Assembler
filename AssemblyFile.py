@@ -13,8 +13,9 @@ class AssemblyFile():
 
     errors = []
     lines = []
+    line_cnt = 1    # files are 1-indexed
 
-    def __init__(self, file, start_line):
+    def __init__(self, file):
         """
         Given the path to the main file, 
         this method initializes every line in 
@@ -22,20 +23,20 @@ class AssemblyFile():
         """
         self._file = file
         self.error = False
-        lines = start_line
 
         # ensure that the file exists
         if os.path.exists(file) == False:
             AssemblyFile.errors.append(f'File Error/File "{file}" Not Found')
             self.error = True
             return
-
+        if file not in Line.include_files:
+            Line.include_files.append(file) # the file exists
         in_macro = False
         macro_line_ctr = 0
         macro_header = ''
         macro_lines = []
-        with open(file) as file:
-            for line in file:
+        with open(file) as asm_file:
+            for line in asm_file:
                 line = line.strip()
                 if line.startswith('#macro') or in_macro == True:
                     in_macro == True
@@ -48,21 +49,34 @@ class AssemblyFile():
                         macro_lines.append(line)
                         macro_line_ctr += 1
                     else: #end of macro
-                        this_line = Line(macro_header, file, lines, macro_lines)
+                        this_line = Line(macro_header, file, self.line_cnt, macro_lines)
                         AssemblyFile.lines.append(this_line)
-                        lines += macro_line_ctr + 1
+                        self.line_cnt += macro_line_ctr + 1
                         in_macro = False
                         macro_line_ctr = 0
                         macro_lines = []
                     continue
-                this_line = Line(line, file, lines, [])
+                this_line = Line(line, file, self.line_cnt, [])
                 AssemblyFile.lines.append(this_line)
-                lines += 1
-        
-        self.end_line = lines
+                self.line_cnt += 1
     
-    def hex(self):
+    def handle_preOrg(self):
+        """
+        This method is called after parsing the file
+        with #org in it. It handles all
+        lines before the orgin and addes them to 
+        the lines array
+        """
+        Line.seg = 1 # all lines in here are instructions
+        lines = self.lines[0].handle_preOrg()
+        for line in lines:
+            AssemblyFile.lines.append(line)
 
+
+    def hex(self):
+        if Line.org == False:
+            self.error = True
+            self.errors.append(f'Origin Error/#ORG Unspecified')
         if self.error == True:
             return 'ERROR'
         output = ''
@@ -72,4 +86,6 @@ class AssemblyFile():
                 output += line
             else:
                 output += f'{line}\n'
+
+        # now hex the lines before org
         return output
