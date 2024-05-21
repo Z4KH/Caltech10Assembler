@@ -141,7 +141,10 @@ class Line():
             name = line[0].strip()
             self._line = (name, args)
             # add to instructions
-            Line.instructions += self.macros[name].num_instructions()
+            try: Line.instructions += self.macros[name].num_instructions()
+            except KeyError:
+                self.error = True
+                self.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Macro "{name}"')
             return
         # if not macro then must be instruction
         # first check for no operand instructions

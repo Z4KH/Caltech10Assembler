@@ -39,7 +39,7 @@ class AssemblyFile():
             for line in asm_file:
                 line = line.strip()
                 if line.startswith('#macro') or in_macro == True:
-                    in_macro == True
+                    in_macro = True
                     #handle macro
                     # handle header
                     if macro_line_ctr == 0:
