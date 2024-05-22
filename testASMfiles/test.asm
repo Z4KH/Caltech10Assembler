@@ -9,6 +9,7 @@
 
 
 #code
+#org
 initialize:
     LDD b
     CMPI 0         ;compare b to 0
@@ -18,7 +19,6 @@ initialize:
     JMP COMPARISON  ;compare a and b
     NOP
 
-#org
 COMPARISON:         ;compares a and b
     CMP b           ;compare a and b
     JGE WHILE       ;if a>=b, go to loop

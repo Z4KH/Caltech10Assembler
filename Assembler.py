@@ -8,6 +8,7 @@ from AssemblyFile import AssemblyFile
 from Lines.Line import Line
 from Lines.Macro import Macro
 from Lines.Instructions.Instruction import Instruction
+from AssemblyFile import hex
 
 def assemble():
     """
@@ -16,7 +17,7 @@ def assemble():
     files = [] #files to hex
     args = sys.argv
 
-    main_file_name = 'testASMfiles/test.asm'#args[1]
+    main_file_name = args[1]
     files.append(AssemblyFile(main_file_name))
 
     # get main_file_name
@@ -30,8 +31,8 @@ def assemble():
     if org == True:
         files[0].handle_preOrg()
     # handle includes
-    test = Line.include_files
     while(len(files) < len(Line.include_files)):
+        test = Line.include_files
         files.append(AssemblyFile(Line.include_files[len(files)]))
         if AssemblyFile.errors != [] or Line.errors != [] or Macro.errors != []: 
             # if the file has errors, dont loop forever
@@ -40,11 +41,8 @@ def assemble():
             files[0].handle_preOrg()
             org = True
 
-    hex_output = ''
     #hex all files and output
-    for file in files:
-        if file.error == False:
-            hex_output += file.hex()
+    hex_output = hex()
 
     with open(out_file, 'w') as out:
         out.write(f'{hex_output.strip()}\n')
@@ -68,7 +66,7 @@ def assemble():
             if byte.startswith('$') == False:
                 print(f'Byte {byte}: {addr}')
         print('\n')
-
+    print(f'Assembled Obj File at "{out_file}"')
 
     
 

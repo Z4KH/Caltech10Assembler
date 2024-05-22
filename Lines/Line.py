@@ -148,8 +148,8 @@ class Line():
             return
         # if not macro then must be instruction
         # first check for no operand instructions
-        if line in Macro.no_operand_instructions:
-            self._line = Instruction(line, '', self._file, self._line_num)
+        if line.upper() in Macro.no_operand_instructions:
+            self._line = Instruction(line.upper(), '', self._file, self._line_num)
             Line.instructions += 1
             return
         # now know that there must be operands => separate by space or tab

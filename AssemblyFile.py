@@ -4,6 +4,7 @@ This file implements the AssemblyFile class
 
 import os
 from Lines.Line import Line
+from Lines.Instructions.Instruction import Instruction
 
 class AssemblyFile():
     """
@@ -59,6 +60,10 @@ class AssemblyFile():
                 this_line = Line(line, file, self.line_cnt, [])
                 AssemblyFile.lines.append(this_line)
                 self.line_cnt += 1
+        # must add no-op at end of each file in case of includes and jumps and preorg
+        AssemblyFile.lines.append(Line('#code', '-1', -1, []))
+        AssemblyFile.lines.append(Line('NOP', '-1', -1, []))
+        self.line_cnt += 1
     
     def handle_preOrg(self):
         """
@@ -71,21 +76,27 @@ class AssemblyFile():
         lines = self.lines[0].handle_preOrg()
         for line in lines:
             AssemblyFile.lines.append(line)
+        # must add no-op at end of each file in case of includes and jumps and preorg
+        AssemblyFile.lines.append(Line('#code', '-1', -1, []))
+        AssemblyFile.lines.append(Line('NOP', '-1', -1, []))
 
 
-    def hex(self):
-        if Line.org == False:
-            self.error = True
-            self.errors.append(f'Origin Error/#ORG Unspecified')
-        if self.error == True:
-            return 'ERROR'
-        output = ''
-        for line in AssemblyFile.lines:
+def hex():
+    if Line.org == False:
+        AssemblyFile.errors.append(f'Origin Error/#ORG Unspecified')
+        return 'ERROR'
+    output = ''
+    for line in AssemblyFile.lines:
+        if line.error == True:
+            output += 'ERROR'
+        else:
             line = line.hex()
             if line == '\n':
                 output += line
-            else:
-                output += f'{line}\n'
+            elif line != '':
+                output += f'{line.strip()}\n'
 
-        # now hex the lines before org
-        return output
+    if Instruction.ret == False:
+        AssemblyFile.errors.append(f'Return Error/No Return in Program')
+    # now hex the lines before org
+    return output

@@ -15,9 +15,10 @@ class Instruction():
     """
 
     errors = [] 
+    ret = False
 
     def __init__(self, opcode, operands, file, line_num):
-        self._opcode = opcode
+        self._opcode = opcode.upper()
         self._operands = operands
         self._file = file
         self._line_num = line_num
@@ -87,6 +88,8 @@ class Instruction():
         if self.error == True:
             return 'ERROR'
         
+        if self._opcode == 'RTS':
+            Instruction.ret = True
 
         hex_op = hex(int(instructions[self._opcode], 2))[2:]
         hex_op = '0' * (4 - len(hex_op)) + hex_op

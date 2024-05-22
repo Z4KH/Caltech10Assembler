@@ -52,7 +52,8 @@
     RTS             ;return
     LDI k ;defined constant in test.asm
 
-    LoadConsts(0x45, 0x48)
+    LoadConsts(0x45, 'c')
+    #include 'testASMfiles/coding.asm'
 
 #data
 #byte c
