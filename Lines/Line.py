@@ -343,7 +343,7 @@ class Line():
                 try: idx = operands[1].index(')')
                 except ValueError:
                     self.error = True
-                    Line.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Args ({line[1]}')
+                    Line.errors.append(f'Macro Error/File {self._file}/Line {self._line_num}/Invalid Args ({operands}')
                     return
                 args = operands[1][:idx].strip()
                 name = operands[0].strip()

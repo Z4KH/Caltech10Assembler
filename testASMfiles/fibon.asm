@@ -14,6 +14,10 @@
 ;     9 Feb 21  Glen George      Updated comments
 ;     21    May 24  Zachary Pestrikov   Added to test files for assembler
 
+#macro macro(op) {
+    LDI op
+}
+
 #code
             init:			;initialize variables
                 LDI   0
@@ -21,6 +25,7 @@
                 INC
                 STD   f1		;f1 := f[n-1] = 1
                 STD   f 		;Fibonacci number (f[1]) is 1 too
+                macro(4)
 
             FibLoop:			;loop, computing nth Fibonacci number
                 LDD   n			;update the Fibonacci count by 1
