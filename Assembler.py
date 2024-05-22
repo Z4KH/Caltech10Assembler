@@ -9,6 +9,7 @@ from Lines.Line import Line
 from Lines.Macro import Macro
 from Lines.Instructions.Instruction import Instruction
 from AssemblyFile import hex
+import os
 
 def assemble():
     """
@@ -17,12 +18,16 @@ def assemble():
     files = [] #files to hex
     args = sys.argv
 
-    main_file_name = 'testASMfiles/fibon.asm'#args[1]
+    if len(args) != 2:
+        print(f'File Error/Unspecified Assembly File')
+        return
+    main_file_name = args[1]
     files.append(AssemblyFile(main_file_name))
 
     # get main_file_name
     if files[0].error == False:
-        out_file = f'{main_file_name.split(".")[0].strip()}.obj'
+        cwd = os.getcwd()
+        out_file = f'{os.path.relpath(main_file_name, cwd)}.obj'
     else: # files must have the .
         print(f'\n{AssemblyFile.errors[0]}\n')
         return
@@ -73,4 +78,5 @@ def assemble():
 
 
 if __name__ == '__main__':
-    assemble()
+    try: assemble()
+    except: print('Assembly Failed')

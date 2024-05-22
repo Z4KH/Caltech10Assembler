@@ -1685,7 +1685,7 @@ def test_line():
     instruction_num = 3066
     symbols = []
     result = line200.hex()
-    assert result == "0CC1 8B00"
+    assert result == "0CC1 8BFF"
     assert line200.error == False
 
     # test pseudo-ops
@@ -1823,7 +1823,7 @@ def test_line():
     assert labelnoinst.error == False
     assert Line.seg == 1
     assert labelnoinst.hex() == '\n'
-    labelnoinstruction = hex(Line.instructions_hexed + 1)[2:].upper()
+    labelnoinstruction = hex(Line.instructions_hexed)[2:].upper() # line number = instructions_hexed - 1
     labelnoinstruction = '0' * (4 - len(labelnoinstruction)) + labelnoinstruction
     assert Line.labels['Labelnoinstruction'] == labelnoinstruction.upper()
 
@@ -1838,7 +1838,7 @@ def test_line():
     tabopcodeoperands = Line(text, "test", 2, [])
     assert tabopcodeoperands.error == False
     result = tabopcodeoperands.hex()
-    assert result == '0CC9 AB00'
+    assert result == '0CC9 ABFF' # executed on next instruction
     instruction_num += 1
 
     # test include same file twice => error
@@ -1850,6 +1850,20 @@ def test_line():
     assert result == ''
     twice_include = Line(text, 'test', 2, [])
     assert twice_include.error == True
+
+
+    # test jmp pc
+    text = "JV\t$"
+    tabopcodeoperands = Line(text, "test", 2, [])
+    assert tabopcodeoperands.error == False
+    result = tabopcodeoperands.hex()
+    assert result == '0CCA ABFF' # executed on next instruction
+
+    text = "JMP\t$"
+    tabopcodeoperands = Line(text, "test", 2, [])
+    assert tabopcodeoperands.error == False
+    result = tabopcodeoperands.hex()
+    assert result == '0CCB CCCB' # executed on next instruction
 
 
 

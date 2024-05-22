@@ -58,5 +58,4 @@
 #byte      f2   ;   DB    ?			;the Fibonacci number from 2 times ago
 #byte      n    ;   DB    ?			;the desired Fibonacci number index
 #word test
-#stack 2
 #include 'testASMfiles/includetest.asm'

@@ -8,7 +8,7 @@ Revision History
 """
 
 
-def hex_offset(offset, symbols, memory, bytes_table):
+def hex_offset(offset, symbols, memory, bytes_table, port=False):
     """
     Given an offset(either a symbol or constant) and a symbols tabel,
     returns the offset in hex if it is proper syntax. Else, it returns
@@ -22,8 +22,9 @@ def hex_offset(offset, symbols, memory, bytes_table):
     """
     warning = False
     error = False
-    if memory == True and offset[:2].lower() != '0x' and offset != '' and offset not in bytes_table and offset not in symbols:
-        error = True
+    if memory == True and offset[:2].lower() != '0x' and offset != '' and offset and offset not in symbols:
+        if port == False and offset not in bytes_table or port == True:
+            error = True
     if offset == '':
         offset = '00'
         if memory == True:

@@ -39,7 +39,8 @@ class OperandInstruction(Instruction):
         """
         operand_list = {
             'memory': False,
-            'offset': ''    # if 0, then left blank
+            'offset': '',    # if 0, then left blank
+            'port': False # for IN OUT
         }
         operands = self._operands
         opcode = self._opcode
@@ -54,7 +55,9 @@ class OperandInstruction(Instruction):
         # for ports and memory instructions, ensure that it is either a symbol/byte or hex
         if opcode in memory_instructions:
             operand_list['memory'] = True
-        
+            if opcode in memory_instructions[2:]:
+                operand_list['port'] = True
+    
         operand_list['offset'] = operands
         return operand_list
 
@@ -106,7 +109,8 @@ class OperandInstruction(Instruction):
         operand_list = self._operand_list
         error = f'Operand Error/File {self._file}/Line {str(self._line_num)}/Invalid {self._opcode} Operands "{self._operands}"'
         
-        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols, operand_list['memory'], bytes_table)
+
+        (offset, warning, invalid) = hex_offset(operand_list['offset'], symbols, operand_list['memory'], bytes_table, operand_list['port'])
         if warning == True and operand_list['memory'] == False:
             OperandInstruction.errors.append(f'Operand Warning/File {self._file}/Line {str(self._line_num)}/Truncation "{self._operands}"')
         if warning == True and operand_list['memory'] == True:

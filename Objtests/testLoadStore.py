@@ -1,4 +1,4 @@
-from Instructions.OperandInstructions.MultiOpInstructions.LoadStoreInstruction import LoadStoreInstruction
+from Lines.Instructions.OperandInstructions.MultiOpInstructions.LoadStoreInstruction import LoadStoreInstruction
 
 """
 This file is used to test the LoadStoreInstruction class through pytest.
