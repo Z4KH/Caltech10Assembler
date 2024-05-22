@@ -14,7 +14,6 @@
 ;     9 Feb 21  Glen George      Updated comments
 ;     21    May 24  Zachary Pestrikov   Added to test files for assembler
 
-#org
 #code
             init:			;initialize variables
                 LDI   0
@@ -42,7 +41,6 @@
 
             Finished:			;done with the calculation
                 LDD   f			;get returned Fibonacci value into accumulator
-                JMP test
             Return: nop ; bc jmp
                 rts                    ;and return
 
@@ -55,5 +53,5 @@
 #byte      f2   ;   DB    ?			;the Fibonacci number from 2 times ago
 #byte      n    ;   DB    ?			;the desired Fibonacci number index
 #word test
-#include 'testASMfiles/includetest.asm'
 #stack 2
+#include 'testASMfiles/includetest.asm'

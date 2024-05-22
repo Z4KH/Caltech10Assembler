@@ -1,2 +1,5 @@
+#org
+#code
+
 test: TAX
-jmp Return
+jmp init

@@ -17,7 +17,7 @@ def assemble():
     files = [] #files to hex
     args = sys.argv
 
-    main_file_name = args[1]
+    main_file_name = 'testASMfiles/fibon.asm'#args[1]
     files.append(AssemblyFile(main_file_name))
 
     # get main_file_name
@@ -32,11 +32,11 @@ def assemble():
         files[0].handle_preOrg()
     # handle includes
     while(len(files) < len(Line.include_files)):
-        test = Line.include_files
         files.append(AssemblyFile(Line.include_files[len(files)]))
         if AssemblyFile.errors != [] or Line.errors != [] or Macro.errors != []: 
             # if the file has errors, dont loop forever
             break
+        test = Line.org
         if Line.org == True and org == False:
             files[0].handle_preOrg()
             org = True
