@@ -26,11 +26,8 @@ def assemble():
 
     # get main_file_name
     if files[0].error == False:
-        cwd = os.getcwd()
-        out_file = f'{os.path.relpath(main_file_name, cwd)}.obj'
-    else: # files must have the .
-        print(f'\n{AssemblyFile.errors[0]}\n')
-        return
+        (root, extension) = os.path.splitext(main_file_name)
+        out_file = f'{root}.obj'
 
     org = Line.org
     if org == True:
@@ -41,7 +38,6 @@ def assemble():
         if AssemblyFile.errors != [] or Line.errors != [] or Macro.errors != []: 
             # if the file has errors, dont loop forever
             break
-        test = Line.org
         if Line.org == True and org == False:
             files[0].handle_preOrg()
             org = True
@@ -79,4 +75,4 @@ def assemble():
 
 if __name__ == '__main__':
     try: assemble()
-    except: print('Assembly Failed')
+    except: print(f'Assembly Failed')
